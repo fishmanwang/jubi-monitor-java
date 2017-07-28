@@ -10,30 +10,38 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-web</artifactId>
+    <artifactId>common-mysql-dao</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
-
+        <!-- ######### mybatis配置 ########## -->
         <dependency>
-            <groupId>com.jubi</groupId>
-            <artifactId>common</artifactId>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jubi</groupId>
-            <artifactId>common-mysql-dao</artifactId>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
         </dependency>
+
+        <!-- 连接池 -->
         <dependency>
-            <groupId>com.jubi</groupId>
-            <artifactId>common-mysql-dao</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
-
 
 </project>

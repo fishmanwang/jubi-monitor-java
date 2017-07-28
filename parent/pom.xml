@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jubi</groupId>
-    <artifactId>jubi-parent</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
         <!-- 项目版本 -->
-        <reddata.version>1.0-SNAPSHOT</reddata.version>
+        <project.version>1.0-SNAPSHOT</project.version>
         <spring.version>4.3.9.RELEASE</spring.version>
         <slf4j.version>1.7.10</slf4j.version>
         <log4j.version>2.6.2</log4j.version>
@@ -33,6 +33,25 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- jubi -->
+            <dependency>
+                <groupId>com.jubi</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jubi</groupId>
+                <artifactId>common-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jubi</groupId>
+                <artifactId>common-mysql-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!-- ######## spring  ########## -->
             <!-- 引入spring的核心包 -->
