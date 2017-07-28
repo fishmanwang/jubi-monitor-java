@@ -1,4 +1,4 @@
-package com.jubi.mybatis.jackson2;
+package com.mybatis.jackson2;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

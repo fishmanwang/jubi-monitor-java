@@ -1,4 +1,4 @@
-package com.jubi.mybatis.jackson2;
+package com.mybatis.jackson2;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;

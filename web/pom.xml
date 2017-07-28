@@ -19,6 +19,11 @@
             <groupId>com.jubi</groupId>
             <artifactId>common-web</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>com.jubi</groupId>
+            <artifactId>common-mysql-dao</artifactId>
+        </dependency>
 
     </dependencies>
 
