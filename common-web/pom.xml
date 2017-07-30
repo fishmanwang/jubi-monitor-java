@@ -45,6 +45,16 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency> <!-- jsp相关 -->
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <dependency> <!-- jsp相关 -->
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+        </dependency>
+
     </dependencies>
 
 

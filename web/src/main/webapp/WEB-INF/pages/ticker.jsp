@@ -1,12 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
     <title>ECharts</title>
 </head>
 <body>
+
+<select id="coinSel">
+    <option value="">请选择币种</option>
+    <c:forEach items="${coins}" var="coin">
+        <option value="${coin.code}">${coin.desc}</option>
+    </c:forEach>
+</select>
+
+
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="height:400px"></div>
+<div id="main" style="height:600px"></div>
 <!-- ECharts单文件引入 -->
 <script src="../js/jquery-1.12.1.min.js"></script>
 <script src="../js/echarts/echarts.common.min.js"></script>
@@ -15,16 +25,21 @@
 <script src="../js/jubi/common.js"></script>
 
 <script type="text/javascript">
-    $(function () {
-        url = "/ticker/xas/recently?span=60";
-        $.getJSON(url, function(json) {
-            if (json.status != '200') {
-                alert(json.message)
-                return
-            }
 
-            var arr = prepareData(json.data.reverse())
-            render(arr[0], arr[1])
+    $(function () {
+        $("#coinSel").off("change").on("change", function() {
+            coin = $(this).val()
+            if (coin != '') {
+                url = "/ticker/recent/" + coin + "?span=60&t=" + Math.random();
+                $.getJSON(url, function(json) {
+                    if (json.status != '200') {
+                        alert(json.message)
+                        return
+                    }
+                    var arr = prepareData(json.data.reverse())
+                    render(arr[0], arr[1])
+                });
+            }
         });
     });
 
@@ -45,8 +60,7 @@
 
         option = {
             title : {
-                text: '未来一周气温变化',
-                subtext: '纯属虚构'
+                text: '行情走势'
             },
             tooltip : {
                 trigger: 'axis'
@@ -80,6 +94,7 @@
                     type:'line',
                     data: yds,
                     markPoint : {
+                        symbolSize : 100,
                         data : [
                             {type : 'max', name: '最大值'},
                             {type : 'min', name: '最小值'}

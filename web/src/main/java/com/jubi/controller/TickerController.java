@@ -17,7 +17,7 @@ public class TickerController {
     @Autowired
     private TickerService tickerService;
 
-    @RequestMapping("/{coin}/recently")
+    @RequestMapping("/recent/{coin}")
     public RestResult queryRecentlyTickers(@PathVariable("coin") String coin, Integer span) {
         if (span == null) {
             span = 300;
