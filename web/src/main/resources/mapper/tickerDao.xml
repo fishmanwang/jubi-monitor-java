@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jubi.dao.TickerDao">
+
+    <resultMap id="tickerMap" type="com.jubi.entity.TickerEntity">
+        <id column="pk" jdbcType="INTEGER" property="pk" />
+        <result column="high" jdbcType="DOUBLE" property="high" />
+        <result column="low" jdbcType="DOUBLE" property="low" />
+        <result column="buy" jdbcType="DOUBLE" property="buy" />
+        <result column="sell" jdbcType="DOUBLE" property="sell" />
+        <result column="last" jdbcType="DOUBLE" property="last" />
+        <result column="vol" jdbcType="DOUBLE" property="vol" />
+        <result column="volume" jdbcType="DOUBLE" property="volume" />
+    </resultMap>
+
+    <select id="queryTickers" resultMap="tickerMap">
+        select pk, `last`
+        from ${tb_name}
+        where (pk mod #{span}) = 0
+    </select>
+
+
+</mapper>

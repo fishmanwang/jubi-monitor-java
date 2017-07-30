@@ -18,7 +18,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
-                <value>classpath:properties/config.properties</value>
+                <value>classpath:config.properties</value>
                 <value>file:/var/jubi/web/config.properties</value>
             </list>
         </property>
@@ -38,6 +38,6 @@
                                 expression="org.springframework.web.bind.annotation.RestController"/><!-- 父容器加载除controller外所有的bean -->
     </context:component-scan>
 
-    <import resource="datasources.xml"/>
+    <import resource="mybatis.xml"/>
 
 </beans>

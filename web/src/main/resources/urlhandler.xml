@@ -14,7 +14,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
-                <value>classpath:properties/config.properties</value>
+                <value>classpath:config.properties</value>
                 <value>file:/var/jubi/web/config.properties</value>
             </list>
         </property>

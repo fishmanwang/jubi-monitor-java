@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd"
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
        default-autowire="byName">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
@@ -38,5 +41,34 @@
         <!-- 配置监控统计拦截的filters -->
         <property name="filters" value="wall,stat"/>
     </bean>
+
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:/mapper/*.xml</value>
+            </list>
+        </property>
+        <property name="plugins">
+            <ref bean="offsetLimitInterceptor"/>
+        </property>
+    </bean>
+    <bean id="offsetLimitInterceptor"
+          class="com.mybatis.pagination.OffsetLimitInterceptor">
+        <property name="dialectClass"
+                  value="com.mybatis.dialect.MySQLDialect"/>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
+        <property name="basePackage" value="com.jubi.dao"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"
+                          proxy-target-class="true"/>
 
 </beans>
