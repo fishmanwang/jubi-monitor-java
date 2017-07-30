@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/hello")
 public class HelloController {
 
-    @RequestMapping("")
+    @RequestMapping("/index.do")
     public String hello() {
-        return "hello";
+        return "index";
     }
 
 }

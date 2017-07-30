@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
     <display-name>Archetype Created Web Application</display-name>
@@ -43,7 +41,7 @@
         <!-- 配置tomcat启动时 启动SpringMVC -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:applicationContext-mvc.xml</param-value>
+            <param-value>classpath:urlhandler.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>
@@ -51,12 +49,10 @@
 
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
-        <!-- "*.do"拦截后台请求 -->
-        <!-- "*.action"拦截前台请求 -->
-        <url-pattern>*.do</url-pattern>
+        <!-- "*.html"拦截前台请求 -->
         <!-- app端拦截处理 -->
-        <url-pattern>*.action</url-pattern>
-        <!-- 不做任何拦截处理 -->
+        <url-pattern>*.html</url-pattern>
+        <!-- 拦截所有 -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
