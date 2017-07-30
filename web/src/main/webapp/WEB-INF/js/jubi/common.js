@@ -1,4 +1,4 @@
-// 格式化日期
+
 // 格式化日期 年-月-日
 var formatDate = function(date) {
     var y = date.getFullYear();
@@ -9,7 +9,8 @@ var formatDate = function(date) {
     return y + '-' + m + '-' + d;
 }
 
-var formatDateTimeSecs = function(secs) {
+// 格式化日期 月/日 时:分
+var formatDateTimeSecsForX = function(secs) {
     return formatDateTime2(new Date(secs * 1000))
 }
 
