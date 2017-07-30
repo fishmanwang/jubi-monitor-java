@@ -34,7 +34,7 @@ public class TickerService {
         List<TickerPriceVo> result = Lists.newArrayList();
 
         String tableName = TickerUtil.getTickerTableNameByCoin(coin);
-        PageBounds pb = new PageBounds(1, 100);
+        PageBounds pb = new PageBounds(1, 1000);
         SortBy sy = SortBy.create("pk", SortBy.Direction.DESC.toString());
         pb.setOrders(Arrays.asList(sy));
 

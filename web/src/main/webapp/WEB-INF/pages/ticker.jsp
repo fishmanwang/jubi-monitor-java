@@ -16,7 +16,7 @@
 
 <script type="text/javascript">
     $(function () {
-        url = "/ticker/xas/recently?span=3600";
+        url = "/ticker/xas/recently?span=60";
         $.getJSON(url, function(json) {
             if (json.status != '200') {
                 alert(json.message)
