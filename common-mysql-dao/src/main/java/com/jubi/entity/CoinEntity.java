@@ -1,14 +1,20 @@
-package com.jubi.service.vo;
+package com.jubi.entity;
 
-/**
- * 币种基本信息
- * Created by Administrator on 2017/7/30.
- */
-public class CoinVo {
+public class CoinEntity {
+
+    private Integer id;
 
     private String code;
 
     private String name;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;
