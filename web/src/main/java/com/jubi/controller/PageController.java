@@ -31,4 +31,15 @@ public class PageController {
         return mv;
     }
 
+    @RequestMapping("/rate.html")
+    public ModelAndView ratePage() {
+        List<CoinVo> coins = coinService.getAllCoins();
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("coins", coins);
+        mv.setViewName("ticker-rate");
+
+        return mv;
+    }
+
 }
