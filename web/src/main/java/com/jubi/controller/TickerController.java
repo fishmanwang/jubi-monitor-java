@@ -25,5 +25,12 @@ public class TickerController {
         return RestResult.ok(tickerService.queryRecentlyTickers(coin, span));
     }
 
+    @RequestMapping("/recent/rate/{coin}")
+    public RestResult queryRecentlyTickerRate(@PathVariable("coin") String coin, Integer span) {
+        if (span == null) {
+            span = 300;
+        }
+        return RestResult.ok(tickerService.queryRecentlyTickers(coin, span));
+    }
 
 }

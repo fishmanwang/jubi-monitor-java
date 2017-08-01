@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <title>行情</title>
+    <title>涨幅</title>
 </head>
 <body>
 
@@ -31,5 +31,5 @@
 
 <script src="../js/jubi/common.js"></script>
 
-<script type="text/javascript" src="../js/jubi/ticker.js"></script>
+<script type="text/javascript" src="../js/jubi/ticker-rate.js"></script>
 </body>
