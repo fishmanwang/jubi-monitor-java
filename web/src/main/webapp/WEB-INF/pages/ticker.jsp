@@ -10,7 +10,7 @@
 <select id="coinSel">
     <option value="">请选择币种</option>
     <c:forEach items="${coins}" var="coin">
-        <option value="${coin.code}">${coin.desc}</option>
+        <option value="${coin.code}">${coin.name}</option>
     </c:forEach>
 </select>
 

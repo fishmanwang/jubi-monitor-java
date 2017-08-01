@@ -2,21 +2,21 @@ package com.jubi.entity;
 
 public class TickerEntity {
 
+    private Integer id;
+
     private Integer pk;
 
-    private Double high;
+    private String coin;
 
-    private Double low;
+    private Double price;
 
-    private Double buy;
+    public Integer getId() {
+        return id;
+    }
 
-    private Double sell;
-
-    private Double last;
-
-    private Double vol;
-
-    private Double volume;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getPk() {
         return pk;
@@ -26,59 +26,19 @@ public class TickerEntity {
         this.pk = pk;
     }
 
-    public Double getHigh() {
-        return high;
+    public String getCoin() {
+        return coin;
     }
 
-    public void setHigh(Double high) {
-        this.high = high;
+    public void setCoin(String coin) {
+        this.coin = coin;
     }
 
-    public Double getLow() {
-        return low;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setLow(Double low) {
-        this.low = low;
-    }
-
-    public Double getBuy() {
-        return buy;
-    }
-
-    public void setBuy(Double buy) {
-        this.buy = buy;
-    }
-
-    public Double getSell() {
-        return sell;
-    }
-
-    public void setSell(Double sell) {
-        this.sell = sell;
-    }
-
-    public Double getLast() {
-        return last;
-    }
-
-    public void setLast(Double last) {
-        this.last = last;
-    }
-
-    public Double getVol() {
-        return vol;
-    }
-
-    public void setVol(Double vol) {
-        this.vol = vol;
-    }
-
-    public Double getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Double volume) {
-        this.volume = volume;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

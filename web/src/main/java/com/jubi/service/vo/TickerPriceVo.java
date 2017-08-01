@@ -1,6 +1,7 @@
 package com.jubi.service.vo;
 
 /**
+ * 币的时间+价格
  * Created by Administrator on 2017/7/30.
  */
 public class TickerPriceVo {

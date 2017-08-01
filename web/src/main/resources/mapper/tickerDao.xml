@@ -3,20 +3,16 @@
 <mapper namespace="com.jubi.dao.TickerDao">
 
     <resultMap id="tickerMap" type="com.jubi.entity.TickerEntity">
-        <id column="pk" jdbcType="INTEGER" property="pk" />
-        <result column="high" jdbcType="DOUBLE" property="high" />
-        <result column="low" jdbcType="DOUBLE" property="low" />
-        <result column="buy" jdbcType="DOUBLE" property="buy" />
-        <result column="sell" jdbcType="DOUBLE" property="sell" />
-        <result column="last" jdbcType="DOUBLE" property="last" />
-        <result column="vol" jdbcType="DOUBLE" property="vol" />
-        <result column="volume" jdbcType="DOUBLE" property="volume" />
+        <id property="id" column="id"/>
+        <result column="pk" jdbcType="INTEGER" property="pk" />
+        <result column="coin" property="coin"/>
+        <result column="price" jdbcType="DOUBLE" property="price" />
     </resultMap>
 
     <select id="queryTickers" resultMap="tickerMap">
-        select pk, `last`
-        from ${tb_name}
-        where (pk mod #{span}) = 0
+        select pk, price
+        from jb_coin_ticker
+        where coin = #{coin} and (pk mod #{span}) = 0
     </select>
 
 
