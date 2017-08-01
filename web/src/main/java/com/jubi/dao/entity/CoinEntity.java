@@ -1,4 +1,4 @@
-package com.jubi.entity;
+package com.jubi.dao.entity;
 
 public class CoinEntity {
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jubi.dao.CoinDao">
 
-    <resultMap id="coinMap" type="com.jubi.entity.CoinEntity">
+    <resultMap id="coinMap" type="com.jubi.dao.entity.CoinEntity">
         <id property="id" column="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name" />

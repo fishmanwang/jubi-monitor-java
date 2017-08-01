@@ -18,10 +18,8 @@ public class TickerController {
     private TickerService tickerService;
 
     @RequestMapping("/recent/{coin}")
-    public RestResult queryRecentlyTickers(@PathVariable("coin") String coin, Integer span) {
-        if (span == null) {
-            span = 300;
-        }
+    public RestResult queryRecentlyTickers(@PathVariable("coin") String coin) {
+        int span = 60;
         return RestResult.ok(tickerService.queryRecentlyTickers(coin, span));
     }
 

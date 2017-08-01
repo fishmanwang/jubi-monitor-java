@@ -1,7 +1,6 @@
-package com.jubi.entity;
+package com.jubi.dao.entity;
 
 public class TickerEntity {
-
     private Integer id;
 
     private Integer pk;

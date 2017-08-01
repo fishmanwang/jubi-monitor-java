@@ -2,7 +2,7 @@
  * BBD Service Inc
  * All Rights Reserved @2016
  */
-package com.jubi.entity;
+package com.jubi.dao.entity;
 
 /**
  *

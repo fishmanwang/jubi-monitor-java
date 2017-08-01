@@ -24,7 +24,7 @@ function fetchAndRender() {
             return
         }
         var ds = [].concat(json.data)
-        var arr = prepareData(json.data.reverse())
+        var arr = prepareData(ds)
         var point = getOriginPoint(ds)
         render(arr[0], arr[1], point)
     });

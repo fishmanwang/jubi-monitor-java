@@ -1,6 +1,6 @@
 package com.jubi.dao;
 
-import com.jubi.entity.CoinRateEntity;
+import com.jubi.dao.entity.CoinRateEntity;
 import com.mybatis.domain.PageBounds;
 import org.apache.ibatis.annotations.Param;
 

@@ -7,7 +7,7 @@ package com.jubi.service;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.jubi.dao.CoinRateDao;
-import com.jubi.entity.CoinRateEntity;
+import com.jubi.dao.entity.CoinRateEntity;
 import com.jubi.service.vo.CoinRateVo;
 import com.jubi.util.BeanMapperUtil;
 import com.mybatis.domain.PageBounds;

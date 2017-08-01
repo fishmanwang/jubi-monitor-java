@@ -1,6 +1,6 @@
 package com.jubi.dao;
 
-import com.jubi.entity.CoinEntity;
+import com.jubi.dao.entity.CoinEntity;
 
 import java.util.List;
 
