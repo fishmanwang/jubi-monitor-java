@@ -21,6 +21,11 @@ public class TickerController {
     @Autowired
     private TickerService tickerService;
 
+    @RequestMapping("/{coin}")
+    public RestResult queryTickers(@PathVariable("coin") String coin, Integer span) {
+        return RestResult.ok(tickerService.queryTickers(coin, span));
+    }
+
     @RequestMapping("/recent/{coin}")
     public RestResult queryRecentlyTickers(@PathVariable("coin") String coin) {
         return RestResult.ok(tickerService.queryRecentlyTickers(coin));

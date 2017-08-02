@@ -9,11 +9,14 @@ import com.jubi.dao.vo.TickerSpanParam;
 import com.jubi.service.vo.TickerPriceVo;
 import com.jubi.util.BeanMapperUtil;
 import com.jubi.util.DateUtils;
+import com.mybatis.domain.PageBounds;
+import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +27,44 @@ import java.util.List;
 @Service
 public class TickerService {
 
+    private static final int LIMIT = 2000;
+
     @Autowired
     private TickerExtDao tickerExtDao;
 
+    public List<TickerPriceVo> queryTickers(String coin, Integer span) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
+
+        List<TickerPriceVo> result = Lists.newArrayList();
+
+        Date now = new Date();
+        int end = Long.valueOf(now.getTime() / 1000).intValue();
+        if (span < 60) {
+            span = 60; // 1分钟
+        }
+
+        TickerSpanParam param = new TickerSpanParam();
+        param.setCoin(coin);
+        param.setSpan(span);
+        param.setEnd(end);
+
+        PageBounds pb = new PageBounds(1, LIMIT, false);
+        pb.setOrders(Arrays.asList(SortBy.create("pk", "desc")));
+
+        List<TickerEntity> ds = tickerExtDao.queryTickers(param, pb);
+        if (ds.size() == 0) {
+            return result;
+        }
+
+        result = BeanMapperUtil.mapList(ds, TickerPriceVo.class);
+        return result;
+    }
+
+    /**
+     * 查询当日行情
+     * @param coin
+     * @return
+     */
     public List<TickerPriceVo> queryRecentlyTickers(String coin) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
 
@@ -42,7 +80,10 @@ public class TickerService {
         param.setSpan(span);
         param.setStart(beginTime);
 
-        List<TickerEntity> ds = tickerExtDao.queryTickers(param);
+        PageBounds pb = new PageBounds(1, LIMIT, false);
+        pb.setOrders(Arrays.asList(SortBy.create("pk", "asc")));
+
+        List<TickerEntity> ds = tickerExtDao.queryTickers(param, pb);
         if (ds.size() == 0) {
             return result;
         }
@@ -75,7 +116,10 @@ public class TickerService {
         param.setStart(begin);
         param.setEnd(end);
 
-        List<TickerEntity> ds = tickerExtDao.queryTickers(param);
+        PageBounds pb = new PageBounds(1, LIMIT, false);
+        pb.setOrders(Arrays.asList(SortBy.create("pk", "asc")));
+
+        List<TickerEntity> ds = tickerExtDao.queryTickers(param, pb);
         if (ds.size() == 0) {
             return result;
         }
