@@ -17,26 +17,25 @@ function fetchAndRender() {
         }
         var ds = [].concat(json.data)
         var arr = prepareData(ds)
-        var point = getOriginPoint(ds)
-        render(arr[0], arr[1], point)
+        render(arr[0], arr[1])
     });
 }
 
-function getOriginPoint(ds) {
-    var date = new Date();
-    var t = date.getTime()
-    var offset = date.getTimezoneOffset() * 60 * 1000
-    t = (t - t % 86400000) + offset
-    t = t / 1000;
-    var r = []
-    for (var i = 0; i < ds.length; i++) {
-        if (ds[i].pk <= t) {
-            r = [formatDateTimeSecsForX(t), ds[i].price]
-            break
-        }
-    }
-    return r
-}
+// function getOriginPoint(ds) {
+//     var date = new Date();
+//     var t = date.getTime()
+//     var offset = date.getTimezoneOffset() * 60 * 1000
+//     t = (t - t % 86400000) + offset
+//     t = t / 1000;
+//     var r = []
+//     for (var i = 0; i < ds.length; i++) {
+//         if (ds[i].pk <= t) {
+//             r = [formatDateTimeSecsForX(t), ds[i].price]
+//             break
+//         }
+//     }
+//     return r
+// }
 
 function prepareData(ds) {
     var len = ds.length
@@ -55,7 +54,7 @@ function prepareData(ds) {
  * @param yds
  * @param origin 最近一天开盘价
  */
-function render(xds, yds, origin) {
+function render(xds, yds) {
     // 基于准备好的dom，初始化echarts图表
     var myChart = echarts.init(document.getElementById('main'), 'macarons');
 
@@ -98,8 +97,7 @@ function render(xds, yds, origin) {
                     symbolSize: 100,
                     data: [
                         {name: '最大值', type: 'max'},
-                        {name: '最小值', type: 'min'},
-                        {name: '开盘价', coord: origin}
+                        {name: '最小值', type: 'min'}
                     ]
                 }
             }

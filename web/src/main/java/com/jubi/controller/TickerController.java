@@ -2,6 +2,7 @@ package com.jubi.controller;
 
 import com.jubi.RestResult;
 import com.jubi.service.TickerService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,11 @@ public class TickerController {
 
     @RequestMapping("/history/{coin}")
     public RestResult queryHistoryTickers(@PathVariable("coin") String coin, @DateTimeFormat(pattern = "yyyy-MM-dd") Date time) {
-        return RestResult.ok(tickerService.queryRecentlyTickers(coin));
+        DateTime dateTime = new DateTime(time);
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear();
+        int day = dateTime.getDayOfMonth();
+        return RestResult.ok(tickerService.queryHistoryTickers(coin, year, month, day));
     }
 
 }

@@ -3,8 +3,18 @@ $(function () {
         fetchAndRender()
     });
 
+    $('#dateInput').keydown(function(e){
+        if(e.keyCode==13){
+            var coin = $("#coinSel").val()
+            if (!coin) {
+                alert("请选择币种");
+                return;
+            }
+            fetchAndRender();
+        }
+    });
+
     var s = formatDate(new Date());
-    console.log(s);
     $("#dateInput").val(s);
 });
 
@@ -13,7 +23,10 @@ function fetchAndRender() {
     if (!coin) {
         return
     }
-    var url = "/ticker/history/" + coin + "?t=" + Math.random();
+
+    var time = $('#dateInput').val()
+
+    var url = "/ticker/history/" + coin + "?time=" + time + "&t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
             alert(json.message)
