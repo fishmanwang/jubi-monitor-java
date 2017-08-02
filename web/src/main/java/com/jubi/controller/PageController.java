@@ -20,13 +20,24 @@ public class PageController {
     @Autowired
     private CoinService coinService;
 
-    @RequestMapping("/ticker.html")
+    @RequestMapping("/recent/ticker.html")
     public ModelAndView tickerPage() {
         List<CoinVo> coins = coinService.getAllCoins();
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("coins", coins);
-        mv.setViewName("ticker");
+        mv.setViewName("ticker-recent");
+
+        return mv;
+    }
+
+    @RequestMapping("/history/ticker.html")
+    public ModelAndView tickerHistoryPage() {
+        List<CoinVo> coins = coinService.getAllCoins();
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("coins", coins);
+        mv.setViewName("ticker-history");
 
         return mv;
     }

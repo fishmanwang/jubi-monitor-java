@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <title>行情</title>
+    <title>最新行情</title>
 </head>
 <body>
 
@@ -13,14 +13,6 @@
         <option value="${coin.code}">${coin.name}</option>
     </c:forEach>
 </select>
-
-<select id="spanSel">
-    <option value="60">一分钟</option>
-    <option value="${5*60}" selected="selected">五分钟</option>
-    <option value="${10*60}">十分钟</option>
-    <option value="${30*60}">三十分钟</option>
-</select>
-
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main" style="height:600px"></div>

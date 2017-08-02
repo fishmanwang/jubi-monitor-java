@@ -1,5 +1,6 @@
 package com.jubi.util;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -25,7 +26,8 @@ public class DateUtils {
      */
     public static int getDayBeginTime(Date date) {
         int t = Long.valueOf(date.getTime() / 1000).intValue();
-        t = t - (t % DateUtils.DAY_LONG);
+        //t = t - (t % DateUtils.DAY_LONG);
+        t = Long.valueOf(org.apache.commons.lang3.time.DateUtils.truncate(date, Calendar.DAY_OF_MONTH).getTime() / 1000).intValue();
         return t;
     }
 

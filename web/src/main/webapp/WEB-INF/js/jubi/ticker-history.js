@@ -2,6 +2,10 @@ $(function () {
     $("#coinSel").off("change").on("change", function () {
         fetchAndRender()
     });
+
+    var s = formatDate(new Date());
+    console.log(s);
+    $("#dateInput").val(s);
 });
 
 function fetchAndRender() {
@@ -9,7 +13,7 @@ function fetchAndRender() {
     if (!coin) {
         return
     }
-    var url = "/ticker/recent/" + coin + "?t=" + Math.random();
+    var url = "/ticker/history/" + coin + "?t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
             alert(json.message)
