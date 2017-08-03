@@ -1,5 +1,7 @@
 $(function () {
-    
+    $("#okBtn").off("click").on("click", function () {
+        fetchAndRender();
+    })
 });
 
 function fetchAndRender() {
@@ -12,14 +14,10 @@ function fetchAndRender() {
         coins.push($(cs[i]).val())
     }
 
-    console.log(coins)
-
     var coinsParam = ""
     for (var i = 0; i < coins.length; i++) {
         coinsParam += "&coins=" + coins[i]
     }
-
-    console.log(coinsParam)
 
     var span = $("#spanSel").val();
     if (!span) {
@@ -27,8 +25,6 @@ function fetchAndRender() {
     }
 
     var url = "/rate/recent?span=" + span + coinsParam + "&t=" + Math.random();
-
-    console.log("url : " + url)
 
     $.getJSON(url, function (json) {
         if (json.status != '200') {
