@@ -51,7 +51,13 @@ public class TickerService {
         PageBounds pb = new PageBounds(1, LIMIT, false);
         pb.setOrders(Arrays.asList(SortBy.create("pk", "desc")));
 
-        List<TickerEntity> ds = tickerExtDao.queryTickers(param, pb);
+        List<TickerEntity> ds = null;
+        if (span <= 3600) {
+            ds = tickerExtDao.queryTickers(param, pb);
+        } else {
+            ds = tickerExtDao.queryHourTickers(param, pb);
+        }
+
         if (ds.size() == 0) {
             return result;
         }

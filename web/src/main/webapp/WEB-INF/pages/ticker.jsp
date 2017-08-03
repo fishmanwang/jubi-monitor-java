@@ -21,7 +21,6 @@
     <option value="${60 * 10}">十分钟</option>
     <option value="${60 * 30}">三十分钟</option>
     <option value="${60 * 60}">一小时</option>
-    <option value="${60 * 60 * 3}">三小时</option>
     <option value="${60 * 60 * 6}">六小时</option>
     <option value="${60 * 60 * 12}">十二小时</option>
     <option value="${60 * 60 * 24}">一日</option>

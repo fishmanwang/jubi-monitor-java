@@ -20,5 +20,16 @@
         </if>
     </select>
 
+    <select id="queryHourTickers" parameterType="map" resultMap="tickerMap">
+        select (pk - 28800) as pk, price from jb_coin_ticker
+        where coin = #{param.coin} and (pk mod #{param.span}) = 0
+        <if test="param.start != null">
+            and pk &gt;= #{param.start}
+        </if>
+        <if test="param.end != null">
+            and pk &lt; #{param.end}
+        </if>
+    </select>
+
 
 </mapper>
