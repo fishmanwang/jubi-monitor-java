@@ -8,6 +8,7 @@ import com.jubi.RestResult;
 import com.jubi.exception.ApplicationException;
 import com.jubi.exception.CommonErrorCode;
 import com.jubi.service.TickerRateService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,9 @@ public class TickerRateController {
         if (time == null) {
             time = new Date();
         }
-        return RestResult.ok(tickerRateService.queryHistoryTickerRate(Arrays.asList(coins), time));
+        DateTime dateTime = new DateTime(time);
+        return RestResult.ok(tickerRateService.queryHistoryTickerRate(Arrays.asList(coins), dateTime.getYear(),
+                dateTime.getMonthOfYear(), dateTime.getDayOfMonth()));
     }
 
     @RequestMapping("/recent")

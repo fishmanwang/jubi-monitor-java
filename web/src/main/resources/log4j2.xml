@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Configuration status="WARN" monitorInterval="60">
+    <Properties>
+        <Property name="LOG_HOME">/var/projects/jubi-monitor/logs/web</Property>
+    </Properties>
+
     <Appenders>
+
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Filters>
@@ -9,10 +14,38 @@
                 <!--<Filter type="MarkerFilter" marker="EXCEPTION" onMatch="DENY" onMismatch="ACCEPT"/>-->
             </Filters>
         </Console>
+
+        <!-- 设置日志格式并配置日志压缩格式(service.log.年份.gz) -->
+        <RollingRandomAccessFile name="FileAppender" fileName="${LOG_HOME}/jubi-web.log"
+                                 filePattern="${LOG_HOME}/jubi-web.%d{yyyy-MM-dd}-%i.log.gz">
+            <!--
+                %d{yyyy-MM-dd HH:mm:ss, SSS} : 日志生产时间
+                %p : 日志输出格式
+                %c : logger的名称
+                %m : 日志内容，即 logger.info("message")
+                %n : 换行符
+                %C : Java类名
+                %L : 日志输出所在行数
+                %M : 日志输出所在方法名
+                hostName : 本地机器名
+                hostAddress : 本地ip地址
+             -->
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M -- %msg%xEx%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="3"/>
+        </RollingRandomAccessFile>
+
     </Appenders>
+
     <Loggers>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -18,6 +18,7 @@ import com.jubi.util.DateUtils;
 import com.mybatis.domain.PageBounds;
 import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,13 +80,15 @@ public class TickerRateService {
      * @param coins
      * @return
      */
-    public List<TickerRateVo> queryHistoryTickerRate(List<String> coins, Date date) {
+    public List<TickerRateVo> queryHistoryTickerRate(List<String> coins, int year, int month, int day) {
         Preconditions.checkArgument(coins != null && coins.size() > 0);
 
         int span = 60 * 10; // 十分钟
         PageBounds pb = new PageBounds(1, 2000, false);
         SortBy sy = SortBy.create("pk", SortBy.Direction.DESC.toString());
         pb.setOrders(Arrays.asList(sy));
+
+        Date date = new DateTime(year, month, day, 0, 0, 0).toDate();
 
         Integer start = DateUtils.getDayBeginTime(date);
         Integer end = start + Constants.DAY_LONG;
