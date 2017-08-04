@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+       default-autowire="byName">
+
+    <bean id="shiroDbRealm" class="com.jubi.shiro.ShiroDbRealm"></bean>
+
+    <!-- 安全（shiro）相关配置 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroDbRealm"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager">
+            <bean class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+        </property>
+    </bean>
+
+    <bean id="sessionManager"
+          class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="globalSessionTimeout" value="1800000"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+    </bean>
+
+    <bean id="sslFilter" class="org.apache.shiro.web.filter.authz.SslFilter">
+        <property name="port" value="${SSL_PORT}"/>
+    </bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="filters">
+            <util:map>
+                <entry key="ssl" value-ref="sslFilter"/>
+                <entry key="ajax">
+                    <bean class="com.jubi.filter.AjaxAuthorizationFilter"/>
+                </entry>
+            </util:map>
+        </property>
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/page/login.html"/>
+        <property name="successUrl" value="/"/>
+        <property name="unauthorizedUrl" value="/unauth"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /page/login* = anon
+                /login* = anon
+                /common/** = anon
+                /monitor/** = user
+                /css/** = anon
+                /img/** = anon
+                /js/** = anon
+                /** = user
+            </value>
+        </property>
+    </bean>
+
+</beans>

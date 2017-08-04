@@ -21,6 +21,7 @@
         <asyncclient.version>4.1.2</asyncclient.version>
         <httpmime.version>4.5</httpmime.version>
         <httpcore.version>4.4.1</httpcore.version>
+        <version.shiro>1.3.2</version.shiro>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -50,6 +51,12 @@
             <dependency>
                 <groupId>com.jubi</groupId>
                 <artifactId>common-mysql-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jubi</groupId>
+                <artifactId>user</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -170,6 +177,22 @@
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-core</artifactId>
                 <version>1.3.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${version.shiro}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${version.shiro}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${version.shiro}</version>
             </dependency>
 
             <!-- 文件上传相关 -->

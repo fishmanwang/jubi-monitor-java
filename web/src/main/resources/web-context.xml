@@ -39,5 +39,6 @@
     </context:component-scan>
 
     <import resource="mybatis.xml"/>
+    <import resource="shiro-config.xml"/>
 
 </beans>

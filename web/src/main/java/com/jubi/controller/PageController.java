@@ -20,6 +20,11 @@ public class PageController {
     @Autowired
     private CoinService coinService;
 
+    @RequestMapping("login.html")
+    public String login() {
+        return "login";
+    }
+
     @RequestMapping("/ticker.html")
     public ModelAndView tickerPage() {
         List<CoinVo> coins = coinService.getAllCoins();
