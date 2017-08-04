@@ -2,29 +2,30 @@
  * BBD Service Inc
  * All Rights Reserved @2016
  */
-package com.jubi.service.vo;
+package com.jubi.dao.entity;
 
 /**
  *
  * @author tjwang
- * @version $Id: CoinRateVo.java, v 0.1 2017/8/1 0001 15:20 tjwang Exp $
+ * @version $Id: TickerRateEntity.java, v 0.1 2017/8/1 0001 15:15 tjwang Exp $
  */
-public class CoinRateVo {
+public class TickerRateEntity {
 
-    /**
-     * 时间
-     */
+    private Integer id;
+
     private Integer pk;
 
-    /**
-     * 币
-     */
     private String  coin;
 
-    /**
-     * 涨幅
-     */
     private Double  rate;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getPk() {
         return pk;

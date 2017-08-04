@@ -7,9 +7,10 @@ package com.jubi.controller;
 import com.jubi.RestResult;
 import com.jubi.exception.ApplicationException;
 import com.jubi.exception.CommonErrorCode;
-import com.jubi.service.CoinRateService;
+import com.jubi.service.TickerRateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,10 +24,18 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/rate")
-public class CoinRateController {
+public class TickerRateController {
 
     @Autowired
-    private CoinRateService coinRateService;
+    private TickerRateService tickerRateService;
+
+    @RequestMapping("/{coin}")
+    public RestResult queryTickerRate(@PathVariable("coin") String coin, Integer span) {
+        if (span == null) {
+            span = 60;
+        }
+        return RestResult.ok(tickerRateService.queryTickerRate(coin, span));
+    }
 
     @RequestMapping("/history")
     public RestResult queryHistoryTickerRate(String[] coins, @DateTimeFormat(pattern = "yyyy-MM-dd") Date time) {
@@ -36,11 +45,11 @@ public class CoinRateController {
         if (time == null) {
             time = new Date();
         }
-        return RestResult.ok(coinRateService.queryHistoryCoinRate(Arrays.asList(coins), time));
+        return RestResult.ok(tickerRateService.queryHistoryTickerRate(Arrays.asList(coins), time));
     }
 
     @RequestMapping("/recent")
     public RestResult queryRecentlyTickerRate(String[] coins) {
-        return RestResult.ok(coinRateService.queryRecentCoinRate(Arrays.asList(coins)));
+        return RestResult.ok(tickerRateService.queryRecentTickerRate(Arrays.asList(coins)));
     }
 }

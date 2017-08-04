@@ -3,7 +3,7 @@ $(function () {
         fetchAndRender()
     });
 
-    $("#spanSel").off("change").on("change", function() {
+    $("#spanSel").off("change").on("change", function () {
         fetchAndRender()
     })
 });
@@ -17,12 +17,13 @@ function fetchAndRender() {
     if (!span) {
         return
     }
-    var url = "/ticker/" + coin + "?span=" + span + "&t=" + Math.random();
+    var url = "/rate/" + coin + "?span=" + span + "&t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
             alert(json.message);
             return
         }
+        console.log(json.data)
         var ds = [].concat(json.data);
         ds.reverse();
         var arr = prepareData(ds);
@@ -32,20 +33,26 @@ function fetchAndRender() {
 
 function prepareData(ds) {
     var len = ds.length
-    var xds = [len];
-    var yds = [len];
+    var xds = []
+    var yds = []
     for (var i = 0; i < len; i++) {
-        xds[i] = formatDateTimeSecsForX(ds[i].pk)
-        yds[i] = ds[i].price
+        var pk = ds[i].pk
+        if (xds.length == 0 || pk > xds[xds.length - 1])
+            xds.push(pk)
+        yds.push(ds[i].rate)
     }
-    return [xds, yds]
+    var xdsStr = []
+    for (var i = 0; i < xds.length; i++) {
+        xdsStr.push(formatDateTimeSecsForX(xds[i]))
+    }
+    console.log([xdsStr, yds])
+    return [xdsStr, yds]
 }
 
 /**
  *
  * @param xds
  * @param yds
- * @param origin 最近一天开盘价
  */
 function render(xds, yds) {
     // 基于准备好的dom，初始化echarts图表
@@ -53,13 +60,10 @@ function render(xds, yds) {
 
     var option = {
         title: {
-            text: '行情走势'
+            text: '涨幅情况'
         },
         tooltip: {
             trigger: 'axis'
-        },
-        legend: {
-            data: ['阿希币', '点点币']
         },
         toolbox: {
             show: false,
@@ -68,7 +72,7 @@ function render(xds, yds) {
         xAxis: [
             {
                 type: 'category',
-                boundaryGap: false,
+                boundaryGap: true,
                 data: xds
             }
         ],
@@ -77,13 +81,13 @@ function render(xds, yds) {
                 type: 'value',
                 scale: true,
                 axisLabel: {
-                    formatter: '{value} 元'
+                    formatter: '{value} %'
                 }
             }
         ],
         series: [
             {
-                name: '价格',
+                name: '涨幅',
                 type: 'line',
                 data: yds,
                 markPoint: {
