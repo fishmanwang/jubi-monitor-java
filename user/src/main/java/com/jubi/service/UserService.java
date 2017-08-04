@@ -137,10 +137,13 @@ public class UserService {
         String salt = com.jubi.util.StringUtils.getRandomString(6);
         String encryptedPwd = encryptionService.encryptPassword(password, salt);
 
+        Date now = new Date();
+
         User user = new User();
         user.setUsername(username);
         user.setPassword(encryptedPwd);
         user.setSalt(salt);
+        user.setCreateTime(now);
 
         return createUser(user);
     }

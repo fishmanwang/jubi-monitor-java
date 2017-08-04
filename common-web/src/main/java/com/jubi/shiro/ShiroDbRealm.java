@@ -86,9 +86,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
      * @return
      */
     private boolean isFrozen(Integer frozen) {
-        if (frozen == null) {
+        if (frozen == null || frozen == 0) {
             return false;
         }
+
+        if (frozen == -1) {
+            return true;
+        }
+
         DateTime dateTime = new DateTime(frozen);
         return dateTime.isBeforeNow();
     }

@@ -20,8 +20,6 @@ public class UserRegisterParam {
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    private String email;
-
     public String getUsername() {
         return username;
     }
@@ -38,11 +36,4 @@ public class UserRegisterParam {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

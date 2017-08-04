@@ -11,6 +11,12 @@
     <title>登录</title>
 </head>
 <body>
-敬请期待
+
+<form action="/login" method="post">
+    用户名：<input name="username"/><br/>
+    密码：<input name="password"/><br/>
+    <input type="submit" name="提交"/>
+</form>
+
 </body>
 </html>

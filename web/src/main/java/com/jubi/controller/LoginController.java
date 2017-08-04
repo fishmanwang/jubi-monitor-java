@@ -6,7 +6,6 @@ import com.jubi.exception.ApplicationException;
 import com.jubi.exception.BizErrorCode;
 import com.jubi.exception.UserErrorCode;
 import com.jubi.param.UserBean;
-import com.jubi.util.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -46,15 +45,16 @@ public class LoginController extends AbstractController {
             throw new ApplicationException(BizErrorCode.USER_PASSWORD_NULL);
         }
         HttpSession session = request.getSession();
-        if (!RequestUtil.checkVerificationCode(null, session, request)) {
-            //return new RestResult<String>(CommonErrorCode.VALIDATION_ERROR.getCode(), "验证码不正确");
-            throw new ApplicationException(BizErrorCode.VALIDATION_ERROR, "验证码不正确");
-        }
+
+//        if (!RequestUtil.checkVerificationCode(null, session, request)) {
+//            throw new ApplicationException(BizErrorCode.VALIDATION_ERROR, "验证码不正确");
+//        }
+
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         //token.setRememberMe(StringUtils.isNotBlank(rememberMe));
         try {
             /*
-             * shiroDbRealm的认证方法com.bbd.brp.front.shiro.ShiroDbRealm.
+             * shiroDbRealm的认证方法ShiroDbRealm.
              * doGetAuthenticationInfo (AuthenticationToken)
              */
             SecurityUtils.getSubject().login(token);

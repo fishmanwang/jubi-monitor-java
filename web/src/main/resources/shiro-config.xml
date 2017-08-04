@@ -45,6 +45,7 @@
             <value>
                 /page/login* = anon
                 /login* = anon
+                /register = anon
                 /common/** = anon
                 /monitor/** = user
                 /css/** = anon
