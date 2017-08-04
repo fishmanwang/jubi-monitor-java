@@ -53,13 +53,24 @@ public class PageController {
         return mv;
     }
 
-    @RequestMapping("/rate.html")
-    public ModelAndView ratePage() {
+    @RequestMapping("/recent/rate.html")
+    public ModelAndView rateRecentPage() {
         List<CoinVo> coins = coinService.getAllCoins();
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("coins", coins);
-        mv.setViewName("ticker-rate");
+        mv.setViewName("ticker-recent-rate");
+
+        return mv;
+    }
+
+    @RequestMapping("/history/rate.html")
+    public ModelAndView rateHistoryPage() {
+        List<CoinVo> coins = coinService.getAllCoins();
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("coins", coins);
+        mv.setViewName("ticker-history-rate");
 
         return mv;
     }

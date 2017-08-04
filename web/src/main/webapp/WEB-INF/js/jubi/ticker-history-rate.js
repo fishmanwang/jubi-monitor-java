@@ -2,6 +2,9 @@ $(function () {
     $("#okBtn").off("click").on("click", function () {
         fetchAndRender();
     })
+    
+    var s = formatDate(new Date());
+    $("#dateInput").val(s);
 });
 
 function fetchAndRender() {
@@ -9,6 +12,9 @@ function fetchAndRender() {
     if (cs.length == 0) {
         return
     }
+
+    var time = $("#dateInput").val();
+
     var coins = []
     for (var i = 0; i < cs.length; i++) {
         coins.push($(cs[i]).val())
@@ -19,12 +25,7 @@ function fetchAndRender() {
         coinsParam += "&coins=" + coins[i]
     }
 
-    var span = $("#spanSel").val();
-    if (!span) {
-        return;
-    }
-
-    var url = "/rate/recent?span=" + span + coinsParam + "&t=" + Math.random();
+    var url = "/rate/history?t=" + Math.random() + coinsParam + "&time=" + time;
 
     $.getJSON(url, function (json) {
         if (json.status != '200') {

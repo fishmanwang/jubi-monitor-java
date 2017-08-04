@@ -6,13 +6,19 @@
         <id property="id" column="id"/>
     </resultMap>
 
-    <select id="queryCoinRates" resultMap="rateMap">
+    <select id="queryCoinRates" parameterType="com.jubi.dao.vo.CoinRateSpanParam" resultMap="rateMap">
         select pk, coin, rate
         from jb_coin_rate
-        where (pk mod #{span}) = 0 and coin in
-        <foreach collection="coins" item="coin" open="(" close=")" separator=",">
+        where (pk mod #{param.span}) = 0 and coin in
+        <foreach collection="param.coins" item="coin" open="(" close=")" separator=",">
             #{coin}
         </foreach>
+        <if test="param.start != null">
+            and pk &gt;= #{param.start}
+        </if>
+        <if test="param.end != null">
+            and pk &lt; #{param.end}
+        </if>
     </select>
 
 

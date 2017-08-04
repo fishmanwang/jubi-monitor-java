@@ -29,14 +29,6 @@
         </ul>
     </div>
     <div style="float: left;">
-        <select id="spanSel">
-            <option value="60">一分钟</option>
-            <option value="${5*60}" selected="selected">五分钟</option>
-            <option value="${10*60}">十分钟</option>
-            <option value="${30*60}">三十分钟</option>
-        </select>
-    </div>
-    <div style="float: left;">
         <button id="okBtn">确定</button>
     </div>
 </div>
@@ -48,5 +40,5 @@
 
 <script src="${ctx}/js/jubi/common.js"></script>
 
-<script type="text/javascript" src="../js/jubi/ticker-rate.js"></script>
+<script type="text/javascript" src="${ctx}/js/jubi/ticker-recent-rate.js"></script>
 </body>
