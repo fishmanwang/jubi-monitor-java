@@ -35,5 +35,13 @@
         </if>
     </select>
 
+    <select id="queryLastPk" resultType="java.lang.Integer">
+        SELECT pk from jb_coin_rate order by pk desc limit 1
+    </select>
+
+    <select id="queryRankedTickerRate" resultMap="rateMap">
+        SELECT coin, rate FROM jb_coin_rate WHERE pk=#{pk} ORDER BY rate DESC;
+    </select>
+
 
 </mapper>

@@ -22,4 +22,16 @@ public interface TickerRateDao {
      * @return
      */
     List<TickerRateEntity> queryHourTickerRates(@Param("param") TickerRateSpanParam param, PageBounds pb);
+
+    /**
+     * 获取最近一次抓取时间
+     * @return
+     */
+    Integer queryLastPk();
+
+    /**
+     * 获取涨幅排行
+     * @return
+     */
+    List<TickerRateEntity> queryRankedTickerRate(@Param("pk") Integer pk);
 }

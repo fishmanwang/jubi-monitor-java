@@ -1,7 +1,9 @@
 package com.jubi.controller;
 
 import com.jubi.service.CoinService;
+import com.jubi.service.TickerRateService;
 import com.jubi.service.vo.CoinVo;
+import com.jubi.service.vo.TickerRateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +22,18 @@ public class PageController {
     @Autowired
     private CoinService coinService;
 
+    @Autowired
+    private TickerRateService tickerRateService;
+
     @RequestMapping("/index.html")
-    public String index() {
-        return "index";
+    public ModelAndView index() {
+        List<TickerRateVo> rankedRate = tickerRateService.queryRankedTickerRate();
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("rankedRate", rankedRate);
+        mv.setViewName("index");
+
+        return mv;
     }
 
     @RequestMapping("login.html")

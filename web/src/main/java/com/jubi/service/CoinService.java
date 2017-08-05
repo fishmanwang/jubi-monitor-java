@@ -5,6 +5,7 @@ import com.jubi.dao.entity.CoinEntity;
 import com.jubi.service.vo.CoinVo;
 import com.jubi.util.BeanMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class CoinService {
     @Autowired
     private CoinDao coinDao;
 
+    @Cacheable(value = "coin", keyGenerator = "defaultKeyGenerator")
     public List<CoinVo> getAllCoins() {
         List<CoinEntity> ds = coinDao.queryAll();
         return BeanMapperUtil.mapList(ds, CoinVo.class);

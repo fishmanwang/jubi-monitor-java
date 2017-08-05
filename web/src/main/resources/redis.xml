@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd"
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd"
        default-autowire="byName">
+
+    <cache:annotation-driven cache-manager="redisCacheManager"/>
 
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="100"></property>
@@ -50,11 +55,18 @@
 
     <bean id="stringKeySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
 
-    <!-- 对string操作的封装 -->
-    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg name="redisOperations" ref="redisTemplate"/>
+        <property name="defaultExpiration" value="1800"/>
+        <property name="expires">
+            <map>
+                <entry key="coin" value="#{24 * 60 * 60}"/>
+                <entry key="ticker" value="#{10}"/>
+                <entry key="ticker-history" value="#{24 * 60 * 60}"/>
+                <entry key="ticker-rate" value="#{10}"/>
+                <entry key="ticker-rate-history" value="#{24 * 60 * 60}"/>
+            </map>
+        </property>
     </bean>
-    <!-- <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager"
-        c:template-ref="redisTemplate"/> -->
 
 </beans>

@@ -17,6 +17,7 @@ import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -35,6 +36,7 @@ public class TickerService {
     @Autowired
     private TickerExtDao tickerExtDao;
 
+    @Cacheable(value = "ticker", keyGenerator = "defaultKeyGenerator")
     public List<TickerPriceVo> queryTickers(String coin, Integer span) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
 
@@ -74,6 +76,7 @@ public class TickerService {
      * @param coin
      * @return
      */
+    @Cacheable(value = "ticker", keyGenerator = "defaultKeyGenerator")
     public List<TickerPriceVo> queryRecentlyTickers(String coin) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
 
@@ -108,6 +111,7 @@ public class TickerService {
      * @param day
      * @return
      */
+    @Cacheable(value = "ticker-history", keyGenerator = "defaultKeyGenerator")
     public List<TickerPriceVo> queryHistoryTickers(String coin, int year, int month, int day) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
 

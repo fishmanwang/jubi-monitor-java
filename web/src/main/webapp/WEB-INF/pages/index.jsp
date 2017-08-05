@@ -16,17 +16,36 @@
 
     <jsp:include page="header.jsp" />
 
-    <div>
-        <h3>行情</h3>
-        <a href="${ctx}/page/ticker.html">行情总览</a>
-        <a href="${ctx}/page/recent/ticker.html">最新行情</a>
-        <a href="${ctx}/page/history/ticker.html">历史行情</a>
+    <div style="float: left;">
+        <div>
+            <h3>行情</h3>
+            <a href="${ctx}/page/ticker.html">行情总览</a>
+            <a href="${ctx}/page/recent/ticker.html">最新行情</a>
+            <a href="${ctx}/page/history/ticker.html">历史行情</a>
+        </div>
+        <div>
+            <h3>涨幅</h3>
+            <a href="${ctx}/page/rate.html">涨幅总览</a>
+            <a href="${ctx}/page/recent/rate.html">最新涨幅</a>
+            <a href="${ctx}/page/history/rate.html">历史涨幅</a>
+        </div>
     </div>
-    <div>
-        <h3>涨幅</h3>
-        <a href="${ctx}/page/rate.html">涨幅总览</a>
-        <a href="${ctx}/page/recent/rate.html">最新涨幅</a>
-        <a href="${ctx}/page/history/rate.html">历史涨幅</a>
+
+    <div style="float: left; margin-left: 30px;">
+        <h3>涨幅排行</h3>
+        <table width="200">
+            <tr>
+                <td width="30%">名称</td>
+                <td>涨幅</td>
+            </tr>
+            <c:forEach var="item" items="${rankedRate}">
+                <tr>
+                    <td>${item.coin}</td>
+                    <td>${item.rate}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
+
 </body>
 </html>

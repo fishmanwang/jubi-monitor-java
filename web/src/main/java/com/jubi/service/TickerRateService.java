@@ -20,6 +20,7 @@ import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -40,6 +41,7 @@ public class TickerRateService {
     @Autowired
     private TickerService tickerService;
 
+    @Cacheable(value = "ticker-rate", keyGenerator = "defaultKeyGenerator")
     public List<TickerRateVo> queryTickerRate(String coin, int span) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
 
@@ -80,6 +82,7 @@ public class TickerRateService {
      * @param coins
      * @return
      */
+    //@Cacheable(value = "ticker-rate-history", keyGenerator = "defaultKeyGenerator")
     public List<TickerRateVo> queryHistoryTickerRate(List<String> coins, int year, int month, int day) {
         Preconditions.checkArgument(coins != null && coins.size() > 0);
 
@@ -121,6 +124,12 @@ public class TickerRateService {
         result = queryTickerRate(coins, span, beginTime, end);
 
         return result;
+    }
+
+    public List<TickerRateVo> queryRankedTickerRate() {
+        Integer lastPk = tickerRateDao.queryLastPk();
+        List<TickerRateEntity> ds = tickerRateDao.queryRankedTickerRate(lastPk);
+        return BeanMapperUtil.mapList(ds, TickerRateVo.class);
     }
 
     private List<TickerRateVo> queryTickerRate(List<String> coins, int span, Integer start, Integer end) {

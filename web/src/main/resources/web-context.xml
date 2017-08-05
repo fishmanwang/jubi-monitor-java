@@ -12,7 +12,7 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- AOP 注解支持 -->
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <bean id="propertiesConfig"
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -39,6 +39,7 @@
     </context:component-scan>
 
     <import resource="mybatis.xml"/>
+    <import resource="redis.xml"/>
     <import resource="shiro-config.xml"/>
 
 </beans>
