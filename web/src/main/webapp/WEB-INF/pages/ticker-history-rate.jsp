@@ -24,9 +24,9 @@
         </ul>
     </div>
     <div style="float: left;">
-        <input id="dateInput"/>
+        <input id="dateInput"/>&nbsp;<input id="prevBtn" type="button" value="上一天"/>&nbsp;<input id="nextBtn" type="button" value="下一天"/>
     </div>
-    <div style="float: left;">
+    <div style="float: left; margin-left: 20px;">
         <button id="okBtn">确定</button>
     </div>
 </div>

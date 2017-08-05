@@ -6,13 +6,10 @@
         <id property="id" column="id"/>
     </resultMap>
 
-    <select id="queryTickerRates" parameterType="com.jubi.dao.vo.TickerRateSpanParam" resultMap="rateMap">
+    <select id="queryTickerRate" parameterType="com.jubi.dao.vo.TickerRateSpanParam" resultMap="rateMap">
         select pk, coin, rate
         from jb_coin_rate
-        where (pk mod #{param.span}) = 0 and coin in
-        <foreach collection="param.coins" item="coin" open="(" close=")" separator=",">
-            #{coin}
-        </foreach>
+        where (pk mod #{param.span}) = 0 and coin = #{param.coin}
         <if test="param.start != null">
             and pk &gt;= #{param.start}
         </if>
@@ -21,12 +18,9 @@
         </if>
     </select>
 
-    <select id="queryHourTickerRates" parameterType="com.jubi.dao.vo.TickerRateSpanParam" resultMap="rateMap">
+    <select id="queryHourTickerRate" parameterType="com.jubi.dao.vo.TickerRateSpanParam" resultMap="rateMap">
         select (pk - 28800) as pk, rate from jb_coin_rate
-        where (pk mod #{param.span}) = 0 and coin in
-        <foreach collection="param.coins" item="coin" open="(" close=")" separator=",">
-            #{coin}
-        </foreach>
+        where (pk mod #{param.span}) = 0 and coin = #{param.coin}
         <if test="param.start != null">
             and pk &gt;= #{param.start}
         </if>

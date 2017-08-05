@@ -4,10 +4,13 @@
  */
 package com.jubi.controller;
 
+import com.google.common.collect.Lists;
 import com.jubi.RestResult;
 import com.jubi.exception.ApplicationException;
 import com.jubi.exception.CommonErrorCode;
 import com.jubi.service.TickerRateService;
+import com.jubi.service.vo.TickerRateVo;
+import com.jubi.util.DateUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -47,12 +51,31 @@ public class TickerRateController {
             time = new Date();
         }
         DateTime dateTime = new DateTime(time);
-        return RestResult.ok(tickerRateService.queryHistoryTickerRate(Arrays.asList(coins), dateTime.getYear(),
-                dateTime.getMonthOfYear(), dateTime.getDayOfMonth()));
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear();
+        int day = dateTime.getDayOfMonth();
+
+        List<TickerRateVo> result = Lists.newArrayList();
+        for (String coin : coins) {
+            result.addAll(tickerRateService.queryHistoryTickerRate(coin, year, month, day));
+        }
+
+        return RestResult.ok(result);
     }
 
     @RequestMapping("/recent")
     public RestResult queryRecentlyTickerRate(String[] coins) {
-        return RestResult.ok(tickerRateService.queryRecentTickerRate(Arrays.asList(coins)));
+        if (coins == null || coins.length == 0) {
+            return RestResult.ok();
+        }
+        int beginTime = DateUtils.getCurrentDayBeginTime();
+        int size = coins.length;
+        List<TickerRateVo> result = Lists.newArrayList();
+
+        for (String coin : coins) {
+            result.addAll(tickerRateService.queryRecentTickerRate(coin, size, beginTime));
+        }
+
+        return RestResult.ok(result);
     }
 }

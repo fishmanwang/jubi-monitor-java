@@ -54,7 +54,7 @@ public class TickerRateService {
         }
 
         TickerRateSpanParam param = new TickerRateSpanParam();
-        param.setCoins(Arrays.asList(coin));
+        param.setCoin(coin);
         param.setSpan(span);
         param.setEnd(end);
 
@@ -63,9 +63,9 @@ public class TickerRateService {
 
         List<TickerRateEntity> ds = null;
         if (span <= 3600) {
-            ds = tickerRateDao.queryTickerRates(param, pb);
+            ds = tickerRateDao.queryTickerRate(param, pb);
         } else {
-            ds = tickerRateDao.queryHourTickerRates(param, pb);
+            ds = tickerRateDao.queryHourTickerRate(param, pb);
         }
 
         if (ds.size() == 0) {
@@ -77,14 +77,9 @@ public class TickerRateService {
 
     }
 
-    /**
-     * 查询最新的涨幅
-     * @param coins
-     * @return
-     */
-    //@Cacheable(value = "ticker-rate-history", keyGenerator = "defaultKeyGenerator")
-    public List<TickerRateVo> queryHistoryTickerRate(List<String> coins, int year, int month, int day) {
-        Preconditions.checkArgument(coins != null && coins.size() > 0);
+    @Cacheable(value = "ticker-rate-history", keyGenerator = "defaultKeyGenerator")
+    public List<TickerRateVo> queryHistoryTickerRate(String coin, int year, int month, int day) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(coin));
 
         int span = 60 * 10; // 十分钟
         PageBounds pb = new PageBounds(1, 2000, false);
@@ -96,21 +91,25 @@ public class TickerRateService {
         Integer start = DateUtils.getDayBeginTime(date);
         Integer end = start + Constants.DAY_LONG;
 
-        return queryTickerRate(coins, span, start, end);
+        return queryTickerRate(coin, span, start, end);
     }
 
     /**
-     * 查询最新的涨幅
-     * @param coins
+     * 查询当前行情涨幅
+     * @param coin
+     * @param size
+     * @param beginTime
      * @return
      */
-    public List<TickerRateVo> queryRecentTickerRate(List<String> coins) {
-        Preconditions.checkArgument(coins != null && coins.size() > 0);
+    @Cacheable(value = "ticker-rate", keyGenerator = "defaultKeyGenerator")
+    public List<TickerRateVo> queryRecentTickerRate(String coin, int size, int beginTime) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(coin));
+        Preconditions.checkArgument(size > 0);
+        Preconditions.checkArgument(beginTime > 0);
 
         List<TickerRateVo> result = Lists.newArrayList();
 
-        int beginTime = DateUtils.getCurrentDayBeginTime();
-        Optional<TickerPriceVo> tickerOpt = tickerService.queryLastTicker(coins.get(0));
+        Optional<TickerPriceVo> tickerOpt = tickerService.queryLastTicker(coin);
         if (!tickerOpt.isPresent()) {
             return result;
         }
@@ -120,8 +119,9 @@ public class TickerRateService {
             return result;
         }
 
-        int span = inferSpan(end - beginTime, coins.size());
-        result = queryTickerRate(coins, span, beginTime, end);
+        int span = inferSpan(end - beginTime, size);
+
+        result = queryTickerRate(coin, span, beginTime, end);
 
         return result;
     }
@@ -132,9 +132,8 @@ public class TickerRateService {
         return BeanMapperUtil.mapList(ds, TickerRateVo.class);
     }
 
-    private List<TickerRateVo> queryTickerRate(List<String> coins, int span, Integer start, Integer end) {
-        Preconditions.checkArgument(coins != null && coins.size() > 0);
 
+    private List<TickerRateVo> queryTickerRate(String coin, int span, Integer start, Integer end) {
         if (span == 0) {
             span = 300; // 5分钟
         }
@@ -146,11 +145,11 @@ public class TickerRateService {
         pb.setOrders(Arrays.asList(sy));
 
         TickerRateSpanParam param = new TickerRateSpanParam();
-        param.setCoins(coins);
+        param.setCoin(coin);
         param.setSpan(span);
         param.setStart(start);
         param.setEnd(end);
-        List<TickerRateEntity> ds = tickerRateDao.queryTickerRates(param, pb);
+        List<TickerRateEntity> ds = tickerRateDao.queryTickerRate(param, pb);
         if (ds.size() == 0) {
             return result;
         }

@@ -1,19 +1,50 @@
 $(function () {
     $("#okBtn").off("click").on("click", function () {
         fetchAndRender();
-    })
-    
-    var s = formatDate(new Date());
+    });
+
+    $("#prevBtn").off("click").on("click", function() {
+        var time = $('#dateInput').val();
+        var d = new Date(time);
+        d = new Date(d.getTime() - dayLong);
+        $('#dateInput').val(formatDateTime3(d));
+        fetchAndRender();
+    });
+
+    $("#nextBtn").off("click").on("click", function() {
+        var time = $('#dateInput').val();
+        var d = new Date(time);
+        d = new Date(d.getTime() + dayLong);
+
+        if (largetThanToday(d)) {
+            alert("不能大于当前日期");
+            return;
+        }
+
+        $('#dateInput').val(formatDateTime3(d));
+        fetchAndRender();
+    });
+
+    var t = new Date().getTime() - 24*60*60* 1000;
+    var s = formatDate(new Date(t));
     $("#dateInput").val(s);
 });
 
 function fetchAndRender() {
-    var cs = $(".coinChk:checked")
-    if (cs.length == 0) {
-        return
+    var time = $("#dateInput").val();
+
+    var ct = currentDayBeginTime();
+    var tt = new Date(time).getTime();
+    if (ct <= tt) {
+        alert("不能大于当前日期");
+        return;
     }
 
-    var time = $("#dateInput").val();
+    var cs = $(".coinChk:checked")
+    if (cs.length == 0) {
+        alert("请选择币种");
+        return
+    }
 
     var coins = []
     for (var i = 0; i < cs.length; i++) {
@@ -61,7 +92,6 @@ function prepareData(ds) {
     for (var i = 0; i < xds.length; i++) {
         xdsStr.push(formatDateTimeSecsForX(xds[i]))
     }
-    console.log([xdsStr, r])
     return [xdsStr, r]
 }
 
@@ -124,4 +154,18 @@ function render(data) {
 
     // 为echarts对象加载数据
     myChart.setOption(option);
+}
+
+/**
+ * 参数日期只能比当天时间小
+ * @param d
+ * @returns {boolean}
+ */
+function largetThanToday(d) {
+    var ct = currentDayBeginTime();
+    var tt = d.getTime();
+    if (ct <= tt) {
+        return true;
+    }
+    return false
 }

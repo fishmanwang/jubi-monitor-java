@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface TickerRateDao {
 
-    List<TickerRateEntity> queryTickerRates(@Param("param") TickerRateSpanParam param, PageBounds pb);
+    List<TickerRateEntity> queryTickerRate(@Param("param") TickerRateSpanParam param, PageBounds pb);
 
     /**
      * 大于一小时的间隔，需要减去8小时，从0点起。
@@ -21,7 +21,7 @@ public interface TickerRateDao {
      * @param pb
      * @return
      */
-    List<TickerRateEntity> queryHourTickerRates(@Param("param") TickerRateSpanParam param, PageBounds pb);
+    List<TickerRateEntity> queryHourTickerRate(@Param("param") TickerRateSpanParam param, PageBounds pb);
 
     /**
      * 获取最近一次抓取时间

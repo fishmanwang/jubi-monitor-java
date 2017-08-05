@@ -17,7 +17,7 @@
     </c:forEach>
 </select>
 
-<input id="dateInput"/>
+<input id="dateInput"/>&nbsp;<input id="prevBtn" type="button" value="上一天"/>&nbsp;<input id="nextBtn" type="button" value="下一天"/>
 
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->

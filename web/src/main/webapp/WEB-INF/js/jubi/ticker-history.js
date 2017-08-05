@@ -14,17 +14,44 @@ $(function () {
         }
     });
 
-    var s = formatDate(new Date());
+    $("#prevBtn").off("click").on("click", function() {
+        var time = $('#dateInput').val();
+        var d = new Date(time);
+        d = new Date(d.getTime() - dayLong);
+        $('#dateInput').val(formatDateTime3(d));
+        fetchAndRender();
+    });
+
+    $("#nextBtn").off("click").on("click", function() {
+        var time = $('#dateInput').val();
+        var d = new Date(time);
+        d = new Date(d.getTime() + dayLong);
+
+        if (largetThanToday(d)) {
+            alert("不能大于当前日期");
+            return;
+        }
+
+        $('#dateInput').val(formatDateTime3(d));
+        fetchAndRender();
+    });
+
+    var t = new Date().getTime() - dayLong;
+    var s = formatDate(new Date(t));
     $("#dateInput").val(s);
 });
 
 function fetchAndRender() {
-    var coin = $("#coinSel").val()
+    var time = $('#dateInput').val();
+    if (largetThanToday(new Date(time))) {
+        alert("不能大于当前日期");
+        return;
+    }
+
+    var coin = $("#coinSel").val();
     if (!coin) {
         return
     }
-
-    var time = $('#dateInput').val()
 
     var ctx = $("#ctx").val();
     var url = ctx + "/ticker/history/" + coin + "?time=" + time + "&t=" + Math.random();
@@ -126,4 +153,18 @@ function render(xds, yds, origin) {
 
     // 为echarts对象加载数据
     myChart.setOption(option);
+}
+
+/**
+ * 参数日期只能比当天时间小
+ * @param d
+ * @returns {boolean}
+ */
+function largetThanToday(d) {
+    var ct = currentDayBeginTime();
+    var tt = d.getTime();
+    if (ct <= tt) {
+        return true;
+    }
+    return false
 }

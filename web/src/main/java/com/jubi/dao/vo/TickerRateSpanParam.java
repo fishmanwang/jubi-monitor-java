@@ -1,13 +1,11 @@
 package com.jubi.dao.vo;
 
-import java.util.List;
-
 /**
  * Created by Administrator on 2017/8/1.
  */
 public class TickerRateSpanParam {
 
-    private List<String> coins;
+    private String coin;
 
     /**
      * 时间跨度，单位秒
@@ -24,12 +22,12 @@ public class TickerRateSpanParam {
      */
     private Integer      end;
 
-    public List<String> getCoins() {
-        return coins;
+    public String getCoin() {
+        return coin;
     }
 
-    public void setCoins(List<String> coins) {
-        this.coins = coins;
+    public void setCoin(String coin) {
+        this.coin = coin;
     }
 
     public int getSpan() {
