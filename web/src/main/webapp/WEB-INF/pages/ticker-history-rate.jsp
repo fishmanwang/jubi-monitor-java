@@ -8,12 +8,7 @@
 </head>
 <body>
 
-<%--<select id="coinSel">--%>
-<%--<option value="">请选择币种</option>--%>
-<%--<c:forEach items="${coins}" var="coin">--%>
-<%--<option value="${coin.code}">${coin.name}</option>--%>
-<%--</c:forEach>--%>
-<%--</select>--%>
+<jsp:include page="header.jsp" />
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main" style="height:600px"></div>

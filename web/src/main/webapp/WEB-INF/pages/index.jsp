@@ -13,6 +13,9 @@
     <title>首页</title>
 </head>
 <body>
+
+    <jsp:include page="header.jsp" />
+
     <div>
         <h3>行情</h3>
         <a href="${ctx}/page/ticker.html">行情总览</a>

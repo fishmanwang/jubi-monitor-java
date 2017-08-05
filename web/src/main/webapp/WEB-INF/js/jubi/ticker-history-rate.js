@@ -25,7 +25,8 @@ function fetchAndRender() {
         coinsParam += "&coins=" + coins[i]
     }
 
-    var url = "/rate/history?t=" + Math.random() + coinsParam + "&time=" + time;
+    var ctx = $("#ctx").val();
+    var url = ctx + "/rate/history?t=" + Math.random() + coinsParam + "&time=" + time;
 
     $.getJSON(url, function (json) {
         if (json.status != '200') {

@@ -13,6 +13,7 @@
     <title>登录</title>
 </head>
 <body>
+    <input type="hidden" id="ctx" value="${ctx}"/>
 
     <form action="${ctx}/login" method="post">
         用户名：<input id="username" name="username"/><br/>

@@ -9,7 +9,10 @@ function fetchAndRender() {
     if (!coin) {
         return
     }
-    var url = "/ticker/recent/" + coin + "?t=" + Math.random();
+
+    var ctx = $("#ctx").val();
+
+    var url = ctx + "/ticker/recent/" + coin + "?t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
             alert(json.message)
@@ -20,22 +23,6 @@ function fetchAndRender() {
         render(arr[0], arr[1])
     });
 }
-
-// function getOriginPoint(ds) {
-//     var date = new Date();
-//     var t = date.getTime()
-//     var offset = date.getTimezoneOffset() * 60 * 1000
-//     t = (t - t % 86400000) + offset
-//     t = t / 1000;
-//     var r = []
-//     for (var i = 0; i < ds.length; i++) {
-//         if (ds[i].pk <= t) {
-//             r = [formatDateTimeSecsForX(t), ds[i].price]
-//             break
-//         }
-//     }
-//     return r
-// }
 
 function prepareData(ds) {
     var len = ds.length

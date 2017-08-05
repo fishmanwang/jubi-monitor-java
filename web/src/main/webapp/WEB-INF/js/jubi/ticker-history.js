@@ -26,7 +26,8 @@ function fetchAndRender() {
 
     var time = $('#dateInput').val()
 
-    var url = "/ticker/history/" + coin + "?time=" + time + "&t=" + Math.random();
+    var ctx = $("#ctx").val();
+    var url = ctx + "/ticker/history/" + coin + "?time=" + time + "&t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
             alert(json.message)

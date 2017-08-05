@@ -17,7 +17,9 @@ function fetchAndRender() {
     if (!span) {
         return
     }
-    var url = "/ticker/" + coin + "?span=" + span + "&t=" + Math.random();
+
+    var ctx = $("#ctx").val();
+    var url = ctx + "/ticker/" + coin + "?span=" + span + "&t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
             alert(json.message);

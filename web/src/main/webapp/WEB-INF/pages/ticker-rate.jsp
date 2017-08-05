@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<jsp:include page="header.jsp" />
+
 <select id="coinSel">
     <option value="">请选择币种</option>
     <c:forEach items="${coins}" var="coin">

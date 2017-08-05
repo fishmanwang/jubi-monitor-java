@@ -17,7 +17,8 @@ function fetchAndRender() {
     if (!span) {
         return
     }
-    var url = "/rate/" + coin + "?span=" + span + "&t=" + Math.random();
+    var ctx = $("#ctx").val();
+    var url = ctx + "/rate/" + coin + "?span=" + span + "&t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
             alert(json.message);

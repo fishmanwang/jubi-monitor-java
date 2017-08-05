@@ -19,7 +19,8 @@ function fetchAndRender() {
         coinsParam += "&coins=" + coins[i]
     }
 
-    var url = "/rate/recent?t=" + Math.random() + coinsParam;
+    var ctx = $("#ctx").val()
+    var url = ctx + "/rate/recent?t=" + Math.random() + coinsParam;
 
     $.getJSON(url, function (json) {
         if (json.status != '200') {
