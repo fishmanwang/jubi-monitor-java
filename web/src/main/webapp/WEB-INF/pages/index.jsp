@@ -33,14 +33,14 @@
 
     <div style="float: left; margin-left: 30px;">
         <h3>涨幅排行</h3>
-        <table width="200">
+        <table width="300">
             <tr>
-                <td width="30%">名称</td>
+                <td width="40%">名称</td>
                 <td>涨幅</td>
             </tr>
             <c:forEach var="item" items="${rankedRate}">
                 <tr>
-                    <td>${item.coin}</td>
+                    <td>${item.name}</td>
                     <td>${item.rate}</td>
                 </tr>
             </c:forEach>

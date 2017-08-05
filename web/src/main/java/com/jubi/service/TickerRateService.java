@@ -11,6 +11,7 @@ import com.jubi.common.Constants;
 import com.jubi.dao.TickerRateDao;
 import com.jubi.dao.entity.TickerRateEntity;
 import com.jubi.dao.vo.TickerRateSpanParam;
+import com.jubi.service.vo.CoinVo;
 import com.jubi.service.vo.TickerPriceVo;
 import com.jubi.service.vo.TickerRateVo;
 import com.jubi.util.BeanMapperUtil;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 涨幅服务
@@ -40,6 +42,9 @@ public class TickerRateService {
 
     @Autowired
     private TickerService tickerService;
+
+    @Autowired
+    private CoinService coinService;
 
     @Cacheable(value = "ticker-rate", keyGenerator = "defaultKeyGenerator")
     public List<TickerRateVo> queryTickerRate(String coin, int span) {
@@ -129,7 +134,13 @@ public class TickerRateService {
     public List<TickerRateVo> queryRankedTickerRate() {
         Integer lastPk = tickerRateDao.queryLastPk();
         List<TickerRateEntity> ds = tickerRateDao.queryRankedTickerRate(lastPk);
-        return BeanMapperUtil.mapList(ds, TickerRateVo.class);
+
+        Map<String, String> coinMap = coinService.getAllCoinsMap();
+        List<TickerRateVo> result = BeanMapperUtil.mapList(ds, TickerRateVo.class);
+        for (TickerRateVo vo : result) {
+            vo.setName(coinMap.get(vo.getCoin()));
+        }
+        return result;
     }
 
 

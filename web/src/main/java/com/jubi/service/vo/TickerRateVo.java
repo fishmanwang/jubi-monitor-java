@@ -22,6 +22,11 @@ public class TickerRateVo {
     private String  coin;
 
     /**
+     * 币名称
+     */
+    private String name;
+
+    /**
      * 涨幅
      */
     private Double  rate;
@@ -40,6 +45,14 @@ public class TickerRateVo {
 
     public void setCoin(String coin) {
         this.coin = coin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getRate() {
