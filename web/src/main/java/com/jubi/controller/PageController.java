@@ -20,6 +20,11 @@ public class PageController {
     @Autowired
     private CoinService coinService;
 
+    @RequestMapping("/index.html")
+    public String index() {
+        return "index";
+    }
+
     @RequestMapping("login.html")
     public String login() {
         return "login";

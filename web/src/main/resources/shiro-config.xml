@@ -39,7 +39,7 @@
         </property>
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/page/login.html"/>
-        <property name="successUrl" value="/"/>
+        <property name="successUrl" value="/page/index.html"/>
         <property name="unauthorizedUrl" value="/unauth"/>
         <property name="filterChainDefinitions">
             <value>
