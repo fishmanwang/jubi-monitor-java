@@ -107,4 +107,9 @@ public class PageController {
         return mv;
     }
 
+    @RequestMapping("/depth.html")
+    public String depthPage() {
+        return "depth";
+    }
+
 }

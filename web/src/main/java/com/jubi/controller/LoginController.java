@@ -67,7 +67,7 @@ public class LoginController extends AbstractController {
         } catch (AuthenticationException ae) {
             logger.info("User {} login failed: {}", username, ae.getMessage());
             //throw new AuthenticationException("登录失败：用户名/密码输入有误，请确认后重试。");
-            throw new ApplicationException(UserErrorCode.USER_PASSWORD_INCONSISTENT);
+            throw new ApplicationException(UserErrorCode.USER_AUTH_EORR);
         }
         UserBean bean = (UserBean) SecurityUtils.getSubject().getPrincipal();
         logger.info("用户{}在{}登录了系统。", bean.getUsername(), new Date());

@@ -1,16 +1,16 @@
-$(function() {
+$(function () {
 
 
     $("#okBtn").off("click").on("click", login);
 
-    $("#username").keydown(function(e){
-        if(e.keyCode == 13){
+    $("#username").keydown(function (e) {
+        if (e.keyCode == 13) {
             login();
         }
     });
 
-    $("#password").keydown(function(e){
-        if(e.keyCode == 13){
+    $("#password").keydown(function (e) {
+        if (e.keyCode == 13) {
             login();
         }
     });
@@ -29,9 +29,11 @@ function login() {
     }
     var data = {username: username, password: password};
     var ctx = $("#ctx").val()
-    $.post(ctx + "/login", data, function(json) {
+    $.post(ctx + "/login", data, function (json) {
         if (json.status == 200) {
-            window.location.href= ctx + "/page/index.html"
+            window.location.href = ctx + "/page/index.html"
+        } else {
+            alert(json.message)
         }
     })
 }

@@ -41,7 +41,9 @@ public enum UserErrorCode implements ErrorCode {
             "邮箱格式不正确"), USER_EMAIL_EXIST(
             1019,
             "邮箱已存在"),
-    USER_NOT_LOGIN(1020, "用户未登录");
+
+    USER_NOT_LOGIN(1020, "用户未登录"),
+    USER_AUTH_EORR(1021, "用户名/密码错误");
 
     private int status;
     private String message;
