@@ -11,10 +11,10 @@
         <result column="bids" jdbcType="LONGVARCHAR" property="bids"/>
     </resultMap>
 
-    <select id="queryCurrentDepth" resultMap="depthMap">
+    <select id="queryDepth" resultMap="depthMap">
         SELECT d.id id, d.pk pk, d.coin coin, d.price price, d.asks asks, d.bids bids
         FROM jb_coin_depth d,
-        (SELECT MAX(pk) pk, coin FROM jb_coin_depth GROUP BY coin) t WHERE d.coin = t.coin AND d.pk = t.pk;
+        (SELECT MAX(pk) pk, coin FROM jb_coin_depth where pk &lt;=#{time} GROUP BY coin) t WHERE d.coin = t.coin AND d.pk = t.pk;
     </select>
 
 </mapper>

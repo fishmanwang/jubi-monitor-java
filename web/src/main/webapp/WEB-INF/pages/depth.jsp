@@ -10,16 +10,14 @@
 
 <jsp:include page="header.jsp"/>
 
-<div>
-    实时深度
+<div style="text-align:center">
+    <h3>实时深度</h3>
 </div>
-
-<div id="content">
-
-</div>
-
 <div>
-    <table id="main" class="display" width="100%"></table>
+    选择时间:<input id="timeInput"/>
+</div>
+<div id="mainDiv">
+    <%--<table id="main" class="display" width="100%"></table>--%>
 </div>
 
 

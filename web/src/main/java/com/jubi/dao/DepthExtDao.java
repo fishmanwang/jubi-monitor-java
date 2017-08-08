@@ -5,6 +5,7 @@
 package com.jubi.dao;
 
 import com.jubi.dao.entity.DepthWithBLOBs;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ import java.util.List;
  */
 public interface DepthExtDao {
 
-    List<DepthWithBLOBs> queryCurrentDepth();
+    List<DepthWithBLOBs> queryDepth(@Param("time") int time);
 
 }

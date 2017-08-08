@@ -5,6 +5,7 @@
 package com.jubi.service;
 
 import com.jubi.service.vo.DepthVo;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,7 +22,13 @@ public class DepthServiceTest extends BaseServiceTest {
 
     @Test
     public void testQueryCurrentDepth() {
-        List<DepthVo> ds = depthService.queryCurrentDepth();
+        DateTime dateTime = new DateTime();
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear();
+        int day = dateTime.getDayOfMonth();
+        int hour = dateTime.getHourOfDay();
+        int minute = dateTime.getMinuteOfHour();
+        List<DepthVo> ds = depthService.queryDepth(year, month, day, hour, minute);
         assertTrue(ds.size() > 0);
     }
 

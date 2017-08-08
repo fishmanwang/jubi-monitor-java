@@ -1,55 +1,45 @@
 $(function () {
+    var t = new Date().getTime();
+    var s = formatDateTime4(new Date(t));
+    $("#timeInput").val(s);
+
+    $('#timeInput').keydown(function (e) {
+        if (e.keyCode == 13) {
+            queryCurrentDepth();
+        }
+    });
 
     queryCurrentDepth()
 
 });
 
 var ctx = $("#ctx").val();
-var spans = [0.03, 0.05, 0.08, 0.1, 0.15, 0.2]
+var spans = [0.03, 0.05, 0.08, 0.1, 0.15, 0.2];
 
 var queryCurrentDepth = function () {
-    var url = ctx + "/depth/current"
+    var time = $("#timeInput").val();
+    var url = ctx + "/depth/query?time=" + time;
     $.get(url, function (json) {
         if (json.status == 200) {
             var ds = json.data;
-            console.log(ds)
-            render(buildShowData(ds))
+            render(buildShowData(ds));
         } else {
-            alert(json.message)
+            alert(json.message);
         }
     });
 }
 
 function render(ds) {
-    $("#content").html("");
-
-    var html = "<table width='100%'>";
-    html += "<tr>";
     var cols = ds.cols;
-    $.each(cols, function (index, col) {
-        html += "<td>" + col + "</td>"
-    });
-    html += "</tr>";
     var vals = ds.vals;
-    $.each(vals, function (index, ds) {
-        html += "<tr>";
-        $.each(ds, function (index, d) {
-            html += "<td>" + d + "</td>"
-        });
-        html += "</tr>"
-    });
-
-    html += "</table>";
-
-    //$("#content").html(html);
 
     var cs = [];
     $.each(cols, function (index, col) {
         cs.push({title: col});
     });
-    console.log(cs)
-    console.log(typeof(vals))
-    console.log(vals)
+
+    $("#mainDiv").html('<table id="main" class="display" width="100%"></table>');
+
     $('#main').DataTable({
         data: vals,
         columns: cs
@@ -65,10 +55,8 @@ function buildShowData(datas) {
     var cols = ['名称', '时间', '价格'];
     $.each(spans, function (index, span) {
         cols.push(formatDecimal('+', span));
-    });
-
-    $.each(spans, function (index, span) {
         cols.push(formatDecimal('-', span));
+        cols.push("比率 (" + formatDecimal('', span) + ")");
     });
 
     var vals = [];
@@ -89,8 +77,19 @@ function buildShowData(datas) {
         d.push(price)
 
 
-        d = d.concat(buildPlusSpanData(price, asks));
-        d = d.concat(buildMinusSpanData(price, bids));
+        var plus = buildPlusSpanData(price, asks);
+        var minus = buildMinusSpanData(price, bids);
+        for (var i = 0; i < spans.length; i++) {
+            var p = plus[i];
+            var m = minus[i];
+            d.push(p);
+            d.push(m);
+            if (p == 0 || m == 0) {
+                d.push(0);
+            } else {
+                d.push((m / p).toFixed(2));
+            }
+        }
 
         vals.push(d)
     });
@@ -118,7 +117,7 @@ function buildPlusSpanData(price, datas) {
                 total += p * vol;
             }
         });
-        amounts.push(total.toFixed(2));
+        amounts.push(parseInt(total));
     });
     return amounts;
 }
@@ -141,7 +140,7 @@ function buildMinusSpanData(price, datas) {
                 total += p * vol;
             }
         });
-        amounts.push(total.toFixed(2));
+        amounts.push(parseInt(total));
     });
     return amounts;
 }
