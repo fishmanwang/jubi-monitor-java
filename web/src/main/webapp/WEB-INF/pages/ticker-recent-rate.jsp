@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp"/>
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main" style="height:600px"></div>
@@ -25,6 +25,10 @@
     </div>
     <div style="float: left;">
         <button id="okBtn">确定</button>
+    </div>
+    <div style="float: left;margin-left:10px;">
+        <button id="maxPlusBtn">最大涨幅</button>
+        <button id="maxMunisBtn">最大跌</button>
     </div>
 </div>
 

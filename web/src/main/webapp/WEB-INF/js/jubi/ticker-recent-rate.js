@@ -1,7 +1,32 @@
 $(function () {
     $("#okBtn").off("click").on("click", function () {
         fetchAndRender();
+    });
+
+    $("#maxPlusBtn").off("click").on("click", function () {
+        var ctx = $("#ctx").val()
+        var url = ctx + "/rate/max/plus?t=" + Math.random();
+        $.get(url, function (json) {
+            if (json.status == 200) {
+                doFetchAndRender(json.data);
+            } else {
+                alert(json.message);
+            }
+        });
+    });
+
+    $("#maxMunisBtn").off("click").on("click", function () {
+        var ctx = $("#ctx").val()
+        var url = ctx + "/rate/max/minus?t=" + Math.random();
+        $.get(url, function (json) {
+            if (json.status == 200) {
+                doFetchAndRender(json.data);
+            } else {
+                alert(json.message);
+            }
+        });
     })
+
 });
 
 function fetchAndRender() {
@@ -13,7 +38,10 @@ function fetchAndRender() {
     for (var i = 0; i < cs.length; i++) {
         coins.push($(cs[i]).val())
     }
+    doFetchAndRender(coins);
+}
 
+function doFetchAndRender(coins) {
     var coinsParam = ""
     for (var i = 0; i < coins.length; i++) {
         coinsParam += "&coins=" + coins[i]
@@ -55,7 +83,6 @@ function prepareData(ds) {
     for (var i = 0; i < xds.length; i++) {
         xdsStr.push(formatDateTimeSecsForX(xds[i]))
     }
-    console.log([xdsStr, r])
     return [xdsStr, r]
 }
 

@@ -94,8 +94,6 @@ function buildShowData(datas) {
         vals.push(d)
     });
 
-    console.log(ds);
-
     return ds;
 }
 

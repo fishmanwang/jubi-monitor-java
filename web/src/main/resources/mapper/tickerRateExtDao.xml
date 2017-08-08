@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jubi.dao.TickerRateExtDao">
+
+    <resultMap id="rateMap" type="com.jubi.dao.entity.TickerRateEntity">
+        <id property="id" column="id"/>
+    </resultMap>
+
+    <select id="queryTickerRate" parameterType="com.jubi.dao.vo.TickerRateSpanParam" resultMap="rateMap">
+        select pk, coin, rate
+        from jb_coin_rate
+        where (pk mod #{param.span}) = 0 and coin = #{param.coin}
+        <if test="param.start != null">
+            and pk &gt;= #{param.start}
+        </if>
+        <if test="param.end != null">
+            and pk &lt; #{param.end}
+        </if>
+    </select>
+
+    <select id="queryHourTickerRate" parameterType="com.jubi.dao.vo.TickerRateSpanParam" resultMap="rateMap">
+        select (pk - 28800) as pk, rate from jb_coin_rate
+        where (pk mod #{param.span}) = 0 and coin = #{param.coin}
+        <if test="param.start != null">
+            and pk &gt;= #{param.start}
+        </if>
+        <if test="param.end != null">
+            and pk &lt; #{param.end}
+        </if>
+    </select>
+
+</mapper>

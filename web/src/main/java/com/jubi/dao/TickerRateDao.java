@@ -1,37 +1,29 @@
 package com.jubi.dao;
 
 import com.jubi.dao.entity.TickerRateEntity;
-import com.jubi.dao.vo.TickerRateSpanParam;
+import com.jubi.dao.entity.TickerRateEntityExample;
 import com.mybatis.domain.PageBounds;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-/**
- * 涨幅
- * Created by Administrator on 2017/7/30.
- */
 public interface TickerRateDao {
+    int deleteByPrimaryKey(Integer id);
 
-    List<TickerRateEntity> queryTickerRate(@Param("param") TickerRateSpanParam param, PageBounds pb);
+    int insert(TickerRateEntity record);
 
-    /**
-     * 大于一小时的间隔，需要减去8小时，从0点起。
-     * @param param
-     * @param pb
-     * @return
-     */
-    List<TickerRateEntity> queryHourTickerRate(@Param("param") TickerRateSpanParam param, PageBounds pb);
+    int insertSelective(TickerRateEntity record);
 
-    /**
-     * 获取最近一次抓取时间
-     * @return
-     */
-    Integer queryLastPk();
+    List<TickerRateEntity> selectByExampleWithPageBounds(TickerRateEntityExample example, PageBounds pageBounds);
 
-    /**
-     * 获取涨幅排行
-     * @return
-     */
-    List<TickerRateEntity> queryRankedTickerRate(@Param("pk") Integer pk);
+    List<TickerRateEntity> selectByExample(TickerRateEntityExample example);
+
+    TickerRateEntity selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") TickerRateEntity record, @Param("example") TickerRateEntityExample example);
+
+    int updateByExample(@Param("record") TickerRateEntity record, @Param("example") TickerRateEntityExample example);
+
+    int updateByPrimaryKeySelective(TickerRateEntity record);
+
+    int updateByPrimaryKey(TickerRateEntity record);
 }

@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author tjwang
  * @version $Id: CoinRateController.java, v 0.1 2017/8/1 0001 15:37 tjwang Exp $
  */
@@ -77,5 +75,21 @@ public class TickerRateController {
         }
 
         return RestResult.ok(result);
+    }
+
+    @RequestMapping("/max/plus")
+    public RestResult queryMaxPlusCoins() {
+        List<TickerRateVo> rates = tickerRateService.queryMaxPlusCoins();
+        List<String> coins = Lists.newArrayList();
+        rates.forEach(p -> coins.add(p.getCoin()));
+        return RestResult.ok(coins);
+    }
+
+    @RequestMapping("/max/minus")
+    public RestResult queryMaxMunisCoins() {
+        List<TickerRateVo> rates = tickerRateService.queryMaxMinusCoins();
+        List<String> coins = Lists.newArrayList();
+        rates.forEach(p -> coins.add(p.getCoin()));
+        return RestResult.ok(coins);
     }
 }

@@ -9,9 +9,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.jubi.common.Constants;
 import com.jubi.dao.TickerRateDao;
+import com.jubi.dao.TickerRateExtDao;
 import com.jubi.dao.entity.TickerRateEntity;
+import com.jubi.dao.entity.TickerRateEntityExample;
 import com.jubi.dao.vo.TickerRateSpanParam;
-import com.jubi.service.vo.CoinVo;
 import com.jubi.service.vo.TickerPriceVo;
 import com.jubi.service.vo.TickerRateVo;
 import com.jubi.util.BeanMapperUtil;
@@ -31,6 +32,7 @@ import java.util.Map;
 
 /**
  * 涨幅服务
+ *
  * @author tjwang
  * @version $Id: CoinRateService.java, v 0.1 2017/8/1 0001 15:20 tjwang Exp $
  */
@@ -39,6 +41,9 @@ public class TickerRateService {
 
     @Autowired
     private TickerRateDao tickerRateDao;
+
+    @Autowired
+    private TickerRateExtDao tickerRateExtDao;
 
     @Autowired
     private TickerService tickerService;
@@ -68,9 +73,9 @@ public class TickerRateService {
 
         List<TickerRateEntity> ds = null;
         if (span <= 3600) {
-            ds = tickerRateDao.queryTickerRate(param, pb);
+            ds = tickerRateExtDao.queryTickerRate(param, pb);
         } else {
-            ds = tickerRateDao.queryHourTickerRate(param, pb);
+            ds = tickerRateExtDao.queryHourTickerRate(param, pb);
         }
 
         if (ds.size() == 0) {
@@ -101,6 +106,7 @@ public class TickerRateService {
 
     /**
      * 查询当前行情涨幅
+     *
      * @param coin
      * @param size
      * @param beginTime
@@ -131,9 +137,19 @@ public class TickerRateService {
         return result;
     }
 
+    /**
+     * 获取涨幅排行
+     *
+     * @return
+     */
     public List<TickerRateVo> queryRankedTickerRate() {
-        Integer lastPk = tickerRateDao.queryLastPk();
-        List<TickerRateEntity> ds = tickerRateDao.queryRankedTickerRate(lastPk);
+        Integer lastPk = queryLastPk();
+
+        TickerRateEntityExample exam = new TickerRateEntityExample();
+        exam.createCriteria().andPkEqualTo(lastPk);
+        exam.setOrderByClause("rate desc");
+
+        List<TickerRateEntity> ds = tickerRateDao.selectByExample(exam);
 
         Map<String, String> coinMap = coinService.getAllCoinsMap();
         List<TickerRateVo> result = BeanMapperUtil.mapList(ds, TickerRateVo.class);
@@ -160,7 +176,7 @@ public class TickerRateService {
         param.setSpan(span);
         param.setStart(start);
         param.setEnd(end);
-        List<TickerRateEntity> ds = tickerRateDao.queryTickerRate(param, pb);
+        List<TickerRateEntity> ds = tickerRateExtDao.queryTickerRate(param, pb);
         if (ds.size() == 0) {
             return result;
         }
@@ -170,13 +186,47 @@ public class TickerRateService {
     }
 
     /**
+     * 获取涨幅最大的10个币信息
+     *
+     * @return
+     */
+    public List<TickerRateVo> queryMaxPlusCoins() {
+        Integer lastPk = queryLastPk();
+        TickerRateEntityExample exam = new TickerRateEntityExample();
+        exam.createCriteria().andPkEqualTo(lastPk);
+        exam.setOrderByClause("rate desc");
+        PageBounds pb = new PageBounds(0, 10, false);
+
+        List<TickerRateEntity> ds = tickerRateDao.selectByExampleWithPageBounds(exam, pb);
+        return BeanMapperUtil.mapList(ds, TickerRateVo.class);
+
+    }
+
+    /**
+     * 获取跌幅最大的10个币信息
+     *
+     * @return
+     */
+    public List<TickerRateVo> queryMaxMinusCoins() {
+        Integer lastPk = queryLastPk();
+        TickerRateEntityExample exam = new TickerRateEntityExample();
+        exam.createCriteria().andPkEqualTo(lastPk);
+        exam.setOrderByClause("rate asc");
+        PageBounds pb = new PageBounds(1, 10, false);
+
+        List<TickerRateEntity> ds = tickerRateDao.selectByExampleWithPageBounds(exam, pb);
+        return BeanMapperUtil.mapList(ds, TickerRateVo.class);
+    }
+
+    /**
      * 推断间隔
+     *
      * @param timeSpan : 时间间隔
-     * @param count : 币种类数量
+     * @param count    : 币种类数量
      * @return
      */
     private int inferSpan(int timeSpan, int count) {
-        int[] cadidates = { 60, 60 * 5, 60 * 10, 60 * 30, 60 * 60, 60 * 60 * 8, 60 * 60 * 24 };
+        int[] cadidates = {60, 60 * 5, 60 * 10, 60 * 30, 60 * 60, 60 * 60 * 8, 60 * 60 * 24};
         // 单个币最大展示数量
         int maxCount = Constants.PAGE_COUNT_LIMIT / count;
         int rawSpan = timeSpan / maxCount;
@@ -186,5 +236,21 @@ public class TickerRateService {
             }
         }
         return cadidates[cadidates.length - 1];
+    }
+
+    /**
+     * 获取最近一次抓取时间
+     *
+     * @return
+     */
+    private Integer queryLastPk() {
+        TickerRateEntityExample exam = new TickerRateEntityExample();
+        exam.setOrderByClause("pk desc");
+        PageBounds pb = new PageBounds(1, 1, false);
+        List<TickerRateEntity> ds = tickerRateDao.selectByExampleWithPageBounds(exam, pb);
+        if (ds.size() == 0) {
+            return 0;
+        }
+        return ds.get(0).getPk();
     }
 }

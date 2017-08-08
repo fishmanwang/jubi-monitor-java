@@ -39,11 +39,13 @@
     <h3>涨幅排行</h3>
     <table width="300">
         <tr>
+            <td width="20%">排行</td>
             <td width="40%">名称</td>
             <td>涨幅</td>
         </tr>
-        <c:forEach var="item" items="${rankedRate}">
+        <c:forEach var="item" varStatus="status" items="${rankedRate}">
             <tr>
+                <td>${status.index + 1}</td>
                 <td>${item.name}</td>
                 <td>${item.rate}</td>
             </tr>
