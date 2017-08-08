@@ -112,4 +112,15 @@ public class PageController {
         return "depth";
     }
 
+    @RequestMapping("/depth/coin.html")
+    public ModelAndView depthCoinPage() {
+        List<CoinVo> coins = coinService.getAllCoins();
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("coins", coins);
+        mv.setViewName("depth-coin");
+        
+        return mv;
+    }
+
 }

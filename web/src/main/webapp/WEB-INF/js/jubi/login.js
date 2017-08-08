@@ -3,13 +3,13 @@ $(function () {
 
     $("#okBtn").off("click").on("click", login);
 
-    $("#username").keydown(function (e) {
+    $("#username").off("keydown").on("keydown", function (e) {
         if (e.keyCode == 13) {
             login();
         }
     });
 
-    $("#password").keydown(function (e) {
+    $("#password").off("keydown").on("keydown", function (e) {
         if (e.keyCode == 13) {
             login();
         }

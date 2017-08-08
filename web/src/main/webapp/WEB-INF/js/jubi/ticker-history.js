@@ -3,8 +3,8 @@ $(function () {
         fetchAndRender()
     });
 
-    $('#dateInput').keydown(function(e){
-        if(e.keyCode==13){
+    $('#dateInput').off("keydown").on("keydown", function (e) {
+        if (e.keyCode == 13) {
             var coin = $("#coinSel").val()
             if (!coin) {
                 alert("请选择币种");
@@ -14,7 +14,7 @@ $(function () {
         }
     });
 
-    $("#prevBtn").off("click").on("click", function() {
+    $("#prevBtn").off("click").on("click", function () {
         var time = $('#dateInput').val();
         var d = new Date(time);
         d = new Date(d.getTime() - dayLong);
@@ -22,7 +22,7 @@ $(function () {
         fetchAndRender();
     });
 
-    $("#nextBtn").off("click").on("click", function() {
+    $("#nextBtn").off("click").on("click", function () {
         var time = $('#dateInput').val();
         var d = new Date(time);
         d = new Date(d.getTime() + dayLong);

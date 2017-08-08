@@ -32,6 +32,7 @@
     <div>
         <h3>深度</h3>
         <a href="${ctx}/page/depth.html">深度分析</a>
+        <a href="${ctx}/page/depth/coin.html">虚拟币深度</a>
     </div>
 </div>
 

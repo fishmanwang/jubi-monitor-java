@@ -14,6 +14,8 @@ public interface DepthDao {
 
     int insertSelective(DepthWithBLOBs record);
 
+    List<DepthWithBLOBs> selectByExampleWithBLOBsWithPageBounds(DepthExample example, PageBounds pageBounds);
+
     List<DepthWithBLOBs> selectByExampleWithBLOBs(DepthExample example);
 
     List<Depth> selectByExampleWithPageBounds(DepthExample example, PageBounds pageBounds);

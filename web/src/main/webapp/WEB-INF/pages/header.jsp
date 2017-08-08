@@ -3,3 +3,4 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <input type="hidden" id="ctx" value="${ctx}"/>
+<a href="${ctx}/page/index.html">首页</a>

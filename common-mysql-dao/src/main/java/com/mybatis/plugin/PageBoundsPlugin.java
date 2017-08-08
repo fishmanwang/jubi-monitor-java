@@ -24,10 +24,10 @@ import java.util.*;
  */
 public class PageBoundsPlugin extends PluginAdapter {
 
-    private static final String                        PAGE_BOUNDS       = "pageBounds";
-    private static final String                        PAGE_BOUNDS_CLASS = "com.mybatis.domain.PageBounds";
+    private static final String PAGE_BOUNDS = "pageBounds";
+    private static final String PAGE_BOUNDS_CLASS = "com.mybatis.domain.PageBounds";
 
-    private FullyQualifiedJavaType                     pageBounds;
+    private FullyQualifiedJavaType pageBounds;
     private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd;
 
     public PageBoundsPlugin() {
@@ -37,7 +37,7 @@ public class PageBoundsPlugin extends PluginAdapter {
 
     public static void generate() {
         String config = ShellRunner.class.getClassLoader().getResource("generatorConfig.xml").getFile();
-        String[] arg = { "-configfile", config, "-overwrite" };
+        String[] arg = {"-configfile", config, "-overwrite"};
         ShellRunner.main(arg);
     }
 
@@ -55,6 +55,22 @@ public class PageBoundsPlugin extends PluginAdapter {
 
     @Override
     public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        if (introspectedTable.getTargetRuntime() == IntrospectedTable.TargetRuntime.MYBATIS3) {
+            copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
+        }
+        return true;
+    }
+
+    @Override
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        if (introspectedTable.getTargetRuntime() == IntrospectedTable.TargetRuntime.MYBATIS3) {
+            copyAndAddMethod(method, interfaze);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         if (introspectedTable.getTargetRuntime() == IntrospectedTable.TargetRuntime.MYBATIS3) {
             copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
         }
@@ -100,7 +116,7 @@ public class PageBoundsPlugin extends PluginAdapter {
         XmlElement newElement = new XmlElement(element);
 
         // remove old id attribute and add a new one with the new name
-        for (Iterator<Attribute> iterator = newElement.getAttributes().iterator(); iterator.hasNext();) {
+        for (Iterator<Attribute> iterator = newElement.getAttributes().iterator(); iterator.hasNext(); ) {
             Attribute attribute = iterator.next();
             if ("id".equals(attribute.getName())) { //$NON-NLS-1$
                 iterator.remove();

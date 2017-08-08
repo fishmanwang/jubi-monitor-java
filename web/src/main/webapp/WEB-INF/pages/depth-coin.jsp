@@ -11,10 +11,16 @@
 <jsp:include page="header.jsp"/>
 
 <div style="text-align:center">
-    <h3>实时深度</h3>
+    <h3>虚拟币深度</h3>
 </div>
-<div>
-    设置时间:<input id="timeInput"/>
+<div style="margin:0 0 20px 0">
+    <select id="coinSel">
+        <option value="">请选择币种</option>
+        <c:forEach items="${coins}" var="coin">
+            <option value="${coin.code}">${coin.name}</option>
+        </c:forEach>
+    </select>
+    &nbsp;设置时间:<input id="timeInput"/>
 </div>
 <div id="mainDiv">
     <%--<table id="main" class="display" width="100%"></table>--%>
@@ -28,5 +34,5 @@
 <script src="${ctx}/js/jubi/common.js"></script>
 
 <script type="text/javascript" src="${ctx}/js/jubi/depth-common.js"></script>
-<script type="text/javascript" src="${ctx}/js/jubi/depth.js"></script>
+<script type="text/javascript" src="${ctx}/js/jubi/depth-coin.js"></script>
 </body>
