@@ -19,21 +19,22 @@ $(function () {
 var ctx = $("#ctx").val();
 
 function render(datas) {
-    $("#mainDiv").html("")
+    $("#mainDiv").html("");
     if (!datas || datas.length == 0) {
         return;
     }
-    var c = "<table>";
-    c += "<tr><td>价格</td><td>数量</td><td>总金额</td><td>交易时间</td></tr>"
+    var c = "<table with='600'>";
+    c += "<tr><td width='20%'>价格</td><td width='20%'>数量</td><td width='20%'>总金额</td><td>交易时间</td></tr>";
     $.each(datas, function (index, data) {
-        c += "<tr>"
-        c += "<td>" + data.price + "</td>"
-        c += "<td>" + data.amount + "</td>"
-        c += "<td>" + data.total + "</td>"
-        c += "<td>" + data.tradeTime + "</td>"
+        c += "<tr>";
+        c += "<td>" + data.price + "</td>";
+        c += "<td>" + data.amount.toFixed(2) + "</td>";
+        c += "<td>" + (data.price * data.amount).toFixed(2)  + "</td>";
+        c += "<td>" + data.tradeTime + "</td>";
         c += "</tr>";
     });
     c += "</table>";
+    $("#mainDiv").html(c);
 }
 
 var queryCoinOrders = function () {
@@ -51,7 +52,7 @@ var queryCoinOrders = function () {
     $.get(url, function (json) {
         if (json.status == 200) {
             var ds = json.data;
-
+            render(ds)
         } else {
             alert(json.message);
         }

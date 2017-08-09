@@ -22,7 +22,7 @@ public class CoinOrderVo {
 
     private Double amount;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date tradeTime;
 
     public Integer getTid() {

@@ -121,11 +121,6 @@
             <artifactId>httpclient</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>

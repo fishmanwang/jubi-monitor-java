@@ -123,7 +123,7 @@ public class PageController {
         return mv;
     }
 
-    @RequestMapping("/coin/order/query.html")
+    @RequestMapping("/coin/order.html")
     public ModelAndView coinOrderQueryPage(String coin) {
         List<CoinVo> coins = coinService.getAllCoins();
 

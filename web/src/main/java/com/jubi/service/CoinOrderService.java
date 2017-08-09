@@ -18,6 +18,8 @@ import com.jubi.dao.entity.CoinOrderEntity;
 import com.jubi.dao.entity.CoinOrderEntityExample;
 import com.jubi.service.vo.CoinOrderVo;
 import com.jubi.util.BeanMapperUtil;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,11 +54,19 @@ public class CoinOrderService {
         exam.createCriteria().andTradeTimeGreaterThanOrEqualTo(beginTime);
 
         List<CoinOrderEntity> ds = coinOrderDao.selectByExample(exam);
-        for (CoinOrderEntity d : ds) {
-            CoinOrderVo vo = BeanMapperUtil.map(d, CoinOrderVo.class);
-            vo.setTradeTime(new Date(d.getTradeTime() * 1000));
-            result.add(vo);
-        }
+
+        ConvertUtils.register(new Converter() {
+
+            @Override
+            public Object convert(Class aClass, Object o) {
+                return new Date(Long.valueOf((Integer)o) * 1000);
+            }
+        }, Date.class);
+
+        result = BeanMapperUtil.mapList(ds, CoinOrderVo.class);
+
+        ConvertUtils.deregister(Date.class);
+
 
         return result;
     }
