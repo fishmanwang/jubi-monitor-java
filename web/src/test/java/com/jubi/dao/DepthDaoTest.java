@@ -4,7 +4,7 @@
  */
 package com.jubi.dao;
 
-import com.jubi.dao.entity.DepthWithBLOBs;
+import com.jubi.dao.entity.CoinDepthWithBLOBs;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ import java.util.List;
 public class DepthDaoTest extends BaseDaoTest {
 
     @Autowired
-    private DepthExtDao depthExtDao;
+    private CoinDepthExtDao coinDepthExtDao;
 
     @Test
     public void testQueryCurrentDepth() {
         DateTime dateTime = new DateTime();
         int time = Long.valueOf(dateTime.getMillis() / 1000).intValue();
-        List<DepthWithBLOBs> ds = depthExtDao.queryDepth(time);
+        List<CoinDepthWithBLOBs> ds = coinDepthExtDao.queryDepth(time);
         assertTrue(ds.size() > 0);
     }
 

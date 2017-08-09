@@ -3,14 +3,14 @@ package com.jubi.dao.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DepthExample {
+public class CoinDepthExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public DepthExample() {
+    public CoinDepthExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

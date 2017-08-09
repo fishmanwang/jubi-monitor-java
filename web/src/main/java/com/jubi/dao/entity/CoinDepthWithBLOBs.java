@@ -1,6 +1,6 @@
 package com.jubi.dao.entity;
 
-public class DepthWithBLOBs extends Depth {
+public class CoinDepthWithBLOBs extends CoinDepth {
     private String asks;
 
     private String bids;

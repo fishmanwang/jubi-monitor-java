@@ -1,6 +1,6 @@
 package com.jubi.dao.entity;
 
-public class Depth {
+public class CoinDepth {
     private Integer id;
 
     private Integer pk;

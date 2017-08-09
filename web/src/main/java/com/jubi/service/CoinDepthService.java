@@ -5,10 +5,10 @@
 package com.jubi.service;
 
 import com.google.common.base.Preconditions;
-import com.jubi.dao.DepthDao;
-import com.jubi.dao.DepthExtDao;
-import com.jubi.dao.entity.DepthExample;
-import com.jubi.dao.entity.DepthWithBLOBs;
+import com.jubi.dao.CoinDepthDao;
+import com.jubi.dao.CoinDepthExtDao;
+import com.jubi.dao.entity.CoinDepthExample;
+import com.jubi.dao.entity.CoinDepthWithBLOBs;
 import com.jubi.service.vo.DepthVo;
 import com.jubi.util.BeanMapperUtil;
 import com.mybatis.domain.PageBounds;
@@ -27,18 +27,18 @@ import java.util.List;
  * @version $Id: DepthService.java, v 0.1 2017/8/7 0007 9:57 tjwang Exp $
  */
 @Service
-public class DepthService {
+public class CoinDepthService {
 
     @Autowired
-    private DepthDao depthDao;
+    private CoinDepthDao depthDao;
 
     @Autowired
-    private DepthExtDao depthExtDao;
+    private CoinDepthExtDao coinDepthExtDao;
 
     public List<DepthVo> queryDepth(int year, int month, int day, int hour, int minute) {
         DateTime dateTime = new DateTime(year, month, day, hour, minute, 0);
         int time = Long.valueOf(dateTime.getMillis() / 1000).intValue();
-        List<DepthWithBLOBs> ds = depthExtDao.queryDepth(time);
+        List<CoinDepthWithBLOBs> ds = coinDepthExtDao.queryDepth(time);
         return BeanMapperUtil.mapList(ds, DepthVo.class);
     }
 
@@ -48,11 +48,11 @@ public class DepthService {
 
         int beginTime = Long.valueOf(begin.getTime() / 1000).intValue();
 
-        DepthExample exam = new DepthExample();
+        CoinDepthExample exam = new CoinDepthExample();
         exam.createCriteria().andCoinEqualTo(coin).andPkGreaterThanOrEqualTo(beginTime);
 
         PageBounds pb = new PageBounds(1, 100, false);
-        List<DepthWithBLOBs> ds = depthDao.selectByExampleWithBLOBsWithPageBounds(exam, pb);
+        List<CoinDepthWithBLOBs> ds = depthDao.selectByExampleWithBLOBsWithPageBounds(exam, pb);
         return BeanMapperUtil.mapList(ds, DepthVo.class);
     }
 

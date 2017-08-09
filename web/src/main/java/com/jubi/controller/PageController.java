@@ -107,20 +107,31 @@ public class PageController {
         return mv;
     }
 
-    @RequestMapping("/depth.html")
-    public String depthPage() {
-        return "depth";
+    @RequestMapping("/coin/depth/cmp.html")
+    public String coinDepthCmpPage() {
+        return "coin-depth-cmp";
     }
 
-    @RequestMapping("/depth/coin.html")
-    public ModelAndView depthCoinPage() {
+    @RequestMapping("/coin/depth/history.html")
+    public ModelAndView coinDepthHistoryPage() {
         List<CoinVo> coins = coinService.getAllCoins();
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("coins", coins);
-        mv.setViewName("depth-coin");
-        
+        mv.setViewName("coin-depth-history");
+
         return mv;
     }
 
+    @RequestMapping("/coin/order/query.html")
+    public ModelAndView coinOrderQueryPage(String coin) {
+        List<CoinVo> coins = coinService.getAllCoins();
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("coin", coin);
+        mv.addObject("coins", coins);
+        mv.setViewName("coin-order");
+
+        return mv;
+    }
 }

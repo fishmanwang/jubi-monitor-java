@@ -4,6 +4,8 @@
  */
 package com.jubi.service.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -20,6 +22,7 @@ public class CoinOrderVo {
 
     private Double amount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date tradeTime;
 
     public Integer getTid() {

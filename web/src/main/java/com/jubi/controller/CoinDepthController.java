@@ -3,7 +3,7 @@ package com.jubi.controller;
 import com.google.common.base.Preconditions;
 import com.jubi.RestResult;
 import com.jubi.context.SessionContext;
-import com.jubi.service.DepthService;
+import com.jubi.service.CoinDepthService;
 import com.jubi.service.vo.DepthVo;
 import com.mybatis.domain.PageBounds;
 import org.joda.time.DateTime;
@@ -21,10 +21,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/depth")
-public class DepthController extends AbstractController {
+public class CoinDepthController extends AbstractController {
 
     @Autowired
-    private DepthService depthService;
+    private CoinDepthService depthService;
 
     @RequestMapping("/query")
     public RestResult queryDepth(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date time) {

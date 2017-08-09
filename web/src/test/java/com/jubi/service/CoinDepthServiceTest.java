@@ -15,10 +15,10 @@ import java.util.List;
  * @author tjwang
  * @version $Id: DepthServiceTest.java, v 0.1 2017/8/7 0007 10:23 tjwang Exp $
  */
-public class DepthServiceTest extends BaseServiceTest {
+public class CoinDepthServiceTest extends BaseServiceTest {
 
     @Autowired
-    private DepthService depthService;
+    private CoinDepthService depthService;
 
     @Test
     public void testQueryCurrentDepth() {

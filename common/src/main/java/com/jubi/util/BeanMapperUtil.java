@@ -4,11 +4,11 @@
  */
 package com.jubi.util;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -24,27 +24,28 @@ public class BeanMapperUtil {
 
     private static Logger logger = LoggerFactory.getLogger(BeanMapperUtil.class);
 
+    private static Mapper dozer = new DozerBeanMapper();
+
     public static <T> T map(Object sourceObject, Class<T> destObjectclazz) {
-        //return sourceObject == null ? null : dozer.map(sourceObject, destObjectclazz);
-        if (sourceObject == null)
-            return null;
-        T obj = null;
-        try {
-            obj = destObjectclazz.newInstance();
-        } catch (InstantiationException e) {
-            logger.warn(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
-            logger.warn(e.getMessage(), e);
-        }
-        //BeanUtils.copyProperties(sourceObject, obj);
-        try {
-            BeanUtils.copyProperties(obj, sourceObject);
-        } catch (IllegalAccessException e) {
-            logger.error(e.getMessage(), e);
-        } catch (InvocationTargetException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return obj;
+        return sourceObject == null ? null : dozer.map(sourceObject, destObjectclazz);
+//        if (sourceObject == null)
+//            return null;
+//        T obj = null;
+//        try {
+//            obj = destObjectclazz.newInstance();
+//        } catch (InstantiationException e) {
+//            logger.warn(e.getMessage(), e);
+//        } catch (IllegalAccessException e) {
+//            logger.warn(e.getMessage(), e);
+//        }
+//        try {
+//            BeanUtils.copyProperties(obj, sourceObject);
+//        } catch (IllegalAccessException e) {
+//            logger.error(e.getMessage(), e);
+//        } catch (InvocationTargetException e) {
+//            logger.error(e.getMessage(), e);
+//        }
+//        return obj;
     }
 
     public static <T, S> List<T> mapList(Collection<S> sourceList, Class<T> destObjectclazz) {
@@ -52,7 +53,7 @@ public class BeanMapperUtil {
         if (sourceList == null || sourceList.size() == 0) {
             return destinationList;
         }
-        for (Iterator<S> it = sourceList.iterator(); it.hasNext();) {
+        for (Iterator<S> it = sourceList.iterator(); it.hasNext(); ) {
             destinationList.add(map(it.next(), destObjectclazz));
         }
         return destinationList;

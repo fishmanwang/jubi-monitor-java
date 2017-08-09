@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jubi.dao.DepthDao">
-  <resultMap id="BaseResultMap" type="com.jubi.dao.entity.Depth">
+<mapper namespace="com.jubi.dao.CoinDepthDao">
+  <resultMap id="BaseResultMap" type="com.jubi.dao.entity.CoinDepth">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="pk" jdbcType="INTEGER" property="pk" />
     <result column="coin" jdbcType="VARCHAR" property="coin" />
     <result column="price" jdbcType="DECIMAL" property="price" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jubi.dao.entity.DepthWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jubi.dao.entity.CoinDepthWithBLOBs">
     <result column="asks" jdbcType="LONGVARCHAR" property="asks" />
     <result column="bids" jdbcType="LONGVARCHAR" property="bids" />
   </resultMap>
@@ -75,7 +75,7 @@
   <sql id="Blob_Column_List">
     asks, bids
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.jubi.dao.entity.DepthExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="com.jubi.dao.entity.CoinDepthExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -92,7 +92,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.jubi.dao.entity.DepthExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.jubi.dao.entity.CoinDepthExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -119,7 +119,7 @@
     delete from jb_coin_depth
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jubi.dao.entity.DepthWithBLOBs">
+  <insert id="insert" parameterType="com.jubi.dao.entity.CoinDepthWithBLOBs">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -128,7 +128,7 @@
     values (#{pk,jdbcType=INTEGER}, #{coin,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
       #{asks,jdbcType=LONGVARCHAR}, #{bids,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jubi.dao.entity.DepthWithBLOBs">
+  <insert id="insertSelective" parameterType="com.jubi.dao.entity.CoinDepthWithBLOBs">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -216,7 +216,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jubi.dao.entity.DepthWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jubi.dao.entity.CoinDepthWithBLOBs">
     update jb_coin_depth
     <set>
       <if test="pk != null">
@@ -237,7 +237,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jubi.dao.entity.DepthWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jubi.dao.entity.CoinDepthWithBLOBs">
     update jb_coin_depth
     set pk = #{pk,jdbcType=INTEGER},
       coin = #{coin,jdbcType=VARCHAR},
@@ -246,14 +246,14 @@
       bids = #{bids,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jubi.dao.entity.Depth">
+  <update id="updateByPrimaryKey" parameterType="com.jubi.dao.entity.CoinDepth">
     update jb_coin_depth
     set pk = #{pk,jdbcType=INTEGER},
       coin = #{coin,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByExampleWithBLOBsWithPageBounds" parameterType="com.jubi.dao.entity.DepthExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBsWithPageBounds" parameterType="com.jubi.dao.entity.CoinDepthExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -270,7 +270,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExampleWithPageBounds" parameterType="com.jubi.dao.entity.DepthExample" resultMap="BaseResultMap">
+  <select id="selectByExampleWithPageBounds" parameterType="com.jubi.dao.entity.CoinDepthExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct

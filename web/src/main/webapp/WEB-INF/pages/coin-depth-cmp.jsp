@@ -11,7 +11,7 @@
 <jsp:include page="header.jsp"/>
 
 <div style="text-align:center">
-    <h3>实时深度</h3>
+    <h3>深度对比</h3>
 </div>
 <div>
     设置时间:<input id="timeInput"/>

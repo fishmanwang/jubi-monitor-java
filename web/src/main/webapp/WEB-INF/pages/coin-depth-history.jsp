@@ -11,7 +11,7 @@
 <jsp:include page="header.jsp"/>
 
 <div style="text-align:center">
-    <h3>虚拟币深度</h3>
+    <h3>深度历史</h3>
 </div>
 <div style="margin:0 0 20px 0">
     <select id="coinSel">
