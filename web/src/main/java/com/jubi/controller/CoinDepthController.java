@@ -1,9 +1,12 @@
 package com.jubi.controller;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.jubi.RestResult;
 import com.jubi.context.SessionContext;
+import com.jubi.exception.CommonErrorCode;
 import com.jubi.service.CoinDepthService;
+import com.jubi.service.vo.DepthRealVo;
 import com.jubi.service.vo.DepthVo;
 import com.mybatis.domain.PageBounds;
 import org.joda.time.DateTime;
@@ -25,6 +28,15 @@ public class CoinDepthController extends AbstractController {
 
     @Autowired
     private CoinDepthService depthService;
+
+    @RequestMapping("/real/{coin}")
+    public RestResult queryCoinRealTimeDepth(@PathVariable("coin") String coin) {
+        Optional<DepthRealVo> opt = depthService.queryRealTimeDepth(coin);
+        if (opt.isPresent()) {
+            return RestResult.ok(opt.get());
+        }
+        return RestResult.fail(CommonErrorCode.BIZ_ERROR.getStatus(), "获取实时信息失败，请重试。");
+    }
 
     @RequestMapping("/query")
     public RestResult queryDepth(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date time) {

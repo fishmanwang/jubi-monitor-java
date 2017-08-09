@@ -5,8 +5,6 @@
 package com.jubi.util;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +24,8 @@ public class BeanMapperUtil {
 
     private static Logger logger = LoggerFactory.getLogger(BeanMapperUtil.class);
 
-//    private static Mapper dozer = new DozerBeanMapper();
 
     public static <T> T map(Object sourceObject, Class<T> destObjectclazz) {
-//        return sourceObject == null ? null : dozer.map(sourceObject, destObjectclazz);
         if (sourceObject == null)
             return null;
         T obj = null;

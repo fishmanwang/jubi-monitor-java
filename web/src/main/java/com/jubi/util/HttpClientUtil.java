@@ -10,7 +10,12 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by Administrator on 2017/8/3.
@@ -19,33 +24,47 @@ public class HttpClientUtil {
 
     private static Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
 
-    private static CloseableHttpClient httpclient = HttpClients.createDefault();
+    public static String get(String serverUrl) {
+        StringBuilder responseBuilder = null;
+        BufferedReader reader = null;
+        OutputStreamWriter wr = null;
 
-    public static String get(String url) {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpGet httpget = new HttpGet(url);
-        CloseableHttpResponse response = null;
-        String data = "{}";
         try {
-            response = httpclient.execute(httpget);
-            HttpEntity entity = response.getEntity();
-            // response.getStatusLine()
-            if (entity != null) {
-                data = EntityUtils.toString(entity);
-                EntityUtils.consume(entity);
+            URL url = new URL(serverUrl);
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(false);
+            conn.setConnectTimeout(1000 * 3);
+
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            responseBuilder = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                responseBuilder.append(line);
             }
+            return responseBuilder.toString();
         } catch (IOException e) {
-            logger.warn(e.getMessage(), e);
+            logger.error("", e);
         } finally {
-            try {
-                if (response != null) {
-                    response.close();
+
+            if (wr != null) {
+                try {
+                    wr.close();
+                } catch (IOException e) {
+                    logger.error("close error", e);
                 }
-                httpclient.close();
-            } catch (IOException e) {
             }
+
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    logger.error("close error", e);
+                }
+            }
+
         }
-        return data;
+
+        return null;
     }
 
 }
