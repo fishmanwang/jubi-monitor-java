@@ -8,13 +8,11 @@ import com.jubi.RestResult;
 import com.jubi.service.CoinOrderService;
 import com.jubi.service.vo.CoinOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,9 +27,8 @@ public class CoinOrderController {
     private CoinOrderService coinOrderService;
 
     @RequestMapping(value = "{coin}", method = RequestMethod.GET)
-    public RestResult queryCoinOrders(@PathVariable("coin") String coin,
-                                      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date time) {
-        List<CoinOrderVo> ds = coinOrderService.queryOrders(coin, time);
+    public RestResult queryCoinOrders(@PathVariable("coin") String coin) {
+        List<CoinOrderVo> ds = coinOrderService.queryRecentOrders(coin);
         return RestResult.ok(ds);
     }
 

@@ -6,14 +6,7 @@ $(function () {
     $("#coinSel").off("change").on("change", function () {
         queryCoinOrders();
     });
-
-    $('#timeInput').off("keydown").on("keydown", function (e) {
-        if (e.keyCode == 13) {
-            queryCoinOrders();
-        }
-    });
-
-    queryCoinOrders()
+    
 });
 
 var ctx = $("#ctx").val();
@@ -29,7 +22,7 @@ function render(datas) {
         c += "<tr>";
         c += "<td>" + data.price + "</td>";
         c += "<td>" + data.amount.toFixed(2) + "</td>";
-        c += "<td>" + (data.price * data.amount).toFixed(2)  + "</td>";
+        c += "<td>" + (data.price * data.amount).toFixed(2) + "</td>";
         c += "<td>" + data.tradeTime + "</td>";
         c += "</tr>";
     });
@@ -43,12 +36,7 @@ var queryCoinOrders = function () {
         alert("请选择币");
         return;
     }
-    var time = $("#timeInput").val();
-    if (!time) {
-        alert("请设置时间")
-        return;
-    }
-    var url = ctx + "/coin/order/" + coin + "?time=" + time;
+    var url = ctx + "/coin/order/" + coin;
     $.get(url, function (json) {
         if (json.status == 200) {
             var ds = json.data;

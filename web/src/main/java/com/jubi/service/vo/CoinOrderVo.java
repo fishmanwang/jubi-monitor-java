@@ -4,10 +4,6 @@
  */
 package com.jubi.service.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
 /**
  * @author tjwang
  * @version $Id: CoinOrderVo.java, v 0.1 2017/8/9 0009 10:06 tjwang Exp $
@@ -22,8 +18,7 @@ public class CoinOrderVo {
 
     private Double amount;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date tradeTime;
+    private Integer tradeTime;
 
     public Integer getTid() {
         return tid;
@@ -57,11 +52,11 @@ public class CoinOrderVo {
         this.amount = amount;
     }
 
-    public Date getTradeTime() {
+    public Integer getTradeTime() {
         return tradeTime;
     }
 
-    public void setTradeTime(Date tradeTime) {
+    public void setTradeTime(Integer tradeTime) {
         this.tradeTime = tradeTime;
     }
 }

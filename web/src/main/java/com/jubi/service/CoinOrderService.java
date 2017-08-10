@@ -12,19 +12,16 @@ package com.jubi.service;
  */
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.jubi.dao.CoinOrderDao;
 import com.jubi.dao.entity.CoinOrderEntity;
 import com.jubi.dao.entity.CoinOrderEntityExample;
 import com.jubi.service.vo.CoinOrderVo;
 import com.jubi.util.BeanMapperUtil;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,38 +31,40 @@ public class CoinOrderService {
     private CoinOrderDao coinOrderDao;
 
     /**
-     * 获取当天所有交易信息
+     * 获取最近两小时内(上一小时+当前小时)所有交易信息
      *
      * @param coin
-     * @param time : 开始时间
      * @return
      */
-    public List<CoinOrderVo> queryOrders(String coin, Date time) {
+    public List<CoinOrderVo> queryRecentOrders(String coin) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "虚拟币不能为空");
 
-        if (time == null) {
-            time = new Date();
-        }
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.withMillisOfSecond(0);
+        dateTime = dateTime.withSecondOfMinute(0);
+        dateTime = dateTime.withMinuteOfHour(0);
 
-        List<CoinOrderVo> result = Lists.newArrayList();
+        System.out.println(dateTime.getMillis());
 
-        int beginTime = Long.valueOf(time.getTime() / 1000).intValue();
+        List<CoinOrderVo> result;
+
+        int beginTime = Long.valueOf(dateTime.getMillis() / 1000).intValue();
         CoinOrderEntityExample exam = new CoinOrderEntityExample();
         exam.createCriteria().andTradeTimeGreaterThanOrEqualTo(beginTime);
 
         List<CoinOrderEntity> ds = coinOrderDao.selectByExample(exam);
 
-        ConvertUtils.register(new Converter() {
-
-            @Override
-            public Object convert(Class aClass, Object o) {
-                return new Date(Long.valueOf((Integer)o) * 1000);
-            }
-        }, Date.class);
+//        ConvertUtils.register(new Converter() {
+//
+//            @Override
+//            public Object convert(Class aClass, Object o) {
+//                return new Date(Long.valueOf((Integer) o) * 1000);
+//            }
+//        }, Date.class);
 
         result = BeanMapperUtil.mapList(ds, CoinOrderVo.class);
 
-        ConvertUtils.deregister(Date.class);
+//        ConvertUtils.deregister(Date.class);
 
 
         return result;

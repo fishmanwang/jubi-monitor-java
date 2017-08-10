@@ -27,7 +27,6 @@
             </c:choose>
         </c:forEach>
     </select>
-    &nbsp;设置时间:<input id="timeInput"/>
 </div>
 <div id="mainDiv">
 

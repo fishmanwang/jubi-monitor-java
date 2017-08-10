@@ -124,11 +124,10 @@ public class PageController {
     }
 
     @RequestMapping("/coin/order.html")
-    public ModelAndView coinOrderQueryPage(String coin) {
+    public ModelAndView coinOrderQueryPage() {
         List<CoinVo> coins = coinService.getAllCoins();
 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("coin", coin);
         mv.addObject("coins", coins);
         mv.setViewName("coin-order");
 
