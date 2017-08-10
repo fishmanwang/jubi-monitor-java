@@ -6,7 +6,9 @@ package com.jubi.controller;
 
 import com.jubi.RestResult;
 import com.jubi.service.CoinOrderService;
+import com.jubi.service.vo.CoinOrderStatisticVo;
 import com.jubi.service.vo.CoinOrderVo;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +28,34 @@ public class CoinOrderController {
     @Autowired
     private CoinOrderService coinOrderService;
 
-    @RequestMapping(value = "{coin}", method = RequestMethod.GET)
-    public RestResult queryCoinOrders(@PathVariable("coin") String coin) {
-        List<CoinOrderVo> ds = coinOrderService.queryRecentOrders(coin);
-        return RestResult.ok(ds);
+    /**
+     * 查询最近十分钟交易情况
+     * @param coin
+     * @return
+     */
+    @RequestMapping(value = "/tm/{coin}", method = RequestMethod.GET)
+    public RestResult queryLastTenMinutesCoinOrderStatistic(@PathVariable("coin") String coin) {
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.withMillisOfSecond(0).withSecondOfMinute(0).plusMinutes(-10);
+        int time = Long.valueOf(dateTime.getMillis() / 1000).intValue();
+
+        CoinOrderStatisticVo vo = coinOrderService.queryOrderStatistics(coin, time);
+        return RestResult.ok(vo);
+    }
+
+    /**
+     * 查询最近十分钟交易情况
+     * @param coin
+     * @return
+     */
+    @RequestMapping(value = "/oh/{coin}", method = RequestMethod.GET)
+    public RestResult queryLastHourCoinOrderStatistic(@PathVariable("coin") String coin) {
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0).plusHours(-1);
+        int time = Long.valueOf(dateTime.getMillis() / 1000).intValue();
+
+        CoinOrderStatisticVo vo = coinOrderService.queryOrderStatistics(coin, time);
+        return RestResult.ok(vo);
     }
 
 }

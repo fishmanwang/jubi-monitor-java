@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jubi.dao.CoinOrderExtDao">
+
+    <resultMap id="statMapper" type="com.jubi.dao.vo.CoinOrderNumVo">
+    </resultMap>
+
+    <select id="queryStatistic" resultMap="statMapper">
+      SELECT COUNT(1) `count`, round(SUM(amount)) `amount`, round(SUM(total)) `total`
+      FROM `jb_coin_order` WHERE coin=#{coin} AND trade_time >= #{time}
+      <if test="plus">
+          and amount >= 0
+      </if>
+      <choose>
+          <when test="plus">
+              and amount &gt;= 0
+          </when>
+          <otherwise>
+              and amount &lt;= 0
+          </otherwise>
+      </choose>
+
+    </select>
+
+
+</mapper>

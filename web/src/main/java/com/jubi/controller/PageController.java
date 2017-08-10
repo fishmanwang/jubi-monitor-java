@@ -133,4 +133,14 @@ public class PageController {
 
         return mv;
     }
+
+    @RequestMapping("/coin/order/info.html")
+    public ModelAndView coinOrderInfoPage() {
+        List<CoinVo> coins = coinService.getAllCoins();
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("coin-info");
+
+        return mv;
+    }
 }

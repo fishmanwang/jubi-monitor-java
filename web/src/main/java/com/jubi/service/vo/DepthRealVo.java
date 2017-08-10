@@ -3,6 +3,8 @@ package com.jubi.service.vo;
 import java.util.List;
 
 /**
+ * 市场深度实时信息
+ *
  * Created by Administrator on 2017/8/9.
  */
 public class DepthRealVo {

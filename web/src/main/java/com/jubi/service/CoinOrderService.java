@@ -13,12 +13,10 @@ package com.jubi.service;
 
 import com.google.common.base.Preconditions;
 import com.jubi.dao.CoinOrderDao;
-import com.jubi.dao.entity.CoinOrderEntity;
-import com.jubi.dao.entity.CoinOrderEntityExample;
-import com.jubi.service.vo.CoinOrderVo;
-import com.jubi.util.BeanMapperUtil;
+import com.jubi.dao.CoinOrderExtDao;
+import com.jubi.dao.vo.CoinOrderNumVo;
+import com.jubi.service.vo.CoinOrderStatisticVo;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,42 +28,37 @@ public class CoinOrderService {
     @Autowired
     private CoinOrderDao coinOrderDao;
 
+    @Autowired
+    private CoinOrderExtDao coinOrderExtDao;
+
     /**
-     * 获取最近两小时内(上一小时+当前小时)所有交易信息
+     * 获取交易信息
      *
      * @param coin
      * @return
      */
-    public List<CoinOrderVo> queryRecentOrders(String coin) {
+    public CoinOrderStatisticVo queryOrderStatistics(String coin, int time) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "虚拟币不能为空");
+        Preconditions.checkArgument(time > 0, "时间必须大于0");
 
-        DateTime dateTime = new DateTime();
-        dateTime = dateTime.withMillisOfSecond(0);
-        dateTime = dateTime.withSecondOfMinute(0);
-        dateTime = dateTime.withMinuteOfHour(0);
+        CoinOrderStatisticVo result = new CoinOrderStatisticVo();
 
-        System.out.println(dateTime.getMillis());
+        CoinOrderNumVo plusVo = coinOrderExtDao.queryStatistic(coin, time, true);
+        CoinOrderNumVo minusVo = coinOrderExtDao.queryStatistic(coin, time, false);
 
-        List<CoinOrderVo> result;
-
-        int beginTime = Long.valueOf(dateTime.getMillis() / 1000).intValue();
-        CoinOrderEntityExample exam = new CoinOrderEntityExample();
-        exam.createCriteria().andTradeTimeGreaterThanOrEqualTo(beginTime);
-
-        List<CoinOrderEntity> ds = coinOrderDao.selectByExample(exam);
-
-//        ConvertUtils.register(new Converter() {
-//
-//            @Override
-//            public Object convert(Class aClass, Object o) {
-//                return new Date(Long.valueOf((Integer) o) * 1000);
-//            }
-//        }, Date.class);
-
-        result = BeanMapperUtil.mapList(ds, CoinOrderVo.class);
-
-//        ConvertUtils.deregister(Date.class);
-
+        int count = plusVo.getCount() + minusVo.getCount();
+        long buyCount = plusVo.getCount();
+        long buyAmount = plusVo.getAmount();
+        long buyTotal = plusVo.getTotal();
+        long sellCount = minusVo.getCount();
+        long sellAmount = minusVo.getAmount();
+        long sellTotal = minusVo.getTotal();
+        result.setBuyCount(buyCount);
+        result.setBuyAmount(buyAmount);
+        result.setBuyTotal(buyTotal);
+        result.setSellCount(sellCount);
+        result.setSellAmount(sellAmount);
+        result.setSellTotal(sellTotal);
 
         return result;
     }
