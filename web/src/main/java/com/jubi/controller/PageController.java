@@ -29,8 +29,10 @@ public class PageController {
     public ModelAndView index() {
         List<TickerRateVo> rankedRate = tickerRateService.queryRankedTickerRate();
 
+        List<CoinVo> coins = coinService.getAllCoins();
         ModelAndView mv = new ModelAndView();
         mv.addObject("rankedRate", rankedRate);
+        mv.addObject("coins", coins);
         mv.setViewName("index");
 
         return mv;
