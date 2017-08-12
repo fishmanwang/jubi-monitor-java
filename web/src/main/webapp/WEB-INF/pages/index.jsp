@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<html>
+<!DOCTYPE html>
 <head>
     <title>首页</title>
 </head>
@@ -34,6 +34,16 @@
         <a href="${ctx}/page/coin/depth/cmp.html">深度对比</a>
         <a href="${ctx}/page/coin/depth/history.html">深度历史</a>
     </div>
+    <div>
+        <h3>概览</h3>
+        <select id="coinSel">
+            <option value="">请选择币种</option>
+            <c:forEach items="${coins}" var="coin">
+                <option value="${coin.code}">${coin.name}</option>
+            </c:forEach>
+        </select>
+
+    </div>
 </div>
 
 <div style="float: left; margin-left: 30px;">
@@ -54,5 +64,6 @@
     </table>
 </div>
 
+<script src="${ctx}/js/jquery-1.12.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jubi/index.js"></script>
 </body>
-</html>

@@ -1,15 +1,28 @@
-$(function() {
+$(function () {
     if (!coin) {
         alert("请传入虚拟币");
         return;
     }
-    queryCoinTicker();
-    queryRealTimeDepth();
-    queryLastOrderStatistic();
+    bindBtns();
+    //queryCoinTicker();
+    //queryRealTimeDepth();
+    //queryLastOrderStatistic();
 });
 
 var coin = $("#coinInput").val();
 var ctx = $("#ctx").val();
+
+function bindBtns() {
+    $("#tickerShowBtn").off("click").on("click", function () {
+        queryCoinTicker();
+    });
+    $("#depthShowBtn").off("click").on("click", function () {
+        queryRealTimeDepth();
+    });
+    $("#orderShowBtn").off("click").on("click", function () {
+        queryLastOrderStatistic();
+    });
+}
 
 /**
  * 查询实时行情
@@ -37,7 +50,29 @@ function queryRealTimeDepth() {
             alert(json.message);
             return;
         }
-        console.log(json.data)
+        var asks = json.data.asks.reverse();
+        var bids = json.data.bids.reverse();
+        var price = json.data.price;
+        var xds = [];
+        var yds = [];
+        var buyTotal = 0;
+        var sellTotal = 0;
+        $.each(bids, function (index, data) {
+            xds.push(data[0]);
+            yds.push(data[1]);
+            buyTotal += data[0] * data[1];
+        });
+        xds.push(price);
+        yds.push(0);
+        $.each(asks, function (index, data) {
+            xds.push(data[0]);
+            yds.push(data[1]);
+            sellTotal += data[0] * data[1];
+        });
+        $("#buyTotalSpan").text(Math.round(buyTotal));
+        $("#sellTotalSpan").text(Math.round(sellTotal));
+        $("#rateSpan").text((buyTotal / sellTotal).toFixed(2));
+        renderDepth(xds, yds);
     });
 }
 
@@ -46,10 +81,10 @@ function renderOrderInfo(json) {
     $("#orderDiv").html("");
     var html = "<table width='400px'>"
         + "<tr><td width='25%'></td><td width='25%'>买</td><td width='25%'>卖</td><td>总计</td></tr>"
-        + "<tr><td>交易次数</td><td>"+json.buyCount+"</td><td>"+json.sellCount+"</td><td>"+(json.buyCount+json.sellCount)+"</td></tr>"
-        + "<tr><td>交易量</td><td>"+json.buyAmount+"</td><td>"+json.sellAmount+"</td><td>"+(json.buyAmount+json.sellAmount)+"</td></tr>"
-        + "<tr><td>交易金额</td><td>"+json.buyTotal+"</td><td>"+json.sellTotal+"</td><td>"+(json.buyTotal+json.sellTotal)+"</td></tr>"
-        "</table>";
+        + "<tr><td>交易次数</td><td>" + json.buyCount + "</td><td>" + json.sellCount + "</td><td>" + (json.buyCount + json.sellCount) + "</td></tr>"
+        + "<tr><td>交易量</td><td>" + json.buyAmount + "</td><td>" + json.sellAmount + "</td><td>" + (json.buyAmount + json.sellAmount) + "</td></tr>"
+        + "<tr><td>交易金额</td><td>" + json.buyTotal + "</td><td>" + json.sellTotal + "</td><td>" + (json.buyTotal + json.sellTotal) + "</td></tr>"
+    "</table>";
     $("#orderDiv").html(html);
 }
 
@@ -78,6 +113,53 @@ function prepareTickerData(ds) {
     return [xds, yds]
 }
 
+var depthCharts = echarts.init(document.getElementById('depthDiv'), 'macarons');
+/**
+ * 渲染实时深度
+ * @param price
+ * @param xds
+ * @param yds
+ */
+function renderDepth(xds, yds) {
+    var option = {
+        title: {
+            text: '深度情况'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: xds
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '数量',
+                type: 'bar',
+                data: yds,
+                markPoint: {
+                    symbolSize: 100,
+                    data: [
+                        {type: "min", name: "当前价格"}
+                    ]
+                }
+            }
+        ]
+    };
+
+    depthCharts.setOption(option);
+}
+
+// 基于准备好的dom，初始化echarts图表
+var tickerCharts = echarts.init(document.getElementById('tickerDiv'), 'macarons');
 /**
  *
  * @param xds
@@ -85,9 +167,6 @@ function prepareTickerData(ds) {
  * @param origin 最近一天开盘价
  */
 function renderTicker(xds, yds) {
-    // 基于准备好的dom，初始化echarts图表
-    var myChart = echarts.init(document.getElementById('tickerDiv'), 'macarons');
-
     var option = {
         title: {
             text: '行情走势'
@@ -130,7 +209,6 @@ function renderTicker(xds, yds) {
             }
         ]
     };
-
     // 为echarts对象加载数据
-    myChart.setOption(option);
+    tickerCharts.setOption(option);
 }

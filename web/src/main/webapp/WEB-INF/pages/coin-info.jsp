@@ -9,23 +9,30 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp"/>
 
 <input id="coinInput" type="hidden" value="${coin}"/>
 
 <div id="mainDiv">
     <div>
+        <div><span>近期行情</span>&nbsp;<span><input id="tickerShowBtn" type="button" value="查看/刷新"/></span></div>
         <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-        <div id="tickerDiv" style="height:600px"></div>
+        <div id="tickerDiv" style="height:300px"></div>
     </div>
 
     <div>
-        <div>实时深度</div>
-        <div id="depthDiv"></div>
+        <div>
+            <span>实时深度</span>&nbsp;
+            <span><input id="depthShowBtn" type="button" value="查看/刷新"/></span>&nbsp;
+            <span>买总金额: <span id="buyTotalSpan" style="margin-left:5px">0</span></span> &nbsp;
+            <span>卖总金额:<span id="sellTotalSpan" style="margin-left:5px">0</span></span> &nbsp;
+            <span>买/卖比率:<span id="rateSpan" style="margin-left:5px">0</span></span>
+        </div>
+        <div id="depthDiv" style="height:300px"></div>
     </div>
 
     <div>
-        <div>近期交易情况</div>
+        <div><span>近期交易情况</span>&nbsp;<span><input id="orderShowBtn" type="button" value="查看/刷新"/></span></div>
         <div id="orderDiv">
 
         </div>
