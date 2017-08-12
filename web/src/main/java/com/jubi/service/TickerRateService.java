@@ -68,14 +68,13 @@ public class TickerRateService {
         param.setSpan(span);
         param.setEnd(end);
 
-        PageBounds pb = new PageBounds(1, Constants.PAGE_COUNT_LIMIT, false);
-        pb.setOrders(Arrays.asList(SortBy.create("pk", "desc")));
-
         List<TickerRateEntity> ds = null;
         if (span <= 3600) {
+            PageBounds pb = new PageBounds(1, Constants.PAGE_COUNT_LIMIT, false);
+            pb.setOrders(Arrays.asList(SortBy.create("pk", "desc")));
             ds = tickerRateExtDao.queryTickerRate(param, pb);
         } else {
-            ds = tickerRateExtDao.queryHourTickerRate(param, pb);
+            ds = tickerRateExtDao.queryHourTickerRate(param, Constants.PAGE_COUNT_LIMIT);
         }
 
         if (ds.size() == 0) {

@@ -19,7 +19,8 @@
     </select>
 
     <select id="queryHourTickerRate" parameterType="com.jubi.dao.vo.TickerRateSpanParam" resultMap="rateMap">
-        select (pk - 28800) as pk, rate from jb_coin_rate
+        select r.pk pk, r.rate rate from jb_coin_rate r,
+        (select (pk - 28800) as pk, rate from jb_coin_rate
         where (pk mod #{param.span}) = 0 and coin = #{param.coin}
         <if test="param.start != null">
             and pk &gt;= #{param.start}
@@ -27,6 +28,7 @@
         <if test="param.end != null">
             and pk &lt; #{param.end}
         </if>
+        order by pk desc limit #{limit}) t where r.pk = t.pk and r.coin = #{param.coin}
     </select>
 
 </mapper>

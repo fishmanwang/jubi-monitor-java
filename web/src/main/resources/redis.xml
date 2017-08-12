@@ -29,7 +29,7 @@
         <property name="hostName" value="${REDIS_HOST}"/>
         <property name="port" value="${REDIS_PORT}"/>
         <property name="timeout" value="15000"/>
-        <property name="database" value="0"/>
+        <property name="database" value="1"/>
         <property name="password" value="${REDIS_PASSWORD}"/>
         <property name="usePool" value="true"/>
         <property name="poolConfig" ref="jedisPoolConfig"/>

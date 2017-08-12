@@ -59,15 +59,15 @@ public class LoginController extends AbstractController {
              */
             SecurityUtils.getSubject().login(token);
         } catch (UnknownAccountException uae) {
-            throw new ApplicationException(UserErrorCode.USER_NO_EXIST, username);
+            throw new ApplicationException(UserErrorCode.USER_NO_EXIST, "用户名/密码错误");
         } catch (LockedAccountException lae) {
             logger.info("Account {} is locked!", username);
             //throw new AuthenticationException("登录失败：账户被锁定，请联系系统管理员解锁。");
-            throw new ApplicationException(UserErrorCode.USER_ACCOUNT_LOCKED, username);
+            throw new ApplicationException(UserErrorCode.USER_ACCOUNT_LOCKED, "登录失败：账户被锁定");
         } catch (AuthenticationException ae) {
             logger.info("User {} login failed: {}", username, ae.getMessage());
             //throw new AuthenticationException("登录失败：用户名/密码输入有误，请确认后重试。");
-            throw new ApplicationException(UserErrorCode.USER_AUTH_EORR);
+            throw new ApplicationException(UserErrorCode.USER_AUTH_EORR, "用户名/密码错误");
         }
         UserBean bean = (UserBean) SecurityUtils.getSubject().getPrincipal();
         logger.info("用户{}在{}登录了系统。", bean.getUsername(), new Date());
