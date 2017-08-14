@@ -31,7 +31,7 @@ import java.util.List;
 public class TickerService {
 
     @Autowired
-    private TickerDao    tickerDao;
+    private TickerDao tickerDao;
 
     @Autowired
     private TickerExtDao tickerExtDao;
@@ -73,6 +73,7 @@ public class TickerService {
 
     /**
      * 查询当日行情
+     *
      * @param coin
      * @return
      */
@@ -105,6 +106,7 @@ public class TickerService {
 
     /**
      * 获取指定日历史行情
+     *
      * @param coin
      * @param year
      * @param month
@@ -142,6 +144,7 @@ public class TickerService {
 
     /**
      * 获取最后的行情
+     *
      * @param coin
      * @return
      */
@@ -159,6 +162,59 @@ public class TickerService {
         TickerEntity t = ds.get(0);
         TickerPriceVo vo = BeanMapperUtil.map(t, TickerPriceVo.class);
         return Optional.of(vo);
+    }
+
+    /**
+     * 获取所有币的最新行情
+     *
+     * @return
+     */
+    public Double queryLastTickerPrice(String coin) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
+        int ct = Long.valueOf(System.currentTimeMillis() / 1000).intValue();
+        return doQueryPriceAtPk(coin, ct);
+    }
+
+    public Double queryPriceAtPk(String coin, Integer pk) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
+        Preconditions.checkArgument(pk != null && pk > 0, "非法时间");
+        return doQueryPriceAtPk(coin, pk);
+    }
+
+    /**
+     * 获取指定时间的价格
+     *
+     * @param coin
+     * @param pk
+     * @return
+     */
+    private Double doQueryPriceAtPk(String coin, Integer pk) {
+        TickerEntityExample exam = new TickerEntityExample();
+        exam.createCriteria().andCoinEqualTo(coin).andPkLessThanOrEqualTo(pk);
+        PageBounds pb = new PageBounds(1, 1, false);
+        List<TickerEntity> ds = tickerDao.selectByExampleWithPageBounds(exam, pb);
+        if (ds.size() == 0) {
+            return 0d;
+        }
+        return ds.get(0).getPrice();
+    }
+
+    /**
+     * 获取指定时间最近的有数据的 PK
+     *
+     * @param time
+     * @return
+     */
+    private Integer getLastPk(int time) {
+        TickerEntityExample exam = new TickerEntityExample();
+        exam.createCriteria().andPkLessThanOrEqualTo(time);
+        exam.setOrderByClause("pk desc");
+        PageBounds pb = new PageBounds(1, 1, false);
+        List<TickerEntity> ds = tickerDao.selectByExampleWithPageBounds(exam, pb);
+        if (ds.size() == 0) {
+            return 0;
+        }
+        return ds.get(0).getPk();
     }
 
 }
