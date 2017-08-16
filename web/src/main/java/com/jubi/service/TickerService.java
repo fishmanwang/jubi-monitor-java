@@ -10,14 +10,18 @@ import com.jubi.dao.entity.TickerEntity;
 import com.jubi.dao.entity.TickerEntityExample;
 import com.jubi.dao.vo.TickerSpanParam;
 import com.jubi.service.vo.TickerPriceVo;
+import com.jubi.service.vo.TickerVo;
 import com.jubi.util.BeanMapperUtil;
 import com.jubi.util.DateUtils;
+import com.jubi.util.RedisCacheUtil;
 import com.mybatis.domain.PageBounds;
 import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -35,6 +39,12 @@ public class TickerService {
 
     @Autowired
     private TickerExtDao tickerExtDao;
+
+    @Autowired
+    private RedisCacheUtil redisCacheUtil;
+
+    @Autowired
+    private RedisTemplate<String, List> redisTemplate;
 
     @Cacheable(value = "ticker", keyGenerator = "defaultKeyGenerator")
     public List<TickerPriceVo> queryTickers(String coin, Integer span) {
@@ -69,6 +79,19 @@ public class TickerService {
 
         result = BeanMapperUtil.mapList(ds, TickerPriceVo.class);
         return result;
+    }
+
+    /**
+     * 获取当前所有行情
+     *
+     * @return
+     */
+    public List<TickerVo> getRecentTickers() {
+        List<TickerVo> list = Lists.newArrayList();
+        //String str = redisCacheUtil.getCacheObject(Constants.CURRENT_TICKERS_KEY);
+        ValueOperations<String, List> ops = redisTemplate.opsForValue();
+
+        return list;
     }
 
     /**

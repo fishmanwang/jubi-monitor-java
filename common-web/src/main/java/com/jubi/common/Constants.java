@@ -21,4 +21,9 @@ public class Constants {
     public static final String REMEMBER_USERNAME = "rememberUsername";
     public static final String DEFAULT_CAPTCHA_PARAM = "captcha";
 
+    /**
+     * redis中保存的当前行情
+     */
+    public static final String CURRENT_TICKERS_KEY = "current_tickers_key";
+
 }

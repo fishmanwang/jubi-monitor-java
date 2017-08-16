@@ -29,7 +29,7 @@
         <property name="hostName" value="${REDIS_HOST}"/>
         <property name="port" value="${REDIS_PORT}"/>
         <property name="timeout" value="15000"/>
-        <property name="database" value="1"/>
+        <property name="database" value="0"/>
         <property name="password" value="${REDIS_PASSWORD}"/>
         <property name="usePool" value="true"/>
         <property name="poolConfig" ref="jedisPoolConfig"/>
@@ -47,6 +47,7 @@
             <bean
                     class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
         </property>
+        <!--<property name="valueSerializer" ref="stringKeySerializer"/>-->
         <property name="hashValueSerializer">
             <bean
                     class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
@@ -54,6 +55,8 @@
     </bean>
 
     <bean id="stringKeySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <bean id="jacksonKeySerializer"
+          class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"></bean>
 
     <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
         <constructor-arg name="redisOperations" ref="redisTemplate"/>

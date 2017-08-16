@@ -40,6 +40,6 @@
 
     <import resource="user-context.xml"/>
     <import resource="mybatis.xml"/>
-    <!--<import resource="redis.xml"/>-->
+    <import resource="redis.xml"/>
 
 </beans>
