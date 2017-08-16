@@ -4,8 +4,6 @@
  */
 package com.jubi.service.vo;
 
-import java.io.Serializable;
-
 /**
  * 详细行情
  *
