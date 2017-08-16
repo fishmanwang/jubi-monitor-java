@@ -44,7 +44,7 @@ public class TickerService {
     private RedisCacheUtil redisCacheUtil;
 
     @Autowired
-    private RedisTemplate<String, List> redisTemplate;
+    private RedisTemplate<String, TickerVo> redisTemplate;
 
     @Cacheable(value = "ticker", keyGenerator = "defaultKeyGenerator")
     public List<TickerPriceVo> queryTickers(String coin, Integer span) {
@@ -88,9 +88,9 @@ public class TickerService {
      */
     public List<TickerVo> getRecentTickers() {
         List<TickerVo> list = Lists.newArrayList();
-        //String str = redisCacheUtil.getCacheObject(Constants.CURRENT_TICKERS_KEY);
-        ValueOperations<String, List> ops = redisTemplate.opsForValue();
-
+//        TickerVo vo = redisCacheUtil.getCacheObject("cache_ticker_ltc");
+        ValueOperations<String, TickerVo> ops = redisTemplate.opsForValue();
+        TickerVo vo = ops.get("cache_ticker_ltc");
         return list;
     }
 

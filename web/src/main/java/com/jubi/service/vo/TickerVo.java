@@ -13,6 +13,11 @@ package com.jubi.service.vo;
 public class TickerVo {
 
     /**
+     * 币
+     */
+    private String coin;
+
+    /**
      * 时间
      */
     private Integer pk;
@@ -51,6 +56,14 @@ public class TickerVo {
      * 成交额
      */
     private Double volume;
+
+    public String getCoin() {
+        return coin;
+    }
+
+    public void setCoin(String coin) {
+        this.coin = coin;
+    }
 
     public Integer getPk() {
         return pk;
