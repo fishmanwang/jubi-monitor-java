@@ -4,8 +4,12 @@
  */
 package com.jubi.service;
 
+import com.jubi.service.vo.TickerVo;
+import com.jubi.util.ObjectMapperUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author tjwang
@@ -18,7 +22,8 @@ public class TickerServiceTest extends BaseServiceTest {
 
     @Test
     public void testGetCurrentTickers() {
-        tickerService.getRecentTickers();
+        List<TickerVo> ds = tickerService.getRecentTickers();
+        System.out.println("size : " + ds.size());
     }
 
 }

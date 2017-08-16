@@ -43,15 +43,13 @@
             <bean
                     class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
-        <property name="valueSerializer">
-            <bean
-                    class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
-        </property>
+        <property name="valueSerializer" ref="jacksonKeySerializer"/>
         <!--<property name="valueSerializer" ref="stringKeySerializer"/>-->
-        <property name="hashValueSerializer">
-            <bean
-                    class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
-        </property>
+        <property name="hashValueSerializer" ref="jacksonKeySerializer"/>
+    </bean>
+
+    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
     </bean>
 
     <bean id="stringKeySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>

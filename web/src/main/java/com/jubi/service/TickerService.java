@@ -9,10 +9,12 @@ import com.jubi.dao.TickerExtDao;
 import com.jubi.dao.entity.TickerEntity;
 import com.jubi.dao.entity.TickerEntityExample;
 import com.jubi.dao.vo.TickerSpanParam;
+import com.jubi.service.vo.CoinVo;
 import com.jubi.service.vo.TickerPriceVo;
 import com.jubi.service.vo.TickerVo;
 import com.jubi.util.BeanMapperUtil;
 import com.jubi.util.DateUtils;
+import com.jubi.util.ObjectMapperUtil;
 import com.jubi.util.RedisCacheUtil;
 import com.mybatis.domain.PageBounds;
 import com.mybatis.domain.SortBy;
@@ -20,7 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
@@ -41,10 +43,13 @@ public class TickerService {
     private TickerExtDao tickerExtDao;
 
     @Autowired
+    private CoinService coinService;
+
+    @Autowired
     private RedisCacheUtil redisCacheUtil;
 
     @Autowired
-    private RedisTemplate<String, TickerVo> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Cacheable(value = "ticker", keyGenerator = "defaultKeyGenerator")
     public List<TickerPriceVo> queryTickers(String coin, Integer span) {
@@ -88,9 +93,17 @@ public class TickerService {
      */
     public List<TickerVo> getRecentTickers() {
         List<TickerVo> list = Lists.newArrayList();
-//        TickerVo vo = redisCacheUtil.getCacheObject("cache_ticker_ltc");
-        ValueOperations<String, TickerVo> ops = redisTemplate.opsForValue();
-        TickerVo vo = ops.get("cache_ticker_ltc");
+        ValueOperations ops = stringRedisTemplate.opsForValue();
+
+        List<CoinVo> coins = coinService.getAllCoins();
+        for (CoinVo c : coins) {
+            String coin = c.getCode();
+            String key = "cache_ticker_" + coin;
+            String str = (String)ops.get("cache_ticker_ltc");
+            if (StringUtils.isNotBlank(str)) {
+                list.add(ObjectMapperUtil.read(str, TickerVo.class));
+            }
+        }
         return list;
     }
 
