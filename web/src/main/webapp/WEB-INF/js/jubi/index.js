@@ -39,8 +39,8 @@ function buildTickers(json) {
         var beginRate = !beginPrice ? 0 : ((price - beginPrice) / beginPrice * 100).toFixed(2) + "%"
         var threeRate = !threePrice ? 0 : ((price - threePrice) / threePrice * 100).toFixed(2) + "%"
         var sevenRate = !sevenPrice ? 0 : ((price - sevenPrice) / sevenPrice * 100).toFixed(2) + "%"
-        var fiftyRate = !sevenPrice ? 0 : ((price - fiftyPrice) / sevenPrice * 100).toFixed(2) + "%"
-        var monthRate = !sevenPrice ? 0 : ((price - monthPrice) / sevenPrice * 100).toFixed(2) + "%"
+        var fiftyRate = !fiftyPrice ? 0 : ((price - fiftyPrice) / fiftyPrice * 100).toFixed(2) + "%"
+        var monthRate = !monthPrice ? 0 : ((price - monthPrice) / monthPrice * 100).toFixed(2) + "%"
 
         var d = [data.name + ' ' + data.coin.toUpperCase(), data.last, data.low, data.high, data.vol, data.volume,
             beginRate, threeRate, sevenRate, fiftyRate, monthRate]
