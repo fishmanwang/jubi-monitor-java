@@ -44,6 +44,11 @@ public class TickerController {
     @RequestMapping(value = "/coins/recent", method = RequestMethod.GET)
     public RestResult queryCoinsRecentTickers() {
         List<TickerVo> tickers = tickerService.getRecentTickers();
+
+        if (tickers.size() == 0) {
+            return RestResult.ok();
+        }
+
         Map<String, TickerVo> tickerMap = tickers.stream().collect(Collectors.toMap(TickerVo::getCoin, p -> p));
 
         DateTime d = new DateTime();

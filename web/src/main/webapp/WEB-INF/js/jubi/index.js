@@ -42,7 +42,7 @@ function buildTickers(json) {
         var fiftyRate = !sevenPrice ? 0 : ((price - fiftyPrice) / sevenPrice * 100).toFixed(2) + "%"
         var monthRate = !sevenPrice ? 0 : ((price - monthPrice) / sevenPrice * 100).toFixed(2) + "%"
 
-        var d = [data.name, data.last, data.low, data.high, data.vol, data.volume,
+        var d = [data.name + ' ' + data.coin.toUpperCase(), data.last, data.low, data.high, data.vol, data.volume,
             beginRate, threeRate, sevenRate, fiftyRate, monthRate]
         ds.push(d)
     })
@@ -55,7 +55,7 @@ function renderTickers() {
 
     var cs = [];
     $.each(cols, function (index, col) {
-        cs.push({title: col});
+        cs.push({title: col})
     });
 
     var url = ctx + "/ticker/coins/recent?t=" + Math.random();
@@ -70,7 +70,7 @@ function renderTickers() {
         paging: false,
         scrollY: 600
     });
-    
+
     setInterval(function () {
         table.ajax.reload()
     }, 10000);
