@@ -52,6 +52,11 @@ public class TickerController {
         int threePk = Long.valueOf(DateUtils.truncate(d.toDate(), Calendar.DAY_OF_MONTH).getTime() / 1000).intValue();
         d = d.plusDays(-4);
         int sevenPk = Long.valueOf(DateUtils.truncate(d.toDate(), Calendar.DAY_OF_MONTH).getTime() / 1000).intValue();
+        d = d.plusDays(-8);
+        int fiftyPk = Long.valueOf(DateUtils.truncate(d.toDate(), Calendar.DAY_OF_MONTH).getTime() / 1000).intValue();
+        d = d.plusDays(-15);
+        int monthPk = Long.valueOf(DateUtils.truncate(d.toDate(), Calendar.DAY_OF_MONTH).getTime() / 1000).intValue();
+
 
         List<TickerShowVo> rs = Lists.newArrayList();
         List<CoinVo> vos = coinService.getAllCoins();
@@ -64,9 +69,13 @@ public class TickerController {
             Double beginPrice = tickerService.queryPriceAtPk(coin, beginPk);
             Double threePrice = tickerService.queryPriceAtPk(coin, threePk);
             Double sevenPrice = tickerService.queryPriceAtPk(coin, sevenPk);
+            Double fiftyPrice = tickerService.queryPriceAtPk(coin, fiftyPk);
+            Double monthPrice = tickerService.queryPriceAtPk(coin, monthPk);
             svo.setBeginPrice(beginPrice);
             svo.setThreePrice(threePrice);
             svo.setSevenPrice(sevenPrice);
+            svo.setFiftyPrice(fiftyPrice);
+            svo.setMonthPrice(monthPrice);
             rs.add(svo);
         }
 

@@ -46,25 +46,8 @@
     </div>
 </div>
 
-<div style="float: left; margin-left: 30px;">
-    <h3>涨幅排行</h3>
-    <table width="300">
-        <tr>
-            <td width="20%">排行</td>
-            <td width="40%">名称</td>
-            <td>涨幅</td>
-        </tr>
-        <c:forEach var="item" varStatus="status" items="${rankedRate}">
-            <tr>
-                <td>${status.index + 1}</td>
-                <td>${item.name}</td>
-                <td>${item.rate}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
-
 <div style="float: left; margin-left: 30px;" id="tickerMainDiv" width="60%">
+    <table id="tickerMainTable" class="display" width="100%"></table>
 </div>
 
 <link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>

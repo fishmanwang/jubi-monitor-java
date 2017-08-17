@@ -76,6 +76,16 @@ public class TickerShowVo {
      */
     private Double sevenPrice;
 
+    /**
+     * 半个月前价格
+     */
+    private Double fiftyPrice;
+
+    /**
+     * 一个月前价格
+     */
+    private Double monthPrice;
+
     public String getCoin() {
         return coin;
     }
@@ -178,5 +188,21 @@ public class TickerShowVo {
 
     public void setSevenPrice(Double sevenPrice) {
         this.sevenPrice = sevenPrice;
+    }
+
+    public Double getFiftyPrice() {
+        return fiftyPrice;
+    }
+
+    public void setFiftyPrice(Double fiftyPrice) {
+        this.fiftyPrice = fiftyPrice;
+    }
+
+    public Double getMonthPrice() {
+        return monthPrice;
+    }
+
+    public void setMonthPrice(Double monthPrice) {
+        this.monthPrice = monthPrice;
     }
 }
