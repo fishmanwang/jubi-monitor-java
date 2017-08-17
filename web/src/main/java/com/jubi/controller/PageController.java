@@ -124,25 +124,5 @@ public class PageController {
 
         return mv;
     }
-
-    @RequestMapping("/coin/order.html")
-    public ModelAndView coinOrderQueryPage() {
-        List<CoinVo> coins = coinService.getAllCoins();
-
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("coins", coins);
-        mv.setViewName("coin-order");
-
-        return mv;
-    }
-
-    @RequestMapping("/coin/order/info.html")
-    public ModelAndView coinOrderInfoPage() {
-        List<CoinVo> coins = coinService.getAllCoins();
-
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("coin-info");
-
-        return mv;
-    }
+    
 }

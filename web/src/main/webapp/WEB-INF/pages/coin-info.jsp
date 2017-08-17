@@ -31,13 +31,6 @@
         <div id="depthDiv" style="height:300px"></div>
     </div>
 
-    <div>
-        <div><span>近期交易情况</span>&nbsp;<span><input id="orderShowBtn" type="button" value="查看/刷新"/></span></div>
-        <div id="orderDiv">
-
-        </div>
-    </div>
-
 </div>
 
 <!-- ECharts单文件引入 -->

@@ -4,9 +4,6 @@ $(function () {
         return;
     }
     bindBtns();
-    //queryCoinTicker();
-    //queryRealTimeDepth();
-    //queryLastOrderStatistic();
 });
 
 var coin = $("#coinInput").val();
@@ -18,9 +15,6 @@ function bindBtns() {
     });
     $("#depthShowBtn").off("click").on("click", function () {
         queryRealTimeDepth();
-    });
-    $("#orderShowBtn").off("click").on("click", function () {
-        queryLastOrderStatistic();
     });
 }
 
@@ -73,32 +67,6 @@ function queryRealTimeDepth() {
         $("#sellTotalSpan").text(Math.round(sellTotal));
         $("#rateSpan").text((buyTotal / sellTotal).toFixed(2));
         renderDepth(xds, yds);
-    });
-}
-
-function renderOrderInfo(json) {
-    console.log(json.buyCount)
-    $("#orderDiv").html("");
-    var html = "<table width='400px'>"
-        + "<tr><td width='25%'></td><td width='25%'>买</td><td width='25%'>卖</td><td>总计</td></tr>"
-        + "<tr><td>交易次数</td><td>" + json.buyCount + "</td><td>" + json.sellCount + "</td><td>" + (json.buyCount + json.sellCount) + "</td></tr>"
-        + "<tr><td>交易量</td><td>" + json.buyAmount + "</td><td>" + json.sellAmount + "</td><td>" + (json.buyAmount + json.sellAmount) + "</td></tr>"
-        + "<tr><td>交易金额</td><td>" + json.buyTotal + "</td><td>" + json.sellTotal + "</td><td>" + (json.buyTotal + json.sellTotal) + "</td></tr>"
-    "</table>";
-    $("#orderDiv").html(html);
-}
-
-/**
- * 查询最近的订单交易信息
- */
-function queryLastOrderStatistic() {
-    var url = ctx + "/coin/order/oh/" + coin + "?t=" + Math.random();
-    $.getJSON(url, function (json) {
-        if (json.status != '200') {
-            alert(json.message);
-            return
-        }
-        renderOrderInfo(json.data);
     });
 }
 
