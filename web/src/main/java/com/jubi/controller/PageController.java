@@ -124,5 +124,14 @@ public class PageController {
 
         return mv;
     }
-    
+
+    @RequestMapping("/coin/info.html")
+    public ModelAndView coinOrderInfoPage() {
+        
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("coin-info");
+
+        return mv;
+    }
+
 }
