@@ -4,10 +4,6 @@
  */
 package com.jubi.param;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
 /**
  * 用户信息。登录后存在缓存中的信息。
  *
@@ -20,10 +16,7 @@ public class UserBean {
 
     private String username;
 
-    private String lastLoginIp;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date lastLoginTime;
+    private String nickname;
 
     public Integer getId() {
         return id;
@@ -41,19 +34,11 @@ public class UserBean {
         this.username = username;
     }
 
-    public String getLastLoginIp() {
-        return lastLoginIp;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setLastLoginIp(String lastLoginIp) {
-        this.lastLoginIp = lastLoginIp;
-    }
-
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
