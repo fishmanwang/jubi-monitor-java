@@ -99,7 +99,7 @@ public class TickerService {
         for (CoinVo c : coins) {
             String coin = c.getCode();
             String key = "cache_ticker_" + coin;
-            String str = (String)ops.get("cache_ticker_ltc");
+            String str = (String) ops.get(key);
             if (StringUtils.isNotBlank(str)) {
                 list.add(ObjectMapperUtil.read(str, TickerVo.class));
             }
@@ -179,7 +179,7 @@ public class TickerService {
     }
 
     /**
-     * 获取最后的行情
+     * 获取最后的价格
      *
      * @param coin
      * @return
@@ -201,7 +201,7 @@ public class TickerService {
     }
 
     /**
-     * 获取所有币的最新行情
+     * 获取所有币的最新价格
      *
      * @return
      */
@@ -211,6 +211,14 @@ public class TickerService {
         return doQueryPriceAtPk(coin, ct);
     }
 
+    /**
+     * 获取指定时间的价格
+     *
+     * @param coin
+     * @param pk
+     * @return
+     */
+    @Cacheable(value = "ticker-history", keyGenerator = "defaultKeyGenerator")
     public Double queryPriceAtPk(String coin, Integer pk) {
         Preconditions.checkArgument(StringUtils.isNotBlank(coin), "币不能为空");
         Preconditions.checkArgument(pk != null && pk > 0, "非法时间");
@@ -227,30 +235,13 @@ public class TickerService {
     private Double doQueryPriceAtPk(String coin, Integer pk) {
         TickerEntityExample exam = new TickerEntityExample();
         exam.createCriteria().andCoinEqualTo(coin).andPkLessThanOrEqualTo(pk);
+        exam.setOrderByClause("pk desc");
         PageBounds pb = new PageBounds(1, 1, false);
         List<TickerEntity> ds = tickerDao.selectByExampleWithPageBounds(exam, pb);
         if (ds.size() == 0) {
             return 0d;
         }
         return ds.get(0).getPrice();
-    }
-
-    /**
-     * 获取指定时间最近的有数据的 PK
-     *
-     * @param time
-     * @return
-     */
-    private Integer getLastPk(int time) {
-        TickerEntityExample exam = new TickerEntityExample();
-        exam.createCriteria().andPkLessThanOrEqualTo(time);
-        exam.setOrderByClause("pk desc");
-        PageBounds pb = new PageBounds(1, 1, false);
-        List<TickerEntity> ds = tickerDao.selectByExampleWithPageBounds(exam, pb);
-        if (ds.size() == 0) {
-            return 0;
-        }
-        return ds.get(0).getPk();
     }
 
 }

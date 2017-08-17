@@ -61,11 +61,11 @@
         <property name="defaultExpiration" value="1800"/>
         <property name="expires">
             <map>
-                <entry key="coin" value="#{24 * 60 * 60}"/>
+                <entry key="coin" value="#{4 * 60 * 60}"/>
                 <entry key="ticker" value="#{30}"/>
-                <entry key="ticker-history" value="#{24 * 60 * 60}"/>
+                <entry key="ticker-history" value="#{4 * 60 * 60}"/>
                 <entry key="ticker-rate" value="#{30}"/>
-                <entry key="ticker-rate-history" value="#{24 * 60 * 60}"/>
+                <entry key="ticker-rate-history" value="#{4 * 60 * 60}"/>
             </map>
         </property>
     </bean>

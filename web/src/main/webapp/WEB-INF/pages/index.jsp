@@ -64,6 +64,11 @@
     </table>
 </div>
 
+<div style="float: left; margin-left: 30px;" id="tickerMainDiv" width="60%">
+</div>
+
+<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 <script src="${ctx}/js/jquery-1.12.1.min.js"></script>
+<script src="${ctx}/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jubi/index.js"></script>
 </body>
