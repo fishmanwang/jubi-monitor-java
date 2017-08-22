@@ -5,9 +5,8 @@ import com.jubi.service.AccountAdminService;
 import com.jubi.service.CoinService;
 import com.jubi.service.TickerRateService;
 import com.jubi.service.TickerService;
+import com.jubi.service.vo.AccountVo;
 import com.jubi.service.vo.CoinVo;
-import com.jubi.service.vo.FavoriteCoin;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/page")
-public class PageController {
+public class PageController extends AbstractController {
 
     @Autowired
     private CoinService coinService;
@@ -143,13 +142,12 @@ public class PageController {
 
     @RequestMapping("/account/admin.html")
     public ModelAndView goToAccountAdmin() {
-        UserBean user = (UserBean) SecurityUtils.getSubject().getPrincipal();
-
-        List<FavoriteCoin> fcs = accountAdminService.getFavoriteCoin(user.getId());
+        UserBean user = (UserBean) getUser();
         List<CoinVo> coins = coinService.getAllCoins();
+        AccountVo account = accountAdminService.getAccount(user.getId());
 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("favorite_coins", fcs);
+        mv.addObject("account", account);
         mv.addObject("coins", coins);
 
         mv.setViewName("account_admin");

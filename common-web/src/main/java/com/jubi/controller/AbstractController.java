@@ -1,9 +1,11 @@
 package com.jubi.controller;
 
+import com.jubi.param.UserBean;
 import com.jubi.util.JBStringUtils;
 import com.mybatis.domain.PageBounds;
 import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,10 @@ public abstract class AbstractController {
             return defaultValue;
         }
         return JBStringUtils.parseStringToInt(stringValue, defaultValue);
+    }
+
+    public UserBean getUser() {
+        return (UserBean) SecurityUtils.getSubject().getPrincipal();
     }
 
 }

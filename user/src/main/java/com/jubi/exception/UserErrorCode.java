@@ -43,7 +43,8 @@ public enum UserErrorCode implements ErrorCode {
             "邮箱已存在"),
 
     USER_NOT_LOGIN(1020, "用户未登录"),
-    USER_AUTH_EORR(1021, "用户名/密码错误");
+    USER_AUTH_EORR(1021, "用户名/密码错误"),
+    ACCOUNT_NOT_EXISTS(1100, "账户不存在");
 
     private int status;
     private String message;

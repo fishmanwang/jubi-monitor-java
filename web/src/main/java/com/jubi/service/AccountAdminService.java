@@ -8,14 +8,20 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.jubi.dao.AccountDao;
 import com.jubi.dao.UserCoinDao;
+import com.jubi.dao.entity.AccountEntity;
+import com.jubi.dao.entity.AccountEntityExample;
 import com.jubi.dao.entity.UserCoinEntity;
 import com.jubi.dao.entity.UserCoinEntityExample;
+import com.jubi.exception.ApplicationException;
+import com.jubi.exception.UserErrorCode;
+import com.jubi.service.vo.AccountVo;
 import com.jubi.service.vo.FavoriteCoin;
 import com.jubi.util.BeanMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +39,29 @@ public class AccountAdminService {
 
     @Autowired
     private UserCoinDao userCoinDao;
+
+    public void saveAccount(int userId, AccountVo vo) {
+        Preconditions.checkArgument(userId > 0, "用户不能为空");
+        AccountEntityExample exam = new AccountEntityExample();
+        exam.createCriteria().andUserIdEqualTo(userId);
+
+        AccountEntity account = BeanMapperUtil.map(vo, AccountEntity.class);
+        account.setUpdateTime(new Date());
+        accountDao.updateByExampleSelective(account, exam);
+    }
+
+    public AccountVo getAccount(int userId) {
+        Preconditions.checkArgument(userId > 0, "用户不能为空");
+
+        AccountEntityExample exam = new AccountEntityExample();
+        exam.createCriteria().andUserIdEqualTo(userId);
+
+        List<AccountEntity> ds = accountDao.selectByExample(exam);
+        if (ds.size() == 0) {
+            throw new ApplicationException(UserErrorCode.ACCOUNT_NOT_EXISTS);
+        }
+        return BeanMapperUtil.map(ds.get(0), AccountVo.class);
+    }
 
     /**
      * 设置感兴趣的币
