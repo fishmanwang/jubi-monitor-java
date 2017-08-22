@@ -7,9 +7,11 @@ package com.jubi.service;
 import com.jubi.dao.UserDao;
 import com.jubi.dao.entity.User;
 import com.jubi.dao.entity.UserExample;
+import com.jubi.event.UserCreateEvent;
 import com.jubi.exception.ApplicationException;
 import com.jubi.exception.UserErrorCode;
 import com.jubi.service.vo.UserRegisterParam;
+import com.jubi.spring.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,7 +147,11 @@ public class UserService {
         user.setSalt(salt);
         user.setCreateTime(now);
 
-        return createUser(user);
+        Integer userId = createUser(user);
+
+        SpringContextHolder.getApplicationContext().publishEvent(new UserCreateEvent(userId));
+
+        return userId;
     }
 
     private Integer createUser(User user) {

@@ -17,7 +17,6 @@
         <log4j.version>2.6.2</log4j.version>
         <mybatis.version>3.3.1</mybatis.version>
         <junit.version>4.12</junit.version>
-        <httpclient.version>4.5</httpclient.version>
         <asyncclient.version>4.1.2</asyncclient.version>
         <httpmime.version>4.5</httpmime.version>
         <httpcore.version>4.4.1</httpcore.version>
@@ -268,12 +267,6 @@
                 <groupId>taglibs</groupId>
                 <artifactId>standard</artifactId>
                 <version>1.1.2</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpclient.version}</version>
             </dependency>
 
             <dependency>

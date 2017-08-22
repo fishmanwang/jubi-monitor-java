@@ -10,6 +10,8 @@
         <bean id="encryptionService" class="com.jubi.service.EncryptionService">
         </bean>
 
+        <bean id="userCreateEventListener" class="com.jubi.listener.UserCreateEventListener"/>
+
     </beans>
 
 </beans>

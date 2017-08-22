@@ -29,11 +29,6 @@
         <a href="${ctx}/page/recent/rate.html">最新涨幅</a>
         <a href="${ctx}/page/history/rate.html">历史涨幅</a>
     </div>
-    <%--<div>--%>
-    <%--<h3>深度</h3>--%>
-    <%--<a href="${ctx}/page/coin/depth/cmp.html">深度对比</a>--%>
-    <%--<a href="${ctx}/page/coin/depth/history.html">深度历史</a>--%>
-    <%--</div>--%>
     <div>
         <h3>概览</h3>
         <select id="coinSel">
@@ -42,6 +37,11 @@
                 <option value="${coin.code}">${coin.name}</option>
             </c:forEach>
         </select>
+
+    </div>
+    <div>
+        <h3>账户信息</h3>
+        <a href="${ctx}/page/account/admin.html">账户管理</a>
 
     </div>
 </div>
