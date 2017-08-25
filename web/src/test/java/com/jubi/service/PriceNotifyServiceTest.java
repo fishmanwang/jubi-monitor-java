@@ -6,9 +6,10 @@ package com.jubi.service;
 
 import com.google.common.collect.Lists;
 import com.jubi.service.vo.CoinPriceNotifyVo;
-import com.jubi.service.vo.PriceNotifyVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author tjwang
@@ -23,9 +24,6 @@ public class PriceNotifyServiceTest extends BaseServiceTest {
     public void testAddPriceNotify() {
         Integer userId = 1;
 
-        PriceNotifyVo vo = new PriceNotifyVo();
-        vo.setUserId(userId);
-
         CoinPriceNotifyVo xasVo = new CoinPriceNotifyVo();
         xasVo.setCoin("xas");
         xasVo.setPrices(Lists.newArrayList(5.5d, 6.0d));
@@ -34,10 +32,9 @@ public class PriceNotifyServiceTest extends BaseServiceTest {
         rssVo.setCoin("rss");
         rssVo.setPrices(Lists.newArrayList(-2.2d, 2.7d));
 
-        vo.getVos().add(xasVo);
-        vo.getVos().add(rssVo);
+        List<CoinPriceNotifyVo> vos = Lists.newArrayList();
 
-        priceNotifyService.save(vo);
+        priceNotifyService.save(userId, vos);
 
     }
 

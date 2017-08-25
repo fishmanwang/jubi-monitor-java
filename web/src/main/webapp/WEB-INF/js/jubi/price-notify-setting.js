@@ -43,14 +43,22 @@ function bindBtnEvents() {
                 alert("价格不能等于0");
                 return;
             }
+            price = Number(price)
             var coin = $(this).attr("coin");
+            var currentPrice = $(this).attr("price");
             var prices = $(".pricesSpan[coin='" + coin + "']").data("prices");
             if (!prices) {
                 prices = []
             }
+            if (currentPrice > price) {
+                price = 0 - price;
+            }
             if (prices.indexOf(price) > -1) {
                 alert("价格已存在");
             } else {
+                if ((price > 0 && price >= currentPrice * 5) || (price < 0 && price <= currentPrice * 0.2)) {
+                    alert("设置价格与当前价相差较大，请确认设置是否正确")
+                }
                 prices.push(price)
                 prices.sort();
                 renderCoinPrices(coin, prices);
@@ -87,7 +95,7 @@ function bindBtnEvents() {
         });
     });
 
-    $("#main").off("click", ".delPriceSpan").on("click", ".delPriceSpan", function () {
+    $("#configArea").off("click", ".delPriceSpan").on("click", ".delPriceSpan", function () {
         var coin = $(this).attr("coin");
         var price = $(this).attr("price");
         var prices = $(".pricesSpan[coin='" + coin + "']").data("prices")

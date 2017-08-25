@@ -18,6 +18,8 @@ public class CoinPriceNotifyVo {
 
     private String coin;
 
+    private String name;
+
     private List<Double> prices = Lists.newArrayList();
 
     public String getCoin() {
@@ -26,6 +28,14 @@ public class CoinPriceNotifyVo {
 
     public void setCoin(String coin) {
         this.coin = coin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Double> getPrices() {

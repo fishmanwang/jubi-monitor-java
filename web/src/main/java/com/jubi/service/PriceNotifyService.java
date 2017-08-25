@@ -11,7 +11,6 @@ import com.jubi.dao.PriceNotifyDao;
 import com.jubi.dao.entity.PriceNotifyEntity;
 import com.jubi.dao.entity.PriceNotifyEntityExample;
 import com.jubi.service.vo.CoinPriceNotifyVo;
-import com.jubi.service.vo.PriceNotifyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,14 +63,12 @@ public class PriceNotifyService {
     /**
      * 增加价格提示配置
      *
-     * @param pnvo
+     * @param userId
+     * @param vos
      */
-    public void save(PriceNotifyVo pnvo) {
-        Preconditions.checkNotNull(pnvo);
-        Preconditions.checkNotNull(pnvo.getUserId());
-
-        Integer userId = pnvo.getUserId();
-        List<CoinPriceNotifyVo> vos = pnvo.getVos();
+    public void save(Integer userId, List<CoinPriceNotifyVo> vos) {
+        Preconditions.checkNotNull(userId);
+        Preconditions.checkNotNull(vos);
 
         List<PriceNotifyEntity> ents = Lists.newArrayList();
         for (CoinPriceNotifyVo vo : vos) {

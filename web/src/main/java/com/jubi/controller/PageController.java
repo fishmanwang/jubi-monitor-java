@@ -1,17 +1,24 @@
 package com.jubi.controller;
 
+import com.google.common.collect.Lists;
+import com.jubi.controller.vo.CoinPriceNotifyViewVo;
 import com.jubi.param.UserBean;
 import com.jubi.service.AccountAdminService;
 import com.jubi.service.CoinService;
+import com.jubi.service.TickerService;
 import com.jubi.service.vo.AccountVo;
 import com.jubi.service.vo.CoinVo;
 import com.jubi.service.vo.FavoriteCoin;
+import com.jubi.service.vo.TickerVo;
+import com.jubi.util.BeanMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 负责页面跳转
@@ -23,6 +30,9 @@ public class PageController extends AbstractController {
 
     @Autowired
     private CoinService coinService;
+
+    @Autowired
+    private TickerService tickerService;
 
     @Autowired
     private AccountAdminService accountAdminService;
@@ -151,8 +161,24 @@ public class PageController extends AbstractController {
     public ModelAndView goToNotifyPriceSettingPage() {
         ModelAndView mv = new ModelAndView();
 
+        List<CoinPriceNotifyViewVo> ds = Lists.newArrayList();
+
+        List<TickerVo> tickers = tickerService.getRecentTickers();
+        Map<String, TickerVo> tickerMap = tickers.stream().collect(Collectors.toMap(TickerVo::getCoin, p -> p));
+
+        Map<String, String> coinMap = coinService.getAllCoinsMap();
         List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(getUser().getId());
-        mv.addObject("fcoins", fcoins);
+        for (FavoriteCoin fc : fcoins) {
+            String coin = fc.getCoin();
+            String name = coinMap.get(coin);
+            CoinPriceNotifyViewVo vo = BeanMapperUtil.map(fc, CoinPriceNotifyViewVo.class);
+            vo.setName(name);
+            TickerVo ticker = tickerMap.get(coin);
+            vo.setPrice(ticker.getLast());
+            ds.add(vo);
+        }
+
+        mv.addObject("items", ds);
 
         mv.setViewName("price-notify-setting");
         return mv;

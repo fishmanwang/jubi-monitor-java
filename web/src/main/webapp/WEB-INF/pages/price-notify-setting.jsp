@@ -17,14 +17,18 @@
 <jsp:include page="header.jsp"/>
 
 <div id="main">
-    <c:forEach items="${fcoins}" var="fc">
-        <div>
-            <span>${fc.coin}:</span>
-            <span><input class="nofityAddBtn" coin="${fc.coin}" style="width: 80px;"/></span>
-            <span class="pricesSpan" coin="${fc.coin}"></span>
-        </div>
-    </c:forEach>
-    <div>
+    <div id="configArea">
+        <c:forEach items="${items}" var="item">
+            <div>
+                <span>${item.name}:</span>
+                <span>${item.price}</span>
+                <span><input class="nofityAddBtn" coin="${item.coin}" price="${item.price}"
+                             style="width: 80px;"/></span>
+                <span class="pricesSpan" coin="${item.coin}"></span>
+            </div>
+        </c:forEach>
+    </div>
+    <div style="margin-top: 10px">
         <input type="button" value="保存" id="saveBtn"/>
         <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
     </div>
