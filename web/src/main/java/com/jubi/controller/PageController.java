@@ -3,10 +3,9 @@ package com.jubi.controller;
 import com.jubi.param.UserBean;
 import com.jubi.service.AccountAdminService;
 import com.jubi.service.CoinService;
-import com.jubi.service.TickerRateService;
-import com.jubi.service.TickerService;
 import com.jubi.service.vo.AccountVo;
 import com.jubi.service.vo.CoinVo;
+import com.jubi.service.vo.FavoriteCoin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +23,6 @@ public class PageController extends AbstractController {
 
     @Autowired
     private CoinService coinService;
-
-    @Autowired
-    private TickerService tickerService;
-
-    @Autowired
-    private TickerRateService tickerRateService;
 
     @Autowired
     private AccountAdminService accountAdminService;
@@ -154,4 +147,14 @@ public class PageController extends AbstractController {
         return mv;
     }
 
+    @RequestMapping("/notify/price")
+    public ModelAndView goToNotifyPriceSettingPage() {
+        ModelAndView mv = new ModelAndView();
+
+        List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(getUser().getId());
+        mv.addObject("fcoins", fcoins);
+
+        mv.setViewName("price-notify-setting");
+        return mv;
+    }
 }
