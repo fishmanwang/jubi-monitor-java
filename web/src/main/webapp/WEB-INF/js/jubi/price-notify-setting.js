@@ -45,6 +45,9 @@ function bindBtnEvents() {
             }
             var coin = $(this).attr("coin");
             var prices = $(".pricesSpan[coin='" + coin + "']").data("prices");
+            if (!prices) {
+                prices = []
+            }
             if (prices.indexOf(price) > -1) {
                 alert("价格已存在");
             } else {
