@@ -37,7 +37,7 @@ public class PriceNotifyServiceTest extends BaseServiceTest {
         vo.getVos().add(xasVo);
         vo.getVos().add(rssVo);
 
-        priceNotifyService.addPriceNotify(vo);
+        priceNotifyService.save(vo);
 
     }
 

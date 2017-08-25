@@ -66,7 +66,7 @@ public class PriceNotifyService {
      *
      * @param pnvo
      */
-    public void addPriceNotify(PriceNotifyVo pnvo) {
+    public void save(PriceNotifyVo pnvo) {
         Preconditions.checkNotNull(pnvo);
         Preconditions.checkNotNull(pnvo.getUserId());
 

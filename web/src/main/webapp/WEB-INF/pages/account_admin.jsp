@@ -49,6 +49,7 @@
         </div>
         <div>
             <input id="saveFcoinsBtn" type="button" value="保存"/>
+            <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
         </div>
     </div>
 

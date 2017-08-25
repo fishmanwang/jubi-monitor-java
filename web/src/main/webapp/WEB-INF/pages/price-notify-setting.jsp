@@ -24,6 +24,10 @@
             <span class="pricesSpan" coin="${fc.coin}"></span>
         </div>
     </c:forEach>
+    <div>
+        <input type="button" value="保存" id="saveBtn"/>
+        <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
+    </div>
 </div>
 
 <!-- ECharts单文件引入 -->
