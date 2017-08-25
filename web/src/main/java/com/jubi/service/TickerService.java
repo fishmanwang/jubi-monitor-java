@@ -100,6 +100,7 @@ public class TickerService {
             String coin = c.getCode();
             String key = "cache_ticker_" + coin;
             String str = (String) ops.get(key);
+            System.out.println("coin cache : " + str);
             if (StringUtils.isNotBlank(str)) {
                 list.add(ObjectMapperUtil.read(str, TickerVo.class));
             }
