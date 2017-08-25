@@ -8,7 +8,6 @@ import com.jubi.service.TickerService;
 import com.jubi.service.vo.CoinVo;
 import com.jubi.service.vo.TickerVo;
 import com.jubi.util.BeanMapperUtil;
-import com.jubi.util.ObjectMapperUtil;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,6 @@ public class TickerController extends AbstractController {
     @RequestMapping(value = "/coins/recent", method = RequestMethod.GET)
     public RestResult queryCoinsRecentTickers() {
         List<TickerVo> tickers = tickerService.getRecentTickers();
-        logger.info(ObjectMapperUtil.writePretty(tickers));
 
         if (tickers.size() == 0) {
             return RestResult.ok();
