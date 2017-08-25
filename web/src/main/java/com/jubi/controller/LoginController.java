@@ -1,7 +1,6 @@
 package com.jubi.controller;
 
 import com.jubi.RestResult;
-import com.jubi.dao.entity.User;
 import com.jubi.exception.ApplicationException;
 import com.jubi.exception.BizErrorCode;
 import com.jubi.exception.UserErrorCode;
@@ -86,7 +85,7 @@ public class LoginController extends AbstractController {
     public RestResult logout() {
         Subject subject = SecurityUtils.getSubject();
         if (subject != null) {
-            User user = (User) subject.getPrincipal();
+            UserBean user = (UserBean) subject.getPrincipal();
             if (user != null) {
                 subject.logout();
                 logger.info("用户{}在{}退出了系统。", user.getUsername(), new Date());
