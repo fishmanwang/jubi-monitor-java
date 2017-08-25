@@ -56,7 +56,7 @@ function bindBtnEvents() {
             if (prices.indexOf(price) > -1) {
                 alert("价格已存在");
             } else {
-                if ((price > 0 && price >= currentPrice * 5) || (price < 0 && price <= currentPrice * 0.2)) {
+                if ((price > 0 && price >= currentPrice * 5) || (price < 0 && price >= 0 - currentPrice * 0.2)) {
                     alert("设置价格与当前价相差较大，请确认设置是否正确")
                 }
                 prices.push(price)
