@@ -20,6 +20,8 @@ import com.mybatis.domain.PageBounds;
 import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,6 +37,8 @@ import java.util.List;
  */
 @Service
 public class TickerService {
+
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private TickerDao tickerDao;
@@ -100,7 +104,7 @@ public class TickerService {
             String coin = c.getCode();
             String key = "cache_ticker_" + coin;
             String str = (String) ops.get(key);
-            System.out.println("coin cache : " + str);
+            logger.info("coin cache : " + str);
             if (StringUtils.isNotBlank(str)) {
                 list.add(ObjectMapperUtil.read(str, TickerVo.class));
             }

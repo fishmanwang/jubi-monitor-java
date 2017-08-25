@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/ticker")
-public class TickerController {
+public class TickerController extends AbstractController {
 
     @Autowired
     private CoinService coinService;
@@ -45,7 +45,7 @@ public class TickerController {
     @RequestMapping(value = "/coins/recent", method = RequestMethod.GET)
     public RestResult queryCoinsRecentTickers() {
         List<TickerVo> tickers = tickerService.getRecentTickers();
-        System.out.println(ObjectMapperUtil.writePretty(tickers));
+        logger.info(ObjectMapperUtil.writePretty(tickers));
 
         if (tickers.size() == 0) {
             return RestResult.ok();
