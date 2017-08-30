@@ -25,7 +25,13 @@ function getUserCoinNotifyPrice() {
 function renderCoinPrices(coin, prices) {
     var html = "";
     prices.forEach(function (price) {
-        html += "<span>" + price + "&nbsp;<span class='delPriceSpan' coin='" + coin + "' price='" + price + "'>x</span></span>";
+        var priceSpan;
+        if (price > 0) {
+            priceSpan = "<span class='pspan' style='color:red'>" + price + "</span>"
+        } else {
+            priceSpan = "<span class='pspan' style='color:green'>" + price + "</span>"
+        }
+        html += "<span class='priceSpanUnit'>" + priceSpan + "<span class='delPriceSpan' coin='" + coin + "' price='" + price + "'>x</span></span>";
     });
     $(".pricesSpan[coin='" + coin + "']").data("prices", prices)
     $(".pricesSpan[coin='" + coin + "']").html(html)
@@ -50,6 +56,10 @@ function bindBtnEvents() {
             if (!prices) {
                 prices = []
             }
+            // if (prices.length >= 10) {
+            //     alert("单个虚拟币价格设置不能超过10个");
+            //     return;
+            // }
             if (currentPrice > price) {
                 price = 0 - price;
             }
@@ -57,7 +67,9 @@ function bindBtnEvents() {
                 alert("价格已存在");
             } else {
                 if ((price > 0 && price >= currentPrice * 5) || (price < 0 && price >= 0 - currentPrice * 0.2)) {
-                    alert("设置价格与当前价相差较大，请确认设置是否正确")
+                    if (!confirm("设置价格与当前价相差较大，请确认设置是否正确")) {
+                        return;
+                    }
                 }
                 prices.push(price)
                 prices.sort();

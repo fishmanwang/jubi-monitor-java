@@ -9,22 +9,36 @@
 <body>
 
 <style>
-    span {
-        margin-right: 20px
+    /*.pricesSpan span {*/
+        /*margin-right: 10px*/
+    /*}*/
+    .pricesSpan .priceSpanUnit {
+        margin: 0 10px
+    }
+
+    .pricesSpan .pspan {
+        margin-right: 5px
     }
 </style>
 
 <jsp:include page="header.jsp"/>
 
 <div id="main">
+    <div align="center">
+        <b>使用方法：</b> 在对应的方块内输入指定价格，点击<b>Enter</b>，设置完成后记得点击<b>保存</b>。
+    </div>
     <div id="configArea">
         <c:forEach items="${items}" var="item">
-            <div>
-                <span>${item.name}:</span>
-                <span>${item.price}</span>
-                <span><input class="nofityAddBtn" coin="${item.coin}" price="${item.price}"
-                             style="width: 80px;"/></span>
-                <span class="pricesSpan" coin="${item.coin}"></span>
+            <div style="clear:both; height:60px; margin-top:10px;">
+                <div>${item.name} ${item.coin}:</div>
+                <div style="margin:10px 0;padding-left: 20px;">
+                    <div style="width: 160px; float: left;">当前价格: <span style="color:blue;">${item.price}</span></div>
+                    <div style="width: 600px; float: left;">
+                        <span><input class="nofityAddBtn" coin="${item.coin}" price="${item.price}"
+                                     style="width: 80px;"/></span>
+                        <span class="pricesSpan" coin="${item.coin}"></span>
+                    </div>
+                </div>
             </div>
         </c:forEach>
     </div>

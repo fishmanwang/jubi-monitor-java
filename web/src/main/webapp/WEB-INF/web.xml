@@ -94,4 +94,10 @@
     </servlet-mapping>
 
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/page/index.html</location>
+    </error-page>
+
+
 </web-app>

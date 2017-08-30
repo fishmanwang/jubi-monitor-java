@@ -10,6 +10,8 @@ import com.google.common.collect.Maps;
 import com.jubi.dao.PriceNotifyDao;
 import com.jubi.dao.entity.PriceNotifyEntity;
 import com.jubi.dao.entity.PriceNotifyEntityExample;
+import com.jubi.exception.ApplicationException;
+import com.jubi.exception.CommonErrorCode;
 import com.jubi.service.vo.CoinPriceNotifyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,6 +72,10 @@ public class PriceNotifyService {
         Preconditions.checkNotNull(userId);
         Preconditions.checkNotNull(vos);
 
+        if (vos.size() == 0) {
+            return;
+        }
+        validCoinPriceNotifyVos(vos);
         List<PriceNotifyEntity> ents = Lists.newArrayList();
         for (CoinPriceNotifyVo vo : vos) {
             ents.addAll(build(userId, vo));
@@ -77,6 +83,15 @@ public class PriceNotifyService {
         deleteUserPriceNotifies(userId);
         for (PriceNotifyEntity ent : ents) {
             priceNotifyDao.insertSelective(ent);
+        }
+    }
+
+    private void validCoinPriceNotifyVos(List<CoinPriceNotifyVo> vos) {
+        for (CoinPriceNotifyVo vo : vos) {
+            if (vo.getPrices().size() > 10) {
+                String msg = vo.getCoin().toUpperCase()+" 价格设置超过了10个";
+                throw new ApplicationException(CommonErrorCode.PARAM_ERROR, msg);
+            }
         }
     }
 
