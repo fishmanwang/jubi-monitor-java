@@ -117,4 +117,18 @@ public class PriceNotifyService {
         return rs;
     }
 
+    /**
+     * 删除掉不再关注的虚拟币的价格提醒
+     *
+     * @param coins：依然关注的虚拟币
+     */
+    public void deleteUnfavoriteCoins(int userId, List<String> coins) {
+        Preconditions.checkNotNull(userId);
+        Preconditions.checkNotNull(coins);
+
+        PriceNotifyEntityExample exam = new PriceNotifyEntityExample();
+        exam.createCriteria().andUserIdEqualTo(userId).andCoinNotIn(coins);
+        priceNotifyDao.deleteByExample(exam);
+    }
+
 }

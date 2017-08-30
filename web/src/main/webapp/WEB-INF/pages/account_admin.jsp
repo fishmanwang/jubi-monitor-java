@@ -40,14 +40,20 @@
     </div>
 
     <div>
-        <h3>关注虚拟币</h3>
-        <div>
-            <c:forEach items="${coins}" var="coin">
-                <span width="60px"><input class="coinChk" code="${coin.code}" type="checkbox"
-                                          value="${coin.code}"/>${coin.name}</span>
-            </c:forEach>
+        <div style="font-size: 24px; font-weight:bold; margin: 10px 0;">关注虚拟币</div>
+        <div align="center" style="color:#999; margin: 10px 0;">
+            (虚拟币被关注后，可以设置价格提醒、涨幅提醒、波动提醒等)
         </div>
-        <div>
+        <div style="width: 800px;;">
+            <c:forEach items="${coins}" var="coin">
+                <div style="float: left; width: 100px; text-align: left;">
+                    <input class="coinChk" code="${coin.code}" type="checkbox"value="${coin.code}"/>
+                    ${coin.name}
+                </div>
+            </c:forEach>
+            <div style="clear:both;"></div>
+        </div>
+        <div align="center" style="margin-top:20px;">
             <input id="saveFcoinsBtn" type="button" value="保存"/>
             <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
         </div>

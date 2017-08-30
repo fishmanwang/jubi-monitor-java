@@ -64,6 +64,10 @@ function getFavoriteCoins() {
 function setFavoriteCoins() {
     var datas = [];
     var fcs = $(".coinChk:checked");
+    if (fcs.length > 10) {
+        alert("最多关注10个虚拟币");
+        return;
+    }
     $.each(fcs, function (index, item) {
         var coin = $(item).val();
         datas.push({coin: coin, priority: 0})

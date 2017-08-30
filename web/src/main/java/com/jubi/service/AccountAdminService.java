@@ -9,8 +9,13 @@ import com.google.common.collect.Lists;
 import com.jubi.dao.UserCoinDao;
 import com.jubi.dao.entity.UserCoinEntity;
 import com.jubi.dao.entity.UserCoinEntityExample;
+import com.jubi.event.FavoriteCoinChangeEvent;
+import com.jubi.event.param.FavoriteCoinChangeSource;
+import com.jubi.exception.ApplicationException;
+import com.jubi.exception.CommonErrorCode;
 import com.jubi.service.vo.AccountVo;
 import com.jubi.service.vo.FavoriteCoin;
+import com.jubi.spring.SpringContextHolder;
 import com.jubi.util.BeanMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,14 +60,23 @@ public class AccountAdminService {
         if (fcs == null) {
             fcs = Lists.newArrayList();
         }
+        if (fcs.size() > 10) {
+            throw new ApplicationException(CommonErrorCode.PARAM_ERROR, "最多关注10个虚拟币");
+        }
         cleanCurrentFavoriteCoins(userId);
+        List<String> coins = Lists.newArrayList();
         for (FavoriteCoin fc : fcs) {
+            coins.add(fc.getCoin());
             UserCoinEntity ent = new UserCoinEntity();
             ent.setUserId(userId);
             ent.setCoin(fc.getCoin());
             ent.setPriority(fc.getPriority());
             userCoinDao.insertSelective(ent);
         }
+        FavoriteCoinChangeSource source = new FavoriteCoinChangeSource();
+        source.setUserId(userId);
+        source.setCoins(coins);
+        SpringContextHolder.getApplicationContext().publishEvent(new FavoriteCoinChangeEvent(source));
     }
 
     /**
