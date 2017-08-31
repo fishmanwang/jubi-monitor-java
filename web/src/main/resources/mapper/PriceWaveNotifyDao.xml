@@ -8,7 +8,6 @@
     <result column="span" jdbcType="INTEGER" property="span" />
     <result column="rate" jdbcType="DECIMAL" property="rate" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, coin, span, rate, create_time, update_time
+    id, user_id, coin, span, rate, create_time
   </sql>
   <select id="selectByExample" parameterType="com.jubi.dao.entity.PriceWaveNotifyEntityExample" resultMap="BaseResultMap">
     select
@@ -107,11 +106,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into jb_price_wave_notify (user_id, coin, span, 
-      rate, create_time, update_time
-      )
+      rate, create_time)
     values (#{userId,jdbcType=INTEGER}, #{coin,jdbcType=VARCHAR}, #{span,jdbcType=INTEGER}, 
-      #{rate,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{rate,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jubi.dao.entity.PriceWaveNotifyEntity">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -134,9 +131,6 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -153,9 +147,6 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -180,9 +171,6 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -195,8 +183,7 @@
       coin = #{record.coin,jdbcType=VARCHAR},
       span = #{record.span,jdbcType=INTEGER},
       rate = #{record.rate,jdbcType=DECIMAL},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -219,9 +206,6 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -231,8 +215,7 @@
       coin = #{coin,jdbcType=VARCHAR},
       span = #{span,jdbcType=INTEGER},
       rate = #{rate,jdbcType=DECIMAL},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByExampleWithPageBounds" parameterType="com.jubi.dao.entity.PriceWaveNotifyEntityExample" resultMap="BaseResultMap">

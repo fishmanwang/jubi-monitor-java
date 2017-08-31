@@ -10,11 +10,15 @@ function bindBtnEvents() {
 
     $("#coinSel").off("change").on("change", function () {
         var coin = $(this).val();
+        if (!coin) {
+            return;
+        }
         if ($(".settingDiv[coin='" + coin + "']:visible").length > 0) {
             return;
         }
         if ($(".settingDiv:visible").length >= 3) {
             alert("监控的虚拟币不能大于3个")
+            $(this).val("")
             return;
         }
         $(".settingDiv[coin='" + coin + "']").show();

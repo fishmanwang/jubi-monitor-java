@@ -12,12 +12,12 @@
 
 <div id="main">
     <div align="center">
-        <b>使用方法：</b> 在对应的方块内输入指定价格，点击<b>Enter</b>，设置完成后记得点击<b>保存</b>。
+        <b>使用方法：</b> 选择虚拟币，填写间隔(1-60整数)和比率(1-100两位小数)，点击<b>保存</b>。
     </div>
-    <div id="configArea">
+    <div id="configArea" style="width:800px; margin-top: 20px">
         <div>
             <select id="coinSel">
-                <option>请选择虚拟币</option>
+                <option value="">请选择虚拟币</option>
                 <c:forEach items="${items}" var="item">
                     <option value="${item.coin}">${item.name}</option>
                 </c:forEach>
@@ -25,15 +25,16 @@
         </div>
         <div>
             <c:forEach items="${items}" var="item">
-                <div class="settingDiv" coin="${item.coin}" style="display: none;" setted="${item.setted}">
+                <div class="settingDiv" coin="${item.coin}" style="display: none; margin: 15px 0;"
+                     setted="${item.setted}">
                     <div style="float: left;display: inline-block; width: 120px;">
-                        <span>${item.name} ${item.coin}</span>
+                        <span>${item.name} <span style="color:#999;">${item.coin}</span></span>
                     </div>
                     <div style="float: left">
                         间隔&nbsp;<input class="spanInput" value="${item.span}" style="width:60px"/>&nbsp;
                         分钟内波动&nbsp;<input class="rateInput" value="${item.rate}" style="width:60px"/>&nbsp;%&nbsp;提醒
                     </div>
-                    <div>
+                    <div style="margin-left: 20px; float: left;">
                         <input type="button" class="delSetting" coin="${item.coin}" value="删除"/>
                     </div>
                     <div style="clear:both"></div>
@@ -41,12 +42,11 @@
             </c:forEach>
         </div>
 
+        <div style="margin-top: 10px">
+            <input type="button" value="保存" id="saveBtn"/>
+            <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
+        </div>
     </div>
-</div>
-<div style="margin-top: 10px">
-    <input type="button" value="保存" id="saveBtn"/>
-    <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
-</div>
 </div>
 
 <!-- ECharts单文件引入 -->
