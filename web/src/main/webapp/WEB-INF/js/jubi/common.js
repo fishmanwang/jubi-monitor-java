@@ -1,6 +1,11 @@
 var dayLong = 24 * 60 * 60 * 1000;
 var gmtOffset = 8 * 60 * 60 * 1000;
 
+var isInteger = function (val) {
+    return parseInt(val) == val
+}
+
+
 // 格式化日期 年-月-日
 var formatDate = function (date) {
     var y = date.getFullYear();
