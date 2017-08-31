@@ -8,17 +8,23 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp"/>
 
-<select id="coinSel">
-    <option value="">请选择币种</option>
-    <c:forEach items="${coins}" var="coin">
-        <option value="${coin.code}">${coin.name}</option>
-    </c:forEach>
-</select>
-
-<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="height:600px"></div>
+<div>
+    <div align="center">
+        <b>使用方法：</b> 选择虚拟币，展示当日行情。
+    </div>
+    <div style="margin-top:20px;">
+        <select id="coinSel">
+            <option value="">请选择币种</option>
+            <c:forEach items="${coins}" var="coin">
+                <option value="${coin.code}">${coin.name}</option>
+            </c:forEach>
+        </select>
+    </div>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:600px"></div>
+</div>
 <!-- ECharts单文件引入 -->
 <script src="${ctx}/js/jquery-1.12.1.min.js"></script>
 <script src="${ctx}/js/echarts/echarts.common.min.js"></script>
