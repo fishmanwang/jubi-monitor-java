@@ -50,7 +50,8 @@
     <div>
         <h3>监控提醒</h3>
         <a href="${ctx}/page/notify/price.html">价格提醒</a><br/><br/>
-        <a href="${ctx}/page/notify/wave.html">波动提醒</a>
+        <a href="${ctx}/page/notify/wave.html">波动提醒</a><br/><br/>
+        <a href="${ctx}/page/notify/rate.html">涨幅提醒</a>
     </div>
 </div>
 

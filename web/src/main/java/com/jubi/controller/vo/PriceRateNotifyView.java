@@ -1,24 +1,21 @@
-package com.jubi.service.vo;
+package com.jubi.controller.vo;
 
 import com.jubi.exception.ApplicationException;
 import com.jubi.exception.CommonErrorCode;
 import com.jubi.util.ValidateUtil;
-import org.apache.commons.lang3.Validate;
 
 import java.util.Set;
 
 /**
  * Created by Administrator on 2017/9/2.
  */
-public class PriceRateNotifyVo {
+public class PriceRateNotifyView {
 
     private String coin;
 
-    private Integer rate;
+    private String name;
 
-    public void validate() {
-        ValidateUtil.checkBlank(coin, CommonErrorCode.PARAM_ERROR, "币不能为空");
-    }
+    private Integer rate;
 
     public String getCoin() {
         return coin;
@@ -26,6 +23,14 @@ public class PriceRateNotifyVo {
 
     public void setCoin(String coin) {
         this.coin = coin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getRate() {
