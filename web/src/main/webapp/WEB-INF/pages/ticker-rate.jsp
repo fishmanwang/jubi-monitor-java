@@ -8,29 +8,34 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp"/>
 
-<select id="coinSel">
-    <option value="">请选择币种</option>
-    <c:forEach items="${coins}" var="coin">
-        <option value="${coin.code}">${coin.name}</option>
-    </c:forEach>
-</select>
+<div>
+    <div align="center">
+        <b>使用方法：</b> 选择虚拟币，该页面最多展示2000条数据，间隔跨度越大，跨越的天数越多。
+    </div>
+    <div style="margin-top: 20px;">
+        <select id="coinSel">
+            <option value="">请选择币种</option>
+            <c:forEach items="${coins}" var="coin">
+                <option value="${coin.code}">${coin.name}</option>
+            </c:forEach>
+        </select>
 
-<select id="spanSel">
-    <option value="60" selected="selected">一分钟</option>
-    <option value="${60 * 5}">五分钟</option>
-    <option value="${60 * 10}">十分钟</option>
-    <option value="${60 * 30}">三十分钟</option>
-    <option value="${60 * 60}">一小时</option>
-    <option value="${60 * 60 * 6}">六小时</option>
-    <option value="${60 * 60 * 12}">十二小时</option>
-    <option value="${60 * 60 * 24}">一日</option>
-</select>
-
-<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="height:600px"></div>
-
+        <select id="spanSel">
+            <option value="60" selected="selected">一分钟</option>
+            <option value="${60 * 5}">五分钟</option>
+            <option value="${60 * 10}">十分钟</option>
+            <option value="${60 * 30}">三十分钟</option>
+            <option value="${60 * 60}">一小时</option>
+            <option value="${60 * 60 * 6}">六小时</option>
+            <option value="${60 * 60 * 12}">十二小时</option>
+            <option value="${60 * 60 * 24}">一日</option>
+        </select>
+    </div>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:600px"></div>
+</div>
 <!-- ECharts单文件引入 -->
 <script src="${ctx}/js/jquery-1.12.1.min.js"></script>
 <script src="${ctx}/js/echarts/echarts.common.min.js"></script>

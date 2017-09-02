@@ -1,15 +1,15 @@
 package com.jubi.controller;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.jubi.controller.vo.CoinPriceNotifyViewVo;
+import com.jubi.controller.vo.CoinPriceWaveView;
 import com.jubi.param.UserBean;
 import com.jubi.service.AccountAdminService;
 import com.jubi.service.CoinService;
+import com.jubi.service.PriceWaveNotifyService;
 import com.jubi.service.TickerService;
-import com.jubi.service.vo.AccountVo;
-import com.jubi.service.vo.CoinVo;
-import com.jubi.service.vo.FavoriteCoin;
-import com.jubi.service.vo.TickerVo;
+import com.jubi.service.vo.*;
 import com.jubi.util.BeanMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +37,9 @@ public class PageController extends AbstractController {
 
     @Autowired
     private AccountAdminService accountAdminService;
+
+    @Autowired
+    private PriceWaveNotifyService priceWaveNotifyService;
 
     @RequestMapping("/index.html")
     public ModelAndView index() {
@@ -181,6 +185,47 @@ public class PageController extends AbstractController {
         mv.addObject("items", ds);
 
         mv.setViewName("price-notify-setting");
+        return mv;
+    }
+
+    @RequestMapping("/notify/wave")
+    public ModelAndView goToNotifyPriceWaveSettingPage() {
+        ModelAndView mv = new ModelAndView();
+
+        List<CoinPriceWaveView> ds = Lists.newArrayList();
+
+        int userId = getUser().getId();
+        Map<String, String> coinMap = coinService.getAllCoinsMap();
+        List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(userId);
+        Set<String> fcs = Sets.newHashSet();
+        for (FavoriteCoin fc : fcoins) {
+            String coin = fc.getCoin();
+            fcs.add(coin);
+        }
+
+        List<CoinPriceWaveVo> vos = priceWaveNotifyService.getUserPriceWaveSettings(userId);
+        for (CoinPriceWaveVo vo : vos) {
+            CoinPriceWaveView view = BeanMapperUtil.map(vo, CoinPriceWaveView.class);
+            String coin = vo.getCoin();
+            String name = coinMap.get(coin);
+            view.setName(name);
+            view.setSetted(true);
+            ds.add(view);
+            fcs.remove(coin);
+        }
+        for (String coin : fcs) {
+            CoinPriceWaveView view = new CoinPriceWaveView();
+            view.setCoin(coin);
+            String name = coinMap.get(coin);
+            view.setName(name);
+            view.setSpan(15);
+            view.setRate(2d);
+            ds.add(view);
+        }
+
+        mv.addObject("items", ds);
+
+        mv.setViewName("price-wave-notify-setting");
         return mv;
     }
 }
