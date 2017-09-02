@@ -12,12 +12,16 @@
 
 <div id="main">
     <div align="center">
-        <b>使用方法：</b> 请在<a href="${ctx}/page/account/admin.html">账户管理</a>中设置关注的虚拟币，选择虚拟币对应的监控幅度，点击<b>保存</b>。
+        <b>使用方法：</b>
+        <span style="color:orangered; font-size: 16px;">
+            请先在 <a href="${ctx}/page/account/admin.html">账户管理</a> 中设置关注的虚拟币
+        </span>，然后选择虚拟币对应的监控幅度，点击
+        <b>保存</b>。
     </div>
     <div id="configArea" style="width:800px; margin-top: 20px">
         <div>
             <c:forEach items="${items}" var="item">
-                <div class="setting" coin="${item.coin}">
+                <div class="setting" coin="${item.coin}" style="margin: 15px 0;">
                     <div style="width:120px; display: inline-block;">
                         <span>${item.name} <span style="color:#999;">${item.coin}</span></span>
                     </div>
@@ -46,6 +50,9 @@
         <div style="margin-top: 10px">
             <input type="button" value="保存" id="saveBtn"/>
             <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
+        </div>
+        <div>
+            <p style="color:red; font-size: 12px;">注意：每个用户每天最多接收50封邮件，请合理设置监控的虚拟币和幅度。</p>
         </div>
     </div>
 </div>
