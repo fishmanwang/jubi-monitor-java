@@ -35,7 +35,7 @@ function render() {
         },
         columns: cs,
         autoWidth: false,
-        info: false,
+        info: true,
         paging: false,
         scrollY: 600
     });

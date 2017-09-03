@@ -28,6 +28,7 @@ public class EmailSendRecordService {
 
         EmailSendRecordEntityExample exam = new EmailSendRecordEntityExample();
         exam.createCriteria().andUserIdEqualTo(userId);
+        exam.setOrderByClause("send_time desc");
 
         PageBounds pb = new PageBounds(1, 50, false);
 
