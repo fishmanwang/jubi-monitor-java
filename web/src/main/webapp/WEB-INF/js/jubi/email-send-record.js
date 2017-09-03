@@ -6,19 +6,6 @@ $(function() {
 
 var ctx = $("#ctx").val();
 
-// function queryData() {
-//     var url = ctx + "/email/record"
-//     $.getJSON(url, function(json) {
-//         if (json.status != 200) {
-//             alert(json.message);
-//             return
-//         }
-//         console.log(json.data)
-//         var ds = buildData(json.data)
-//         console.log(ds);
-//     });
-// }
-
 function render() {
     var cols = ['提醒类型', '邮箱', '状态', '发送内容', '发送时间', '失败原因']
 
@@ -33,8 +20,9 @@ function render() {
             "url": url,
             "dataSrc": buildData
         },
+        searching: false,
         columns: cs,
-        "order": [[ 4, 'desc' ]],
+        order: [[ 4, 'desc' ]],
         autoWidth: false,
         info: true,
         paging: false,

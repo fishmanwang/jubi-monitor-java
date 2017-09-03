@@ -88,8 +88,8 @@ public class PriceNotifyService {
 
     private void validCoinPriceNotifyVos(List<CoinPriceNotifyVo> vos) {
         for (CoinPriceNotifyVo vo : vos) {
-            if (vo.getPrices().size() > 10) {
-                String msg = vo.getCoin().toUpperCase()+" 价格设置超过了10个";
+            if (vo.getPrices().size() > 3) {
+                String msg = vo.getCoin().toUpperCase()+" 价格设置超过了3个";
                 throw new ApplicationException(CommonErrorCode.PARAM_ERROR, msg);
             }
         }
