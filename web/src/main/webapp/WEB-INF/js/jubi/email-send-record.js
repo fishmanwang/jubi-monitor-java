@@ -20,7 +20,7 @@ function render() {
             "url": url,
             "dataSrc": buildData
         },
-        searching: false,
+        searching: true,
         columns: cs,
         order: [[ 4, 'desc' ]],
         autoWidth: false,
