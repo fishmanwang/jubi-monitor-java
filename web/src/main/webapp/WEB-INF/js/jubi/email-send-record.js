@@ -34,6 +34,7 @@ function render() {
             "dataSrc": buildData
         },
         columns: cs,
+        "order": [[ 4, 'desc' ]],
         autoWidth: false,
         info: true,
         paging: false,
