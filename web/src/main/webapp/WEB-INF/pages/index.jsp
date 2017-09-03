@@ -53,6 +53,10 @@
         <a href="${ctx}/page/notify/wave.html">波动提醒</a><br/><br/>
         <a href="${ctx}/page/notify/rate.html">涨幅提醒</a>
     </div>
+    <div>
+        <h3>消息记录</h3>
+        <a href="${ctx}/page/email/record.html">邮件记录</a>
+    </div>
 </div>
 
 <div style="float: left; margin-left: 30px;" id="tickerMainDiv" width="60%">

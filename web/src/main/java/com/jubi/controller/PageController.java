@@ -43,6 +43,9 @@ public class PageController extends AbstractController {
     @Autowired
     private PriceRateNotifyService priceRateNotifyService;
 
+    @Autowired
+    private EmailSendRecordService emailSendRecordService;
+
     @RequestMapping("/index.html")
     public ModelAndView index() {
         List<CoinVo> coins = coinService.getAllCoins();
@@ -271,6 +274,13 @@ public class PageController extends AbstractController {
         mv.addObject("validRates", validRates);
         mv.setViewName("price-rate-notify-setting");
 
+        return mv;
+    }
+
+    @RequestMapping("/email/record")
+    public ModelAndView goToEmailSendRecord() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("email-send-record");
         return mv;
     }
 }
