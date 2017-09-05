@@ -5,6 +5,7 @@
 package com.jubi.service;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.jubi.dao.PriceWaveNotifyDao;
 import com.jubi.dao.entity.PriceWaveNotifyEntity;
 import com.jubi.dao.entity.PriceWaveNotifyEntityExample;
@@ -54,8 +55,8 @@ public class PriceWaveNotifyService {
      */
     public void savePriceWaves(int userId, List<CoinPriceWaveVo> params) {
         Preconditions.checkNotNull(userId);
-        if (params == null || params.size() == 0) {
-            return;
+        if (params == null) {
+            params = Lists.newArrayList();
         }
 
         if (params.size() > 3) {
