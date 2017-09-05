@@ -4,11 +4,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.jubi.controller.vo.CoinPriceNotifyViewVo;
 import com.jubi.controller.vo.CoinPriceWaveView;
+import com.jubi.controller.vo.PriceRateNotifyView;
 import com.jubi.param.UserBean;
-import com.jubi.service.AccountAdminService;
-import com.jubi.service.CoinService;
-import com.jubi.service.PriceWaveNotifyService;
-import com.jubi.service.TickerService;
+import com.jubi.service.*;
 import com.jubi.service.vo.*;
 import com.jubi.util.BeanMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,6 +39,12 @@ public class PageController extends AbstractController {
 
     @Autowired
     private PriceWaveNotifyService priceWaveNotifyService;
+
+    @Autowired
+    private PriceRateNotifyService priceRateNotifyService;
+
+    @Autowired
+    private EmailSendRecordService emailSendRecordService;
 
     @RequestMapping("/index.html")
     public ModelAndView index() {
@@ -197,11 +202,7 @@ public class PageController extends AbstractController {
         int userId = getUser().getId();
         Map<String, String> coinMap = coinService.getAllCoinsMap();
         List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(userId);
-        Set<String> fcs = Sets.newHashSet();
-        for (FavoriteCoin fc : fcoins) {
-            String coin = fc.getCoin();
-            fcs.add(coin);
-        }
+        Set<String> fcs = getFavoriateCoins(userId);
 
         List<CoinPriceWaveVo> vos = priceWaveNotifyService.getUserPriceWaveSettings(userId);
         for (CoinPriceWaveVo vo : vos) {
@@ -218,14 +219,68 @@ public class PageController extends AbstractController {
             view.setCoin(coin);
             String name = coinMap.get(coin);
             view.setName(name);
-            view.setSpan(15);
-            view.setRate(2d);
+            view.setSpan(30);
+            view.setRate(5d);
             ds.add(view);
         }
 
         mv.addObject("items", ds);
-
         mv.setViewName("price-wave-notify-setting");
+
+        return mv;
+    }
+
+    private Set<String> getFavoriateCoins(Integer userId) {
+        Set<String> fcs = Sets.newHashSet();
+
+        List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(userId);
+        for (FavoriteCoin fc : fcoins) {
+            String coin = fc.getCoin();
+            fcs.add(coin);
+        }
+        return fcs;
+    }
+
+    @RequestMapping("/notify/rate")
+    public ModelAndView goToNotifyPricerRateSettingPage() {
+        ModelAndView mv = new ModelAndView();
+
+        List<PriceRateNotifyView> ds = Lists.newArrayList();
+
+        Integer userId = getUser().getId();
+        Map<String, String> coinMap = coinService.getAllCoinsMap();
+        List<PriceRateNotifyVo> vos = priceRateNotifyService.queryUserPriceRateNotify(userId);
+        Set<String> fcs = getFavoriateCoins(userId);
+
+        for (PriceRateNotifyVo vo : vos) {
+            PriceRateNotifyView view = BeanMapperUtil.map(vo, PriceRateNotifyView.class);
+            String coin = view.getCoin();
+            view.setName(coinMap.get(coin));
+            ds.add(view);
+            fcs.remove(coin);
+        }
+        for (String coin : fcs) {
+            PriceRateNotifyView view = new PriceRateNotifyView();
+            view.setCoin(coin);
+            view.setName(coinMap.get(coin));
+            view.setRate(0);
+            ds.add(view);
+        }
+
+        List<Integer> validRates = priceRateNotifyService.getValidRates();
+        Collections.sort(validRates);
+
+        mv.addObject("items", ds);
+        mv.addObject("validRates", validRates);
+        mv.setViewName("price-rate-notify-setting");
+
+        return mv;
+    }
+
+    @RequestMapping("/email/record")
+    public ModelAndView goToEmailSendRecord() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("email-send-record");
         return mv;
     }
 }

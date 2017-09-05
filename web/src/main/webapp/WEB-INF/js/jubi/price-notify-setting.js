@@ -56,10 +56,10 @@ function bindBtnEvents() {
             if (!prices) {
                 prices = []
             }
-            // if (prices.length >= 10) {
-            //     alert("单个虚拟币价格设置不能超过10个");
-            //     return;
-            // }
+            if (prices.length >= 3) {
+                alert("单个虚拟币价格设置不能超过3个");
+                return;
+            }
             if (currentPrice > price) {
                 price = 0 - price;
             }
