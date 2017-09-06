@@ -27,8 +27,8 @@
 <jsp:include page="/WEB-INF/pages/header.jsp"/>
 <jsp:include page="/WEB-INF/pages/menu.jsp"/>
 
-<div id="mbody">
-    <jsp:body></jsp:body>
+<div id="mbody" style="float:left;">
+    <jsp:doBody></jsp:doBody>
 </div>
 
 <script src="${ctx}/js/jquery-1.12.1.min.js"></script>
