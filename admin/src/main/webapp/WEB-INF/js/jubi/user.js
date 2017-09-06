@@ -1,11 +1,15 @@
 $(function () {
 
     init();
+    bindBtnEvents();
 
 });
 
 var ctx = $("#ctx").val();
 var limit = 10;
+
+var usernameVal = "";
+var nicknameVal = "";
 
 function init() {
     var param = {
@@ -13,6 +17,22 @@ function init() {
         limit: limit
     };
     query(param);
+}
+
+function bindBtnEvents() {
+    $("#userTable").off("click", ".del").on("click", ".del", function () {
+        var userId = $(this).attr("item");
+        var username = $(this).attr("uname");
+        if (confirm("确认删除 " + username + "?")) {
+            alert("删除 " + username + " 成功");
+        }
+    });
+
+    $("#searchBtn").off("click").on("click", function () {
+        usernameVal = $("#usernameInput").val().trim();
+        nicknameVal = $("#nicknameInput").val().trim();
+        fresh(1);
+    });
 }
 
 function query(param) {
@@ -30,7 +50,9 @@ function query(param) {
 function fresh(page) {
     var param = {
         page: page,
-        limit: limit
+        limit: limit,
+        username: usernameVal,
+        nickname: nicknameVal
     };
     query(param);
 }
@@ -46,6 +68,7 @@ function render(data) {
             + '<td>' + item.email + '</td>'
             + '<td>' + item.lastLoginIp + '</td>'
             + '<td>' + item.lastLoginTime + '</td>'
+            + '<td><a class="del" item="' + item.id + '" uname="' + item.username + '">删除</a></td>'
             + '</tr>';
     });
     $("#userTable .line").remove();
