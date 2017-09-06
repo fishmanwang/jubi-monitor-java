@@ -1,12 +1,11 @@
 $(function () {
 
-
     init();
 
 });
 
 var ctx = $("#ctx").val();
-var limit = 3;
+var limit = 10;
 
 function init() {
     var param = {
@@ -24,7 +23,7 @@ function query(param) {
             return;
         }
         render(json.data);
-        setPagination(json.data);
+        setPagination(json.data.page, json.data.totalPages, fresh);
     });
 }
 
@@ -40,7 +39,7 @@ function render(data) {
     var c = '';
     var ds = data.items;
     ds.forEach(function (item) {
-        c += '<tr>'
+        c += '<tr class="line">'
             + '<td>' + item.username + '</td>'
             + '<td>' + item.nickname + '</td>'
             + '<td>' + item.phone + '</td>'
@@ -49,27 +48,7 @@ function render(data) {
             + '<td>' + item.lastLoginTime + '</td>'
             + '</tr>';
     });
+    $("#userTable .line").remove();
     $("#userTable").append(c)
-}
-
-function setPagination(data) {
-    if ($("#pagination").html().trim() == '') {
-        $("#pagination").pagination({
-            currentPage: data.page,
-            totalPage: data.totalPages,
-            isShow: true,
-            count: 5,
-            homePageText: "首页",
-            endPageText: "尾页",
-            prevPageText: "上一页",
-            nextPageText: "下一页",
-            callback: function (current) {
-                fresh(current)
-            }
-        });
-    } else {
-        $("#pagination").pagination("setPage", data.page, data.totalPages);
-    }
-
 }
 

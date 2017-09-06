@@ -26,7 +26,7 @@
 <div id="main" style="float:left;">
     <div id="content">
         <table id="userTable" width="800px">
-            <tr>
+            <tr class="head">
                 <td>用户名</td>
                 <td>昵称</td>
                 <td>电话</td>
