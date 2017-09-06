@@ -4,14 +4,19 @@
  */
 package com.jubi.service;
 
+import com.google.common.base.Preconditions;
 import com.jubi.dao.UserDao;
+import com.jubi.dao.UserExtDao;
 import com.jubi.dao.entity.User;
 import com.jubi.dao.entity.UserExample;
+import com.jubi.dao.param.UserQueryParam;
+import com.jubi.dao.vo.UserAdminVo;
 import com.jubi.event.UserCreateEvent;
 import com.jubi.exception.ApplicationException;
 import com.jubi.exception.UserErrorCode;
 import com.jubi.service.vo.UserRegisterParam;
 import com.jubi.spring.SpringContextHolder;
+import com.mybatis.domain.PageBounds;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +37,9 @@ public class UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private UserExtDao userExtDao;
 
     @Autowired
     private EncryptionService encryptionService;
@@ -167,4 +175,16 @@ public class UserService {
         userDao.updateByPrimaryKeySelective(user);
     }
 
+    /**
+     * 管理端查询用户
+     *
+     * @param param
+     * @param pb
+     * @return
+     */
+    public List<UserAdminVo> queryUserAdminUser(UserQueryParam param, PageBounds pb) {
+        Preconditions.checkNotNull(param);
+        Preconditions.checkNotNull(pb);
+        return userExtDao.queryUser(param, pb);
+    }
 }

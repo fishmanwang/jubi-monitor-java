@@ -7,7 +7,7 @@ package com.jubi.controller;
 import com.google.common.collect.Lists;
 import com.jubi.RestResult;
 import com.jubi.param.UserBean;
-import com.jubi.service.AccountAdminService;
+import com.jubi.service.AccountFrontService;
 import com.jubi.service.vo.AccountVo;
 import com.jubi.service.vo.FavoriteCoin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +27,11 @@ import java.util.List;
 public class AccountController extends AbstractController {
 
     @Autowired
-    private AccountAdminService accountAdminService;
+    private AccountFrontService accountFrontService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public RestResult saveAccount(@RequestBody AccountVo vo) {
-        accountAdminService.saveAccount(getUser().getId(), vo);
+        accountFrontService.saveAccount(getUser().getId(), vo);
         return RestResult.ok();
     }
 
@@ -42,7 +42,7 @@ public class AccountController extends AbstractController {
         }
         UserBean bean = getUser();
         Integer userId = bean.getId();
-        accountAdminService.setFavoriteCoins(userId, fcs);
+        accountFrontService.setFavoriteCoins(userId, fcs);
         return RestResult.ok();
     }
 
@@ -50,7 +50,7 @@ public class AccountController extends AbstractController {
     public RestResult getFavoriateCoins() {
         UserBean user = getUser();
         Integer userId = user.getId();
-        List<FavoriteCoin> fcs = accountAdminService.getFavoriteCoin(userId);
+        List<FavoriteCoin> fcs = accountFrontService.getFavoriteCoin(userId);
         return RestResult.ok(fcs);
     }
 

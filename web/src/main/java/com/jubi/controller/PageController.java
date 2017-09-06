@@ -35,7 +35,7 @@ public class PageController extends AbstractController {
     private TickerService tickerService;
 
     @Autowired
-    private AccountAdminService accountAdminService;
+    private AccountFrontService accountFrontService;
 
     @Autowired
     private PriceWaveNotifyService priceWaveNotifyService;
@@ -156,7 +156,7 @@ public class PageController extends AbstractController {
     public ModelAndView goToAccountAdmin() {
         UserBean user = (UserBean) getUser();
         List<CoinVo> coins = coinService.getAllCoins();
-        AccountVo account = accountAdminService.getAccount(user.getId());
+        AccountVo account = accountFrontService.getAccount(user.getId());
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("account", account);
@@ -176,7 +176,7 @@ public class PageController extends AbstractController {
         Map<String, TickerVo> tickerMap = tickers.stream().collect(Collectors.toMap(TickerVo::getCoin, p -> p));
 
         Map<String, String> coinMap = coinService.getAllCoinsMap();
-        List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(getUser().getId());
+        List<FavoriteCoin> fcoins = accountFrontService.getFavoriteCoin(getUser().getId());
         for (FavoriteCoin fc : fcoins) {
             String coin = fc.getCoin();
             String name = coinMap.get(coin);
@@ -201,7 +201,7 @@ public class PageController extends AbstractController {
 
         int userId = getUser().getId();
         Map<String, String> coinMap = coinService.getAllCoinsMap();
-        List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(userId);
+        List<FavoriteCoin> fcoins = accountFrontService.getFavoriteCoin(userId);
         Set<String> fcs = getFavoriateCoins(userId);
 
         List<CoinPriceWaveVo> vos = priceWaveNotifyService.getUserPriceWaveSettings(userId);
@@ -233,7 +233,7 @@ public class PageController extends AbstractController {
     private Set<String> getFavoriateCoins(Integer userId) {
         Set<String> fcs = Sets.newHashSet();
 
-        List<FavoriteCoin> fcoins = accountAdminService.getFavoriteCoin(userId);
+        List<FavoriteCoin> fcoins = accountFrontService.getFavoriteCoin(userId);
         for (FavoriteCoin fc : fcoins) {
             String coin = fc.getCoin();
             fcs.add(coin);

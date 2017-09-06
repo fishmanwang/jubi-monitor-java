@@ -1,5 +1,6 @@
 package com.jubi.controller;
 
+import com.jubi.context.SessionContext;
 import com.jubi.param.UserBean;
 import com.jubi.util.JBStringUtils;
 import com.mybatis.domain.PageBounds;
@@ -20,7 +21,9 @@ public abstract class AbstractController {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static PageBounds getPageBounds(HttpServletRequest request) {
+    public static PageBounds getPageBounds() {
+        HttpServletRequest request = SessionContext.getRequest();
+
         int page = getParameterForInt(request, "page", 1);
         int limit = getParameterForInt(request, "limit", 10);
 

@@ -38,8 +38,16 @@ public class EncryptionService {
     }
 
     public static void main(String[] args) {
-        EncryptionService um = new EncryptionService();
-        System.out.println(um.encryptPassword("123456", "test"));
+        MessageDigest digest = null;
+        String content = "123456";
+        try {
+            digest = MessageDigest.getInstance(DEFAULT_HASH_ALGORITHM);
+            digest.update(content.getBytes());
+            System.out.println(digest.digest());
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

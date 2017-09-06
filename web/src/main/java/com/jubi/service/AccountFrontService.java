@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class AccountAdminService {
+public class AccountFrontService {
 
     @Autowired
     private AccountService accountService;
