@@ -6,7 +6,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
     </resultMap>
 
-    <select id="queryUser" resultMap="userMap">
+    <select id="queryUser" parameterType="com.jubi.dao.param.UserQueryParam" resultMap="userMap">
         SELECT
         u.id id,
         u.username,
@@ -14,7 +14,7 @@
         a.phone phone,
         a.email email,
         u.frozen frozen,
-        a.last_login_ip lastLoginIp,
+        u.last_login_ip lastLoginIp,
         u.last_login_time lastLoginTime
         FROM zx_user u LEFT JOIN zx_account a ON u.id = a.user_id
         where 1 = 1

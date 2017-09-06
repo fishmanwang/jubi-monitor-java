@@ -1,0 +1,35 @@
+
+body {
+    text-align: center;
+    /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+    font-family: "微软雅黑";
+    background: #eee;
+    margin: 0 auto;
+    width: 1000px;
+    /*height: 400px;*/
+}
+
+a {
+    color: #00B7FF;
+}
+
+.fl {
+    float: left;
+}
+
+/*分页插件*/
+.box {
+    width: 800px;
+    margin: 100px auto 0;
+    height: 34px;
+}
+
+.box .page {
+    width: 600px;
+}
+
+.box .info {
+    width: 200px;
+    height: 34px;
+    line-height: 34px;
+}

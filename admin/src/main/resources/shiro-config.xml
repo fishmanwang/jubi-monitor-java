@@ -50,7 +50,7 @@
                 /css/** = anon
                 /img/** = anon
                 /js/** = anon
-                /** = user
+                /** = anon
             </value>
         </property>
     </bean>

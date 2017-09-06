@@ -4,7 +4,6 @@ import com.jubi.context.SessionContext;
 import com.jubi.param.UserBean;
 import com.jubi.util.JBStringUtils;
 import com.mybatis.domain.PageBounds;
-import com.mybatis.domain.SortBy;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -27,12 +26,13 @@ public abstract class AbstractController {
         int page = getParameterForInt(request, "page", 1);
         int limit = getParameterForInt(request, "limit", 10);
 
-        String sortBy = request.getParameter("sortBy");
-        if (StringUtils.isBlank(sortBy)) {
-            sortBy = "create_time";
-        }
-        String sort = request.getParameter("sort");
-        return new PageBounds(page, limit, SortBy.create(sortBy, sort));
+        return new PageBounds(page, limit);
+//        String sortBy = request.getParameter("sortBy");
+//        if (StringUtils.isBlank(sortBy)) {
+//            sortBy = "create_time";
+//        }
+//        String sort = request.getParameter("sort");
+//        return new PageBounds(page, limit, SortBy.create(sortBy, sort));
     }
 
     /**
