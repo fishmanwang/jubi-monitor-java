@@ -6,7 +6,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
     </resultMap>
 
-    <select id="queryUser" parameterType="com.jubi.dao.param.UserQueryParam" resultMap="userMap">
+    <select id="queryUser" resultMap="userMap">
         SELECT
         u.id id,
         u.username,
@@ -18,11 +18,8 @@
         u.last_login_time lastLoginTime
         FROM zx_user u LEFT JOIN zx_account a ON u.id = a.user_id
         where 1 = 1
-        <if test="username != null">
-            and u.username = #{username}
-        </if>
-        <if test="nickname != null">
-            and u.nickname = #{nickname}
+        <if test="name != null and name != ''">
+            and (u.username = #{name} or a.nickname = #{name})
         </if>
         order by last_login_time desc
     </select>

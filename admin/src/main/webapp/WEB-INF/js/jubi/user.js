@@ -8,8 +8,7 @@ $(function () {
 var ctx = $("#ctx").val();
 var limit = 10;
 
-var usernameVal = "";
-var nicknameVal = "";
+var nameVal = "";
 
 function init() {
     var param = {
@@ -24,13 +23,19 @@ function bindBtnEvents() {
         var userId = $(this).attr("item");
         var username = $(this).attr("uname");
         if (confirm("确认删除 " + username + "?")) {
-            alert("删除 " + username + " 成功");
+            $.post(ctx + "/user/delete", {userId: userId}, function (json) {
+                if (json.status == 200) {
+                    alert("删除 " + username + " 成功");
+                    fresh(1);
+                } else {
+                    alert(json.message)
+                }
+            })
         }
     });
 
     $("#searchBtn").off("click").on("click", function () {
-        usernameVal = $("#usernameInput").val().trim();
-        nicknameVal = $("#nicknameInput").val().trim();
+        nameVal = $("#nameInput").val().trim();
         fresh(1);
     });
 }
@@ -51,8 +56,7 @@ function fresh(page) {
     var param = {
         page: page,
         limit: limit,
-        username: usernameVal,
-        nickname: nicknameVal
+        name: nameVal
     };
     query(param);
 }

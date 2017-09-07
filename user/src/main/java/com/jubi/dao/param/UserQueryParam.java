@@ -10,23 +10,13 @@ package com.jubi.dao.param;
  */
 public class UserQueryParam {
 
-    private String username;
+    private String name;
 
-    private String nickname;
-
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setName(String name) {
+        this.name = name;
     }
 }

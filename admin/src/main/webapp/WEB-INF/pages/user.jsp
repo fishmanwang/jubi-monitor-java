@@ -12,8 +12,7 @@
     <div id="content">
         <div>
             <div style="float: left;">
-                用户名：<input id="usernameInput" style="width: 120px;"/>
-                &nbsp;昵称：<input id="nicknameInput" style="width: 120px;"/>
+                用户名：<input id="nameInput" style="width: 120px;"/>
             </div>
             <div style="float: left;margin-left: 10px;">
                 <input type="button" id="searchBtn" value="查询"/>

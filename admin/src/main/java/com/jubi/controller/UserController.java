@@ -14,6 +14,7 @@ import com.mybatis.domain.Paginator;
 import com.mybatis.util.PageListHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,6 +36,12 @@ public class UserController extends AbstractController {
         Paginator p = PageListHelper.getPaginator(ds);
         List<UserAdminView> rs = BeanMapperUtil.mapList(ds, UserAdminView.class);
         return RestResult.ok(PageListHelper.create(rs, p));
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public RestResult deleteUser(Integer userId) {
+        userService.deleteUser(userId);
+        return RestResult.ok();
     }
 
 }

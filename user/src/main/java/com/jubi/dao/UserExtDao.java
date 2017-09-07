@@ -4,9 +4,9 @@
  */
 package com.jubi.dao;
 
-import com.jubi.dao.param.UserQueryParam;
 import com.jubi.dao.vo.UserAdminVo;
 import com.mybatis.domain.PageBounds;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface UserExtDao {
 
-    List<UserAdminVo> queryUser(UserQueryParam param, PageBounds pb);
+    List<UserAdminVo> queryUser(@Param("name") String name, PageBounds pb);
 
 }

@@ -22,6 +22,6 @@ public interface TickerRateExtDao {
      * @param pb
      * @return
      */
-    List<TickerRateEntity> queryHourTickerRate(@Param("param") TickerRateSpanParam param, @Param("limit")int limit);
+    List<TickerRateEntity> queryHourTickerRate(@Param("param") TickerRateSpanParam param, @Param("limit") int limit);
 
 }

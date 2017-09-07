@@ -12,7 +12,9 @@ import com.jubi.dao.entity.UserExample;
 import com.jubi.dao.param.UserQueryParam;
 import com.jubi.dao.vo.UserAdminVo;
 import com.jubi.event.UserCreateEvent;
+import com.jubi.event.UserDeleteEvent;
 import com.jubi.exception.ApplicationException;
+import com.jubi.exception.CommonErrorCode;
 import com.jubi.exception.UserErrorCode;
 import com.jubi.service.vo.UserRegisterParam;
 import com.jubi.spring.SpringContextHolder;
@@ -127,12 +129,26 @@ public class UserService {
         return null;
     }
 
+    /**
+     * 删除用户
+     *
+     * @param userId
+     */
     public void deleteUser(Integer userId) {
-        try {
-            userDao.deleteByPrimaryKey(userId);
-        } catch (Exception e) {
-            throw new ApplicationException(UserErrorCode.USER_DELETE_FAIL, "删除用户失败", e);
+        User user = getUser(userId);
+        if (user == null) {
+            logger.warn("指定ID {} 不存在", userId);
+            throw new ApplicationException(CommonErrorCode.PARAM_ERROR, "指定用户不存在");
         }
+
+        userDao.deleteByPrimaryKey(userId);
+
+        UserDeleteEvent event = new UserDeleteEvent(userId);
+        SpringContextHolder.getApplicationContext().publishEvent(event);
+    }
+
+    private User getUser(Integer userId) {
+        return userDao.selectByPrimaryKey(userId);
     }
 
     public Integer registerUser(UserRegisterParam param) {
@@ -185,6 +201,8 @@ public class UserService {
     public List<UserAdminVo> queryUserAdminUser(UserQueryParam param, PageBounds pb) {
         Preconditions.checkNotNull(param);
         Preconditions.checkNotNull(pb);
-        return userExtDao.queryUser(param, pb);
+
+        return userExtDao.queryUser(param.getName(), pb);
     }
+
 }
