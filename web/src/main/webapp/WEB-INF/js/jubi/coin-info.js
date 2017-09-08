@@ -3,6 +3,7 @@ $(function () {
         alert("请传入虚拟币");
         return;
     }
+    queryCoinTicker()
     bindBtns();
 });
 
@@ -10,9 +11,6 @@ var coin = $("#coinInput").val();
 var ctx = $("#ctx").val();
 
 function bindBtns() {
-    $("#tickerShowBtn").off("click").on("click", function () {
-        queryCoinTicker();
-    });
     $("#depthShowBtn").off("click").on("click", function () {
         queryRealTimeDepth();
     });
@@ -90,9 +88,6 @@ var depthCharts = echarts.init(document.getElementById('depthDiv'), 'macarons');
  */
 function renderDepth(xds, yds) {
     var option = {
-        title: {
-            text: '深度情况'
-        },
         tooltip: {
             trigger: 'axis'
         },
@@ -136,9 +131,6 @@ var tickerCharts = echarts.init(document.getElementById('tickerDiv'), 'macarons'
  */
 function renderTicker(xds, yds) {
     var option = {
-        title: {
-            text: '行情走势'
-        },
         tooltip: {
             trigger: 'axis'
         },
