@@ -2,8 +2,11 @@ package com.jubi.shiro;
 
 import com.jubi.dao.entity.User;
 import com.jubi.param.UserBean;
+import com.jubi.service.AccountService;
 import com.jubi.service.EncryptionService;
 import com.jubi.service.UserService;
+import com.jubi.service.vo.AccountVo;
+import com.jubi.service.vo.UserGradeVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -34,6 +37,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private AccountService accountService;
 
     @Resource
     private EncryptionService encryptionService;
@@ -70,8 +76,13 @@ public class ShiroDbRealm extends AuthorizingRealm {
                 logger.info("User {} is locked, can not log in!", user.getUsername());
                 throw new LockedAccountException(user.getUsername() + "is locked");
             }
+
             UserBean bean = new UserBean();
+            UserGradeVo userGrade = accountService.getUserGrade(user.getId());
+            AccountVo account = accountService.getAccount(user.getId());
             BeanUtils.copyProperties(user, bean);
+            bean.setNickname(account.getNickname());
+            BeanUtils.copyProperties(userGrade, bean);
             /* 后继使用HashedCredentialsMatcher进行密码验证 */
             SimpleAuthenticationInfo authinfo = new SimpleAuthenticationInfo(bean, user.getPassword().trim(), getName());
             authinfo.setCredentialsSalt(ByteSource.Util.bytes(user.getSalt()));

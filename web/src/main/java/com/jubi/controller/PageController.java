@@ -49,6 +49,7 @@ public class PageController extends AbstractController {
     @RequestMapping("/index.html")
     public ModelAndView index() {
         List<CoinVo> coins = coinService.getAllCoins();
+
         ModelAndView mv = new ModelAndView();
         mv.addObject("coins", coins);
         mv.setViewName("index");

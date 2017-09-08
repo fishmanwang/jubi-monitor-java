@@ -44,7 +44,8 @@ public enum UserErrorCode implements ErrorCode {
 
     USER_NOT_LOGIN(1020, "用户未登录"),
     USER_AUTH_EORR(1021, "用户名/密码错误"),
-    ACCOUNT_NOT_EXISTS(1100, "账户不存在");
+    ACCOUNT_NOT_EXISTS(1100, "账户不存在"),
+    USER_GRADE_NOT_EXISTS(1200, "用户等级不存在");
 
     private int status;
     private String message;

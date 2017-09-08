@@ -14,8 +14,8 @@
 <head>
     <title>${title}</title>
 </head>
+<link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/css/style.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="${ctx}/css/jquery.pagination.css"/>
 <body>
 <div id="main" class="main"></div>
 <jsp:include page="/WEB-INF/pages/header.jsp"/>
@@ -26,7 +26,7 @@
 </div>
 
 <script src="${ctx}/js/jquery-1.12.1.min.js"></script>
-<script src="${ctx}/js/jquery.pagination.min.js"></script>
+<script src="${ctx}/js/jquery.dataTables.min.js"></script>
 
 <script src="${ctx}/js/jubi/common.js"></script>
 </body>

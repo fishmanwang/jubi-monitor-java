@@ -18,6 +18,16 @@ public class UserBean {
 
     private String nickname;
 
+    /**
+     * 等级
+     */
+    private Integer grade;
+
+    /**
+     * 一天邮件最大发送数量
+     */
+    private Integer emailCount;
+
     public Integer getId() {
         return id;
     }
@@ -40,5 +50,21 @@ public class UserBean {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    public Integer getEmailCount() {
+        return emailCount;
+    }
+
+    public void setEmailCount(Integer emailCount) {
+        this.emailCount = emailCount;
     }
 }

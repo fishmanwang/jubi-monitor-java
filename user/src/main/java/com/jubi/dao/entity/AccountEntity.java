@@ -13,6 +13,8 @@ public class AccountEntity {
 
     private String email;
 
+    private Integer grade;
+
     private Date createTime;
 
     private Date updateTime;
@@ -55,6 +57,14 @@ public class AccountEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
     public Date getCreateTime() {
