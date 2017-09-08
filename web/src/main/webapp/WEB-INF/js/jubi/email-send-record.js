@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
     render()
 
@@ -22,7 +22,7 @@ function render() {
         },
         searching: true,
         columns: cs,
-        order: [[ 4, 'desc' ]],
+        order: [[4, 'desc']],
         autoWidth: false,
         info: true,
         paging: false,
@@ -37,11 +37,11 @@ function buildData(json) {
         return [];
     }
     var datas = [];
-    ds.forEach(function(d) {
+    ds.forEach(function (d) {
         var data = [];
         data.push(transNotifyType(d.notifyType));
         data.push(d.email);
-        data.push(d.succ ? '发送成功': '发送失败');
+        data.push(d.succ ? '成功' : '失败');
         data.push(d.content);
         data.push(d.sendTime);
         data.push(d.reason);
@@ -57,7 +57,7 @@ function transNotifyType(type) {
         r = '价格提醒'
     } else if (type == 2) {
         r = '波动提醒'
-    } else if(type == 3) {
+    } else if (type == 3) {
         r = '涨幅提醒'
     }
     return r

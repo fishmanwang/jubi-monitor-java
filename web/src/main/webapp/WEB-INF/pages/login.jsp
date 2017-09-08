@@ -12,6 +12,7 @@
 <head>
     <title>登录</title>
 </head>
+<link href="${ctx}/css/style.css" rel="stylesheet" type="text/css">
 <style>
     body {
         text-align: center
