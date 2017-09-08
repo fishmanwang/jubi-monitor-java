@@ -17,7 +17,7 @@
 <link href="${ctx}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/css/style.css" rel="stylesheet" type="text/css">
 <body>
-<div id="main" class="main"></div>
+<input type="hidden" id="ctx" value="${ctx}"/>
 <jsp:include page="/WEB-INF/pages/header.jsp"/>
 <jsp:include page="/WEB-INF/pages/menu.jsp"/>
 

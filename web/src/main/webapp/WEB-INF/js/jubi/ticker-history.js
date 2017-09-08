@@ -1,11 +1,11 @@
 $(function () {
-    $("#coinSel").off("change").on("change", function () {
+    $("#thCoinSel").off("change").on("change", function () {
         fetchAndRender()
     });
 
     $('#dateInput').off("keydown").on("keydown", function (e) {
         if (e.keyCode == 13) {
-            var coin = $("#coinSel").val()
+            var coin = $("#thCoinSel").val()
             if (!coin) {
                 alert("请选择币种");
                 return;
@@ -48,7 +48,7 @@ function fetchAndRender() {
         return;
     }
 
-    var coin = $("#coinSel").val();
+    var coin = $("#thCoinSel").val();
     if (!coin) {
         return
     }

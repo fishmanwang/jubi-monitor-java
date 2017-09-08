@@ -4,7 +4,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <div id="header" style="height:50px; margin-right: 70px;">
-    <input type="hidden" id="ctx" value="${ctx}"/>
     <div style="float:right">
         <span>
             <a href="${ctx}/page/account/admin.html"><shiro:principal property="nickname"/></a>

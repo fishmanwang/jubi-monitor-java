@@ -1,11 +1,11 @@
 $(function () {
-    $("#coinSel").off("change").on("change", function () {
+    $("#tcCoinSel").off("change").on("change", function () {
         fetchAndRender()
     });
 });
 
 function fetchAndRender() {
-    var coin = $("#coinSel").val()
+    var coin = $("#tcCoinSel").val()
     if (!coin) {
         return
     }

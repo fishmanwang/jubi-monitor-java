@@ -1,6 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+
+<tag:layout title="历史行情">
+    <select id="thCoinSel">
+        <option value="">请选择币种</option>
+        <c:forEach items="${coins}" var="coin">
+            <option value="${coin.code}">${coin.name}</option>
+        </c:forEach>
+        <input id="dateInput"/>&nbsp;<input id="prevBtn" type="button" value="上一天"/>&nbsp;
+        <input id="nextBtn" type="button" value="下一天"/>
+    </select>
+</tag:layout>
+
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -8,16 +22,7 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
-
-<select id="coinSel">
-    <option value="">请选择币种</option>
-    <c:forEach items="${coins}" var="coin">
-        <option value="${coin.code}">${coin.name}</option>
-    </c:forEach>
-</select>
-
-<input id="dateInput"/>&nbsp;<input id="prevBtn" type="button" value="上一天"/>&nbsp;<input id="nextBtn" type="button" value="下一天"/>
+<jsp:include page="header.jsp"/>
 
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->

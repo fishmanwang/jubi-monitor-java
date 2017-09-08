@@ -1,15 +1,17 @@
 $(function () {
-    $("#coinSel").off("change").on("change", function () {
+
+    $("#tickerCoinSel").off("change").on("change", function () {
         fetchAndRender()
     });
 
-    $("#spanSel").off("change").on("change", function() {
+    $("#spanSel").off("change").on("change", function () {
         fetchAndRender()
     })
 });
 
 function fetchAndRender() {
-    var coin = $("#coinSel").val();
+
+    var coin = $("#tickerCoinSel").val();
     if (!coin) {
         return
     }
