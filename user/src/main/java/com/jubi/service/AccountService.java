@@ -98,7 +98,7 @@ public class AccountService {
 
         UserGradeVo vo = new UserGradeVo();
         vo.setGrade(grade);
-        vo.setEmailCount(vo.getEmailCount());
+        vo.setEmailCount(d.getEmailCount());
         return vo;
     }
 }

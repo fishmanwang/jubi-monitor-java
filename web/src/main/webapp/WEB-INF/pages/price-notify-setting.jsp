@@ -2,14 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
-
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <title>价格提醒配置</title>
-</head>
-<body>
 
 <style>
     /*.pricesSpan span {*/
@@ -52,10 +45,11 @@
             <input type="button" value="保存" id="saveBtn"/>
             <input type="button" value="取消" onclick="window.location.href='${ctx}/page/index.html'"/>
         </div>
-        <p style="color:red; font-size: 12px;">注意：您的等级为 L<shiro:principal property="grade"/> 每天最多接收
-            <shiro:principal property="emailCount"/>封邮件，请合理设置监控的虚拟币和价格数量。</p>
+        <p style="color:red; font-size: 12px;">注意：您的等级为
+            <span style="color: green;">L<shiro:principal property="grade"/></span> 每天最多接收
+            <span style="color: green;"><shiro:principal property="emailCount"/></span>
+            封邮件，请合理设置监控的虚拟币和价格数量。</p>
     </div>
 </tag:layout>
 
 <script type="text/javascript" src="${ctx}/js/jubi/price-notify-setting.js"></script>
-</body>
