@@ -1,5 +1,5 @@
 $(function () {
-    $("#coinSel").off("change").on("change", function () {
+    $("#rateCoinSel").off("change").on("change", function () {
         fetchAndRender()
     });
 
@@ -9,7 +9,7 @@ $(function () {
 });
 
 function fetchAndRender() {
-    var coin = $("#coinSel").val();
+    var coin = $("#rateCoinSel").val();
     if (!coin) {
         return
     }
