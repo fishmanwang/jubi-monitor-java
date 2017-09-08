@@ -3,7 +3,7 @@
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
-<div id="header" style="height:30px; margin-right: 70px;">
+<div id="header" style="height:50px; margin-right: 70px;">
     <input type="hidden" id="ctx" value="${ctx}"/>
     <div style="float:right">
         <span>

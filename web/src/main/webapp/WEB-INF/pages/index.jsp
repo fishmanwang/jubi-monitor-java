@@ -11,7 +11,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <tag:layout title="首页">
-    <div style="float: left; margin-left: 30px;" id="tickerMainDiv" width="60%">
+    <div style="float: left;" id="tickerMainDiv" width="60%">
         <table id="tickerMainTable" class="display" width="100%"></table>
     </div>
 </tag:layout>

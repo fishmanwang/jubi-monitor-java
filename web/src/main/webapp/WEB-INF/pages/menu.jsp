@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
-<div style="float: left; width:100px; height: 600px;">
+<div style="float: left; width:13%; height: 600px;">
     <div>
         <h3>首页</h3>
         <a href="${ctx}/page/index.html">首页</a>

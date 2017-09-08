@@ -21,12 +21,14 @@
 <jsp:include page="/WEB-INF/pages/header.jsp"/>
 <jsp:include page="/WEB-INF/pages/menu.jsp"/>
 
-<div id="mbody" style="float:left;">
+<div id="mbody" style="float:left;width:87%;">
     <jsp:doBody></jsp:doBody>
 </div>
 
 <script src="${ctx}/js/jquery-1.12.1.min.js"></script>
 <script src="${ctx}/js/jquery.dataTables.min.js"></script>
-
+<!-- ECharts单文件引入 -->
+<script src="${ctx}/js/echarts/echarts.common.min.js"></script>
+<script src="${ctx}/js/echarts/theme/macarons.js"></script>
 <script src="${ctx}/js/jubi/common.js"></script>
 </body>
