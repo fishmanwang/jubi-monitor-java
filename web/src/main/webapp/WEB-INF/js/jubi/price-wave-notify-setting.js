@@ -8,7 +8,7 @@ var ctx = $("#ctx").val();
 
 function bindBtnEvents() {
 
-    $("#coinSel").off("change").on("change", function () {
+    $("#pwCoinSel").off("change").on("change", function () {
         var coin = $(this).val();
         if (!coin) {
             return;
@@ -16,8 +16,8 @@ function bindBtnEvents() {
         if ($(".settingDiv[coin='" + coin + "']:visible").length > 0) {
             return;
         }
-        if ($(".settingDiv:visible").length >= 3) {
-            alert("监控的虚拟币不能大于3个")
+        if ($(".settingDiv:visible").length >= 5) {
+            alert("监控的虚拟币不能大于5个")
             $(this).val("")
             return;
         }
