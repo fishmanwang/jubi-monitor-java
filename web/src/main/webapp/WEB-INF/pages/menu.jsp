@@ -9,8 +9,8 @@
     </div>
     <div>
         <h3>行情</h3>
-        <a href="${ctx}/page/ticker.html">行情总览</a><br/><br/>
-        <a href="${ctx}/page/recent/ticker.html">当日行情</a>
+        <a href="${ctx}/page/coin/info.html">行情概览</a><br/><br/>
+        <a href="${ctx}/page/ticker.html">行情总览</a>
         <!--
         <a href="${ctx}/page/history/ticker.html">历史行情</a>
         -->
@@ -23,16 +23,16 @@
         <a href="${ctx}/page/history/rate.html">历史涨幅</a>
         -->
     </div>
-    <div>
-        <h3>概览</h3>
-        <select id="coinSel">
-            <option value="">请选择币种</option>
-            <c:forEach items="${coins}" var="coin">
-                <option value="${coin.code}">${coin.name}</option>
-            </c:forEach>
-        </select>
+    <%--<div>--%>
+        <%--<h3>概览</h3>--%>
+        <%--<select id="coinSel">--%>
+            <%--<option value="">请选择币种</option>--%>
+            <%--<c:forEach items="${coins}" var="coin">--%>
+                <%--<option value="${coin.code}">${coin.name}</option>--%>
+            <%--</c:forEach>--%>
+        <%--</select>--%>
 
-    </div>
+    <%--</div>--%>
     <div>
         <h3>账户信息</h3>
         <a href="${ctx}/page/account/admin.html">账户管理</a>
