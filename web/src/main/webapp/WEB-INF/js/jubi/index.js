@@ -8,21 +8,6 @@ $(function () {
 
 var ctx = $("#ctx").val();
 
-/**
- * 查询所有币当前行情
- */
-function queryAllCoinTickers() {
-    var url = ctx + "/ticker/coins/recent?t=" + Math.random();
-    $.getJSON(url, function (json) {
-        if (json.status != '200') {
-            alert(json.message);
-            return
-        }
-        var ds = buildTickers(json);
-        renderTickers(ds)
-    })
-}
-
 function buildTickers(json) {
     var datas = json.data
     if (!datas || datas.length == 0) {
