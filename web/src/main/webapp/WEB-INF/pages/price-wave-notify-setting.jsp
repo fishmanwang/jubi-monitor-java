@@ -16,7 +16,7 @@
         </div>
         <div id="configArea" style="width:800px; margin-top: 20px">
             <div>
-                <select id="coinSel">
+                <select id="pwCoinSel">
                     <option value="">请选择虚拟币</option>
                     <c:forEach items="${items}" var="item">
                         <option value="${item.coin}">${item.name}</option>

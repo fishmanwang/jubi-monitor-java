@@ -59,8 +59,8 @@ public class PriceWaveNotifyService {
             params = Lists.newArrayList();
         }
 
-        if (params.size() > 3) {
-            throw new ApplicationException(CommonErrorCode.PARAM_ERROR, "波动监控不能超过3个虚拟币");
+        if (params.size() > 5) {
+            throw new ApplicationException(CommonErrorCode.PARAM_ERROR, "波动监控不能超过5个虚拟币");
         }
 
         for (CoinPriceWaveVo param : params) {

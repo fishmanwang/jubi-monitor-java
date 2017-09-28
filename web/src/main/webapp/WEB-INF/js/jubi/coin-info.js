@@ -1,18 +1,22 @@
 $(function () {
-    if (!coin) {
-        alert("请传入虚拟币");
-        return;
-    }
-    queryCoinTicker()
+    queryCoinTicker();
+    queryRealTimeDepth();
     bindBtns();
 });
 
-var coin = $("#coinInput").val();
 var ctx = $("#ctx").val();
 
 function bindBtns() {
     $("#depthShowBtn").off("click").on("click", function () {
         queryRealTimeDepth();
+    });
+
+    $("#tcCoinSel").off("change").on("change", function () {
+        var coin = $(this).val();
+        console.log(coin);
+        $("#coinInput").val(coin);
+        queryCoinTicker()
+        queryRealTimeDepth()
     });
 }
 
@@ -20,6 +24,11 @@ function bindBtns() {
  * 查询实时行情
  */
 function queryCoinTicker() {
+    var coin = $("#coinInput").val();
+    if (!coin) {
+        return;
+    }
+
     var url = ctx + "/ticker/recent/" + coin + "?t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
@@ -36,6 +45,11 @@ function queryCoinTicker() {
  * 查询实时深度
  */
 function queryRealTimeDepth() {
+    var coin = $("#coinInput").val();
+    if (!coin) {
+        return;
+    }
+
     var url = ctx + "/depth/real/" + coin + "?t=" + Math.random();
     $.getJSON(url, function (json) {
         if (json.status != '200') {
@@ -63,7 +77,6 @@ function queryRealTimeDepth() {
         });
         $("#buyTotalSpan").text(Math.round(buyTotal));
         $("#sellTotalSpan").text(Math.round(sellTotal));
-        $("#rateSpan").text((buyTotal / sellTotal).toFixed(2));
         renderDepth(xds, yds);
     });
 }

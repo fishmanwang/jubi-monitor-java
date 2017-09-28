@@ -40,7 +40,10 @@ public class PriceRateNotifyService {
      */
     public void savePriceRateNotify(Integer userId, List<PriceRateNotifyVo> vos) {
         Preconditions.checkNotNull(userId, "用户不能为空");
-        Preconditions.checkArgument(vos != null && vos.size() > 0, "配置信息不能为空");
+
+        if (vos == null) {
+            vos = Lists.newArrayList();
+        }
 
         List<Integer> validRates = getValidRates();
         for (PriceRateNotifyVo vo : vos) {
